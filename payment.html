@@ -423,23 +423,23 @@
         <!-- Project info -->
         <div class="card-fields" style="margin-bottom:var(--sp-6);">
           <div class="form-group full">
-            <label class="form-label">Full Name *</label>
-            <input type="text" class="form-input" placeholder="Your full name" required />
+            <label class="form-label" for="bk-name">Full Name *</label>
+            <input type="text" class="form-input" id="bk-name" placeholder="Your full name" required />
           </div>
           <div class="form-group">
-            <label class="form-label">Email Address *</label>
-            <input type="email" class="form-input" placeholder="you@example.com" required />
+            <label class="form-label" for="bk-email">Email Address *</label>
+            <input type="email" class="form-input" id="bk-email" placeholder="you@example.com" required />
           </div>
           <div class="form-group">
-            <label class="form-label">Phone Number *</label>
-            <input type="tel" class="form-input" placeholder="+91 98765 43210" required />
+            <label class="form-label" for="bk-phone">Phone Number *</label>
+            <input type="tel" class="form-input" id="bk-phone" placeholder="+91 98765 43210" required />
           </div>
           <div class="form-group">
-            <label class="form-label">Company / Brand Name</label>
-            <input type="text" class="form-input" placeholder="Your company name" />
+            <label class="form-label" for="bk-company">Company / Brand Name</label>
+            <input type="text" class="form-input" id="bk-company" placeholder="Your company name" />
           </div>
           <div class="form-group">
-            <label class="form-label">Project Type</label>
+            <label class="form-label" for="project-type-select">Project Type</label>
             <select class="form-input" id="project-type-select">
               <option value="Social Media & Ad Creatives">Social Media &amp; Ad Creatives</option>
               <option value="Website & Digital Design">Website &amp; Digital Design</option>
@@ -447,8 +447,8 @@
             </select>
           </div>
           <div class="form-group full">
-            <label class="form-label">Brief Project Description</label>
-            <textarea class="form-input" placeholder="Tell us about your project, goals, and timeline..." rows="3"></textarea>
+            <label class="form-label" for="bk-desc">Brief Project Description</label>
+            <textarea class="form-input" id="bk-desc" placeholder="Tell us about your project, goals, and timeline..." rows="3"></textarea>
           </div>
         </div>
 
@@ -483,6 +483,8 @@
         <button class="btn btn-lime" style="width:100%; padding:16px; font-size:1rem;" id="pay-btn" onclick="handlePayment()">
           <i class="fa-solid fa-lock"></i> Pay & Start Project
         </button>
+
+        <div id="bk-status" style="display:none; margin-top:var(--sp-4); padding:16px; border-radius:var(--r-md); font-size:0.88rem; line-height:1.5;"></div>
 
         <div class="secure-badge">
           <i class="fa-solid fa-shield-halved"></i>
@@ -577,7 +579,7 @@
 <footer class="footer">
   <div class="container">
     <div class="footer-grid">
-      <div class="footer-brand"><div class="nav-logo" style="margin-bottom:var(--sp-5);"><img src="images/mps-logo.png" alt="MPS Studio" class="site-logo-img" /></div><p>Creating visual experiences that inspire and convert. Based in Mumbai, working globally.</p><div class="social-links" style="margin-top:var(--sp-6);"><a href="https://www.behance.net/princesingh174" target="_blank" rel="noopener" class="social-link" title="Behance"><i class="fa-brands fa-behance"></i></a><a href="https://www.linkedin.com" target="_blank" rel="noopener" class="social-link" title="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a><a href="mailto:spriyanshuajay25@gmail.com" class="social-link" title="Email Priyanshu"><i class="fa-solid fa-envelope"></i></a><a href="tel:8888578111" class="social-link" title="Call Us"><i class="fa-solid fa-phone"></i></a></div></div>
+      <div class="footer-brand"><div class="nav-logo" style="margin-bottom:var(--sp-5);"><img src="images/mps-logo.png" alt="MPS Studio" class="site-logo-img" /></div><p>Creating visual experiences that inspire and convert. Based in Mumbai, working globally.</p><div class="social-links" style="margin-top:var(--sp-6);"><a href="https://www.behance.net/princesingh174" target="_blank" rel="noopener" class="social-link" title="Behance"><i class="fa-brands fa-behance"></i></a><a href="https://www.linkedin.com" target="_blank" rel="noopener" class="social-link" title="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a><a href="mailto:hello@mpsstudio.in" class="social-link" title="Email MPS Studio"><i class="fa-solid fa-envelope"></i></a><a href="tel:8888578111" class="social-link" title="Call Us"><i class="fa-solid fa-phone"></i></a></div></div>
       <div><div class="footer-col-title">Portfolios</div><ul class="footer-links"><li><a href="portfolio.html">Company Portfolio</a></li><li><a href="team-portfolio.html">Team / Priyanshu's Portfolio</a></li><li><a href="about.html">About Us</a></li><li><a href="services.html">Services</a></li><li><a href="contact.html">Contact</a></li></ul></div>
       <div><div class="footer-col-title">Services</div><ul class="footer-links"><li><a href="services.html">Branding & Identity</a></li><li><a href="services.html">Graphic & Communication</a></li><li><a href="services.html">Web & Digital Design</a></li><li><a href="services.html">Motion Graphics & Video</a></li><li><a href="services.html">Packaging & Print</a></li><li><a href="services.html">Creative Direction</a></li></ul></div>
       <div><div class="footer-col-title">Contact</div><ul class="footer-links"><li><a href="mailto:hello@mpsstudio.in">hello@mpsstudio.in</a></li><li><a href="#">+91 98765 43210</a></li><li><a href="#">Mumbai, Maharashtra</a></li></ul></div>
@@ -773,23 +775,158 @@
     e.target.value = v.match(/.{1,4}/g)?.join('  ') || v;
   });
 
-  // Payment handler
-  function handlePayment() {
+  // Payment & Booking handler connected to hello@mpsstudio.in with Auto-reply
+  async function handlePayment() {
+    const statusDiv = document.getElementById('bk-status');
+    const nameEl = document.getElementById('bk-name');
+    const emailEl = document.getElementById('bk-email');
+    const phoneEl = document.getElementById('bk-phone');
+    const companyEl = document.getElementById('bk-company');
+    const descEl = document.getElementById('bk-desc');
+    const pTypeEl = document.getElementById('project-type-select');
+    const btn = document.getElementById('pay-btn');
+
     const prod = productsData[activeProductKey];
     const selected = prod.services.filter(s => s.checked);
+
     if (selected.length === 0) {
-      alert('Please select at least one sub-service to continue.');
+      alert('Please select at least one sub-service from the scope customizer above to calculate your package.');
       document.getElementById('customizer-box').scrollIntoView({ behavior: 'smooth' });
       return;
     }
 
-    const btn = document.getElementById('pay-btn');
-    btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Processing Booking…';
+    const name = nameEl.value.trim();
+    const email = emailEl.value.trim();
+    const phone = phoneEl.value.trim();
+
+    if (!name || !email || !phone) {
+      statusDiv.style.display = 'block';
+      statusDiv.style.background = 'rgba(239, 68, 68, 0.12)';
+      statusDiv.style.border = '1px solid rgba(239, 68, 68, 0.4)';
+      statusDiv.style.color = '#f87171';
+      statusDiv.innerHTML = '<i class="fa-solid fa-circle-exclamation"></i> Please fill in your <strong>Full Name</strong>, <strong>Email Address</strong>, and <strong>Phone Number</strong>.';
+      if (!name) nameEl.focus();
+      else if (!email) emailEl.focus();
+      else phoneEl.focus();
+      return;
+    }
+
+    // Email format validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      statusDiv.style.display = 'block';
+      statusDiv.style.background = 'rgba(239, 68, 68, 0.12)';
+      statusDiv.style.border = '1px solid rgba(239, 68, 68, 0.4)';
+      statusDiv.style.color = '#f87171';
+      statusDiv.innerHTML = '<i class="fa-solid fa-circle-exclamation"></i> Please provide a valid email address.';
+      emailEl.focus();
+      return;
+    }
+
+    const subtotal = selected.reduce((sum, s) => sum + s.price, 0);
+    const tax = Math.round(subtotal * 0.18);
+    const total = subtotal + tax;
+    const advance = Math.round(total * 0.5);
+
+    const originalBtnHtml = btn.innerHTML;
+    btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Submitting Booking to hello@mpsstudio.in…';
     btn.disabled = true;
-    setTimeout(() => {
-      btn.innerHTML = '<i class="fa-solid fa-check-circle"></i> Booking Confirmed! We\'ll reach out within 24 hours.';
-      btn.style.background = '#22c55e';
-    }, 2000);
+    statusDiv.style.display = 'none';
+
+    // Auto-reply message sent to client's email
+    const autoReplyMessage = `Dear ${name},
+
+Thank you for booking your project with MPS Studio! We have successfully received your project scope and order details:
+
+• Product / Category: ${prod.title}
+• Selected Sub-services:
+${selected.map(s => '  - ' + s.name + ' (' + formatINR(s.price) + ')').join('\n')}
+
+• Subtotal: ${formatINR(subtotal)}
+• GST (18%): ${formatINR(tax)}
+• Total Project Value: ${formatINR(total)}
+• 50% Advance to Initiate: ${formatINR(advance)}
+
+${descEl.value.trim() ? '• Project Notes: ' + descEl.value.trim() + '\n' : ''}
+Our Creative Director, Priyanshu Singh, and the MPS Studio team will review your project brief and contact you within 24 hours to schedule your strategy kickoff call and finalize payment and onboarding.
+
+If you have any reference materials, moodboards, or questions in the meantime, reply directly to this email or reach us on WhatsApp.
+
+Warm regards,
+Priyanshu Singh & The MPS Studio Team
+Email: hello@mpsstudio.in
+Website: https://mpsstudio.in
+Mumbai, Maharashtra, India`;
+
+    const payload = {
+      client_name: name,
+      email: email,
+      phone: phone,
+      company: companyEl.value.trim() || 'Not specified',
+      project_category: prod.title,
+      project_type_selected: pTypeEl.value,
+      sub_services_selected: selected.map(s => `${s.name} (${formatINR(s.price)})`).join(' | '),
+      sub_services_count: `${selected.length} of ${prod.services.length}`,
+      subtotal: formatINR(subtotal),
+      tax_gst: formatINR(tax),
+      total_amount: formatINR(total),
+      advance_amount_50pct: formatINR(advance),
+      project_description: descEl.value.trim() || 'None provided',
+      _subject: `New Project Booking: ${prod.title} — ${name}`,
+      _autoresponse: autoReplyMessage,
+      _template: 'table',
+      _captcha: 'false'
+    };
+
+    try {
+      const res = await fetch('https://formsubmit.co/ajax/hello@mpsstudio.in', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify(payload)
+      });
+
+      const data = await res.json();
+
+      if (res.ok || data.success === 'true' || data.success === true) {
+        statusDiv.style.display = 'block';
+        statusDiv.style.background = 'rgba(34, 197, 94, 0.12)';
+        statusDiv.style.border = '1px solid rgba(34, 197, 94, 0.4)';
+        statusDiv.style.color = '#4ade80';
+        statusDiv.innerHTML = `
+          <div style="font-weight:700; font-size:1.05rem; margin-bottom:6px; color:#4ade80;">
+            <i class="fa-solid fa-circle-check"></i> Booking Confirmed! Thank you, ${name}.
+          </div>
+          <div style="color:var(--text-secondary); font-size:0.85rem; line-height:1.6;">
+            Your project order has been dispatched directly to <strong>hello@mpsstudio.in</strong>.<br/>
+            An instant confirmation auto-reply has been sent to <strong>${email}</strong>.<br/>
+            Our team will reach out within 24 hours to schedule your strategy call and initiate your project!
+          </div>`;
+        btn.innerHTML = '<i class="fa-solid fa-check"></i> Project Scope Booked!';
+        btn.style.background = '#22c55e';
+        btn.style.borderColor = '#22c55e';
+        statusDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      } else {
+        throw new Error(data.message || 'Booking submission error');
+      }
+    } catch (err) {
+      console.error('Booking failed:', err);
+      statusDiv.style.display = 'block';
+      statusDiv.style.background = 'rgba(239, 68, 68, 0.12)';
+      statusDiv.style.border = '1px solid rgba(239, 68, 68, 0.4)';
+      statusDiv.style.color = '#f87171';
+      statusDiv.innerHTML = `
+        <div style="font-weight:700; margin-bottom:4px;">
+          <i class="fa-solid fa-triangle-exclamation"></i> Submission Notice
+        </div>
+        <div style="font-size:0.85rem; color:var(--text-secondary);">
+          If this is the first submission to <strong>hello@mpsstudio.in</strong>, FormSubmit requires a one-time email activation link sent to your inbox. You can also email your project scope directly to <a href="mailto:hello@mpsstudio.in" style="color:var(--lime); text-decoration:underline; font-weight:600;">hello@mpsstudio.in</a>.
+        </div>`;
+      btn.disabled = false;
+      btn.innerHTML = originalBtnHtml;
+    }
   }
 
   // Initialize on load & support URL parameter
