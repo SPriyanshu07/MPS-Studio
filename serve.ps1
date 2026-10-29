@@ -39,6 +39,9 @@ try {
                 ".jpg"  { "image/jpeg" }
                 ".jpeg" { "image/jpeg" }
                 ".svg"  { "image/svg+xml" }
+                ".webp" { "image/webp" }
+                ".woff" { "font/woff" }
+                ".woff2"{ "font/woff2" }
                 ".ico"  { "image/x-icon" }
                 Default { "application/octet-stream" }
             }
