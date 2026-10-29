@@ -18,106 +18,206 @@
       display: flex; align-items: center; gap: var(--sp-4);
       justify-content: center; margin-bottom: var(--sp-10);
     }
-    .toggle-label { font-size: 0.9rem; font-weight: 600; color: var(--text-secondary); }
-    .toggle-label.active { color: var(--text-primary); }
-    .toggle-switch {
-      width: 48px; height: 26px;
-      background: var(--surface-2); border-radius: var(--r-full);
-      cursor: pointer; position: relative;
-      border: 1px solid var(--border);
-      transition: background var(--dur) var(--ease);
-    }
-    .toggle-switch.on { background: var(--lime); }
-    .toggle-knob {
-      position: absolute; top: 3px; left: 3px;
-      width: 18px; height: 18px; border-radius: 50%;
-      background: var(--text-primary);
-      transition: transform var(--dur) var(--ease);
-    }
-    .toggle-switch.on .toggle-knob { transform: translateX(22px); background: var(--black); }
-    .save-badge {
-      font-size: 0.72rem; font-weight: 700;
-      background: var(--lime-dim); color: var(--lime);
-      border: 1px solid var(--border-accent);
-      padding: 2px 8px; border-radius: var(--r-full);
-    }
-
-    /* Pricing Cards */
-    .pricing-grid {
+    /* Product Selector Tabs */
+    .product-tabs {
       display: grid;
-      grid-template-columns: repeat(3,1fr);
-      gap: var(--sp-5);
-      margin-bottom: var(--sp-16);
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--sp-4);
+      margin-bottom: var(--sp-10);
     }
-    .pricing-card {
-      border-radius: var(--r-xl);
-      padding: var(--sp-8) var(--sp-6);
-      border: 1px solid var(--border);
+    .product-tab {
       background: var(--surface-1);
-      position: relative;
+      border: 1px solid var(--border);
+      border-radius: var(--r-xl);
+      padding: var(--sp-6);
+      text-align: left;
+      cursor: pointer;
       transition: all var(--dur) var(--ease);
+      position: relative;
+      overflow: hidden;
     }
-    .pricing-card:hover { border-color: var(--border-accent); transform: translateY(-4px); box-shadow: var(--sh-md); }
-    .pricing-card.featured {
-      background: var(--lime);
+    .product-tab:hover {
+      border-color: var(--border-accent);
+      transform: translateY(-2px);
+    }
+    .product-tab.active {
+      background: linear-gradient(135deg, rgba(85,119,184,0.15), rgba(31,31,31,0.98));
       border-color: var(--lime);
-      transform: translateY(-8px);
-      box-shadow: 0 24px 60px rgba(215,255,100,0.2);
+      box-shadow: 0 8px 32px rgba(85,119,184,0.2);
     }
-    .pricing-card.featured * { color: var(--black) !important; }
-    .pricing-card.featured .plan-btn { background: var(--black); color: var(--lime); }
-    .pricing-card.featured .plan-btn:hover { background: #222; }
-    .featured-badge {
-      position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
-      background: var(--black); color: var(--lime);
-      padding: 4px 16px; border-radius: var(--r-full);
-      font-size: 0.72rem; font-weight: 700;
-      letter-spacing: 0.08em; text-transform: uppercase;
-      white-space: nowrap;
+    .product-tab.active::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--lime);
     }
-    .plan-name {
-      font-size: 0.78rem; font-weight: 700;
-      letter-spacing: 0.12em; text-transform: uppercase;
-      color: var(--text-secondary); margin-bottom: var(--sp-3);
-    }
-    .plan-price {
-      font-family: var(--font-head);
-      font-size: 2.8rem; font-weight: 800;
-      letter-spacing: -0.03em; line-height: 1;
+    .product-tab-num {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--lime);
       margin-bottom: 4px;
     }
-    .plan-period { font-size: 0.82rem; color: var(--text-secondary); margin-bottom: var(--sp-5); }
-    .plan-desc { font-size: 0.88rem; line-height: 1.6; color: var(--text-secondary); margin-bottom: var(--sp-6); }
-
-    .plan-features { margin-bottom: var(--sp-8); }
-    .plan-feature {
-      display: flex; align-items: center; gap: var(--sp-3);
-      font-size: 0.88rem; padding: 8px 0;
-      border-bottom: 1px solid rgba(255,255,255,0.05);
+    .product-tab h3 {
+      font-size: 1.15rem;
+      margin-bottom: 4px;
     }
-    .plan-feature:last-child { border-bottom: none; }
-    .plan-feature i { font-size: 0.8rem; color: var(--lime); flex-shrink: 0; }
-    .pricing-card.featured .plan-feature i { color: var(--black); }
-    .plan-feature.off { opacity: 0.4; }
-    .plan-feature.off i { color: var(--text-muted); }
-
-    .plan-btn {
-      width: 100%;
-      padding: 14px;
-      border-radius: var(--r-full);
-      background: var(--lime); color: var(--black);
-      font-weight: 700; font-size: 0.9rem;
-      text-align: center; cursor: pointer;
-      border: none; font-family: inherit;
-      transition: all var(--dur) var(--ease);
+    .product-tab p {
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      margin: 0;
+      line-height: 1.5;
     }
-    .plan-btn:hover { filter: brightness(1.1); transform: translateY(-1px); }
-    .plan-btn-outline {
-      background: transparent;
+
+    /* Customizer Section */
+    .customizer-box {
+      background: var(--surface-1);
       border: 1px solid var(--border);
+      border-radius: var(--r-xl);
+      padding: var(--sp-8);
+      margin-bottom: var(--sp-16);
+    }
+    .customizer-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: var(--sp-4);
+      padding-bottom: var(--sp-5);
+      margin-bottom: var(--sp-6);
+      border-bottom: 1px solid var(--border);
+    }
+    .customizer-actions {
+      display: flex;
+      gap: var(--sp-3);
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .customizer-btn {
+      padding: 6px 16px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      border-radius: var(--r-full);
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all var(--dur-fast) var(--ease);
+    }
+    .customizer-btn:hover {
+      color: var(--text-primary);
+      border-color: var(--lime);
+      background: var(--surface-3);
+    }
+    .selection-counter {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--lime);
+      background: var(--lime-dim);
+      padding: 6px 14px;
+      border-radius: var(--r-full);
+      border: 1px solid var(--border-accent);
+    }
+
+    /* Subservice Items Grid */
+    .subservice-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--sp-3);
+      margin-bottom: var(--sp-6);
+    }
+    .subservice-check-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 18px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--r-md);
+      cursor: pointer;
+      transition: all var(--dur) var(--ease);
+      user-select: none;
+    }
+    .subservice-check-card:hover {
+      border-color: var(--border-accent);
+      background: #2a2a2a;
+      transform: translateY(-1px);
+    }
+    .subservice-check-card.checked {
+      background: linear-gradient(135deg, rgba(85,119,184,0.18), rgba(39,39,39,0.95));
+      border-color: var(--lime);
+      box-shadow: 0 4px 16px rgba(85,119,184,0.18);
+    }
+    .subservice-info-wrap {
+      display: flex;
+      align-items: center;
+      gap: var(--sp-3);
+    }
+    .custom-check-box {
+      width: 22px;
+      height: 22px;
+      border-radius: 6px;
+      border: 2px solid var(--border-strong);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all var(--dur-fast) var(--ease);
+      flex-shrink: 0;
+      color: transparent;
+      font-size: 0.75rem;
+      background: var(--surface-1);
+    }
+    .subservice-check-card.checked .custom-check-box {
+      background: var(--lime);
+      border-color: var(--lime);
+      color: #ffffff;
+    }
+    .subservice-name {
+      font-size: 0.92rem;
+      font-weight: 600;
       color: var(--text-primary);
     }
-    .plan-btn-outline:hover { border-color: var(--border-accent); color: var(--lime); background: var(--lime-dim); }
+    .subservice-price-pill {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--lime);
+      background: var(--surface-1);
+      padding: 4px 12px;
+      border-radius: var(--r-full);
+      border: 1px solid var(--border);
+      white-space: nowrap;
+    }
+    .subservice-check-card.checked .subservice-price-pill {
+      background: var(--lime);
+      color: #ffffff;
+      border-color: var(--lime);
+    }
+
+    /* Selected items breakdown in order summary */
+    .summary-items-list {
+      max-height: 220px;
+      overflow-y: auto;
+      margin: var(--sp-4) 0;
+      padding-right: 4px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .summary-item-pill {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      padding: 4px 0;
+      border-bottom: 1px dashed var(--border);
+    }
+    .summary-item-pill span:last-child {
+      font-weight: 700;
+      color: var(--lime);
+    }
 
     /* Checkout Form */
     .checkout-wrap {
@@ -235,9 +335,9 @@
 <!-- PAGE HERO -->
 <section class="page-hero">
   <div class="container">
-    <div class="section-label reveal">Pricing</div>
-    <h1 class="reveal d1">Simple, <span class="text-lime">Transparent</span> Pricing</h1>
-    <p class="reveal d2">No hidden fees. No surprises. Pick a plan that fits your vision, or request a custom quote for complex projects.</p>
+    <div class="section-label reveal">Per-Service &amp; Tailored Pricing</div>
+    <h1 class="reveal d1">Customizable <span class="text-lime">Pricing</span> Plans</h1>
+    <p class="reveal d2">Select from our 3 core design disciplines. Customize your exact scope by choosing only the sub-services you need, and see your live investment in real-time.</p>
   </div>
 </section>
 
@@ -245,70 +345,55 @@
 <section class="section">
   <div class="container">
 
-    <!-- Toggle -->
-    <div class="toggle-wrap reveal">
-      <span class="toggle-label active" id="monthly-label">Monthly</span>
-      <div class="toggle-switch" id="billing-toggle">
-        <div class="toggle-knob"></div>
+    <!-- 3 Main Products Selector Tabs -->
+    <div class="product-tabs reveal">
+      <div class="product-tab active" data-product="social" onclick="switchProduct('social')">
+        <div class="product-tab-num">01 / SOCIAL &amp; CAMPAIGNS</div>
+        <h3>Social Media &amp; Ad Creatives</h3>
+        <p>Scroll-stopping visuals for social media, paid ads &amp; digital marketing campaigns.</p>
       </div>
-      <span class="toggle-label" id="yearly-label">Yearly <span class="save-badge">Save 20%</span></span>
+
+      <div class="product-tab" data-product="web" onclick="switchProduct('web')">
+        <div class="product-tab-num">02 / WEB &amp; DIGITAL</div>
+        <h3>Website &amp; Digital Design</h3>
+        <p>Intuitive, responsive &amp; visually consistent digital experiences in Figma.</p>
+      </div>
+
+      <div class="product-tab" data-product="brand" onclick="switchProduct('brand')">
+        <div class="product-tab-num">03 / BRANDING &amp; PACKAGING</div>
+        <h3>Branding &amp; Packaging Design</h3>
+        <p>Distinctive brand identities, guidelines, stationary &amp; retail product packaging.</p>
+      </div>
     </div>
 
-    <!-- Pricing Cards -->
-    <div class="pricing-grid reveal">
-      <!-- Starter -->
-      <div class="pricing-card tilt" id="plan-starter">
-        <div class="plan-name">Starter</div>
-        <div class="plan-price" data-monthly="₹15,000" data-yearly="₹1,44,000">₹15,000</div>
-        <div class="plan-period">per project</div>
-        <p class="plan-desc">Perfect for startups and small businesses looking to establish their visual identity.</p>
-        <div class="plan-features">
-          <div class="plan-feature"><i class="fa-solid fa-check"></i> Logo Design (3 concepts)</div>
-          <div class="plan-feature"><i class="fa-solid fa-check"></i> Basic Brand Guidelines</div>
-          <div class="plan-feature"><i class="fa-solid fa-check"></i> Business Card Design</div>
-          <div class="plan-feature"><i class="fa-solid fa-check"></i> 2 Revision Rounds</div>
-          <div class="plan-feature"><i class="fa-solid fa-check"></i> All Source Files</div>
-          <div class="plan-feature off"><i class="fa-solid fa-xmark"></i> UI/UX Design</div>
-          <div class="plan-feature off"><i class="fa-solid fa-xmark"></i> Motion Graphics</div>
+    <!-- Interactive Subservices Customizer Box -->
+    <div class="customizer-box reveal" id="customizer-box">
+      <div class="customizer-header">
+        <div>
+          <div class="section-label" id="current-prod-num" style="margin-bottom:4px;">01 / SOCIAL &amp; CAMPAIGNS</div>
+          <h2 id="current-prod-title" style="font-size:1.5rem; margin-bottom:4px;">Social Media &amp; Ad Creatives</h2>
+          <p id="current-prod-desc" style="font-size:0.88rem; color:var(--text-secondary); margin:0;">Select the exact sub-services you need for your project.</p>
         </div>
-        <button class="plan-btn plan-btn-outline" onclick="selectPlan('Starter', '₹15,000')">Choose Starter</button>
+
+        <div class="customizer-actions">
+          <span class="selection-counter" id="sel-counter">3 of 10 Selected</span>
+          <button class="customizer-btn" onclick="selectAllCurrent(true)"><i class="fa-solid fa-check-double"></i> Select All</button>
+          <button class="customizer-btn" onclick="selectAllCurrent(false)"><i class="fa-solid fa-rotate-left"></i> Clear All</button>
+        </div>
       </div>
 
-      <!-- Professional (Featured) -->
-      <div class="pricing-card featured tilt" id="plan-pro">
-        <div class="featured-badge">⭐ Most Popular</div>
-        <div class="plan-name">Professional</div>
-        <div class="plan-price" data-monthly="₹45,000" data-yearly="₹4,32,000">₹45,000</div>
-        <div class="plan-period">per project</div>
-        <p class="plan-desc">Full brand experience for growing businesses ready to make a serious impression.</p>
-        <div class="plan-features">
-          <div class="plan-feature"><i class="fa-solid fa-check"></i> Complete Brand Identity</div>
-          <div class="plan-feature"><i class="fa-solid fa-check"></i> UI/UX Design (up to 5 screens)</div>
-          <div class="plan-feature"><i class="fa-solid fa-check"></i> Web Design (Landing Page)</div>
-          <div class="plan-feature"><i class="fa-solid fa-check"></i> Social Media Kit</div>
-          <div class="plan-feature"><i class="fa-solid fa-check"></i> Unlimited Revisions</div>
-          <div class="plan-feature"><i class="fa-solid fa-check"></i> Priority Support</div>
-          <div class="plan-feature off"><i class="fa-solid fa-xmark"></i> Motion Graphics</div>
-        </div>
-        <button class="plan-btn" onclick="selectPlan('Professional', '₹45,000')">Choose Professional</button>
+      <!-- Dynamic Subservices Checklist Grid -->
+      <div class="subservice-list" id="subservice-list-container">
+        <!-- Rendered dynamically by JavaScript -->
       </div>
 
-      <!-- Enterprise -->
-      <div class="pricing-card tilt" id="plan-enterprise">
-        <div class="plan-name">Enterprise</div>
-        <div class="plan-price" data-monthly="₹1,20,000" data-yearly="₹11,52,000">₹1,20,000</div>
-        <div class="plan-period">per project</div>
-        <p class="plan-desc">The complete design suite for enterprises demanding the highest level of output.</p>
-        <div class="plan-features">
-          <div class="plan-feature"><i class="fa-solid fa-check"></i> Full Brand Identity System</div>
-          <div class="plan-feature"><i class="fa-solid fa-check"></i> Full UI/UX App Design</div>
-          <div class="plan-feature"><i class="fa-solid fa-check"></i> Multi-page Web Design</div>
-          <div class="plan-feature"><i class="fa-solid fa-check"></i> Motion Graphics Package</div>
-          <div class="plan-feature"><i class="fa-solid fa-check"></i> Print Collateral Set</div>
-          <div class="plan-feature"><i class="fa-solid fa-check"></i> Dedicated Design Manager</div>
-          <div class="plan-feature"><i class="fa-solid fa-check"></i> 6-Month Support</div>
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:var(--sp-4); padding-top:var(--sp-4); border-top:1px solid var(--border);">
+        <div style="font-size:0.88rem; color:var(--text-secondary);">
+          Estimated Subtotal: <strong style="font-size:1.3rem; color:var(--lime); margin-left:6px;" id="box-subtotal">₹7,500</strong>
         </div>
-        <button class="plan-btn plan-btn-outline" onclick="selectPlan('Enterprise', '₹1,20,000')">Choose Enterprise</button>
+        <a href="#checkout-section" class="btn btn-lime btn-sm">
+          Continue to Order Details <i class="fa-solid fa-arrow-down"></i>
+        </a>
       </div>
     </div>
 
@@ -316,19 +401,23 @@
     <div class="divider"></div>
 
     <!-- Checkout Section -->
-    <div class="section-header reveal" style="margin-bottom:var(--sp-10);">
-      <div class="section-label">Checkout</div>
-      <h2>Complete Your <span class="text-lime">Order</span></h2>
+    <div class="section-header reveal" id="checkout-section" style="margin-bottom:var(--sp-10);">
+      <div class="section-label">Order Details &amp; Confirmation</div>
+      <h2>Review &amp; <span class="text-lime">Book Project</span></h2>
+      <p>Confirm your customized scope below. An advance of 50% initiates your project immediately.</p>
     </div>
 
     <div class="checkout-wrap reveal">
       <!-- Form -->
       <div class="checkout-card">
-        <h3 class="checkout-title">Project Details &amp; Payment</h3>
+        <h3 class="checkout-title">Project Details &amp; Confirmation</h3>
 
         <div class="selected-plan" id="selected-plan-banner">
-          <span>Selected: <span class="selected-plan-name" id="sel-plan-name">Professional — ₹45,000</span></span>
-          <span class="selected-plan-change" onclick="window.scrollTo({top:0,behavior:'smooth'})">Change Plan</span>
+          <div>
+            <span style="font-size:0.75rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--text-secondary); display:block;">Active Scope</span>
+            <span class="selected-plan-name" id="sel-plan-name">Social Media &amp; Ad Creatives</span>
+          </div>
+          <span class="selected-plan-change" onclick="document.getElementById('customizer-box').scrollIntoView({behavior:'smooth'})">Modify Sub-services</span>
         </div>
 
         <!-- Project info -->
@@ -351,12 +440,10 @@
           </div>
           <div class="form-group">
             <label class="form-label">Project Type</label>
-            <select class="form-input">
-              <option>Brand Identity</option>
-              <option>UI/UX Design</option>
-              <option>Web Design</option>
-              <option>Motion Graphics</option>
-              <option>Complete Package</option>
+            <select class="form-input" id="project-type-select">
+              <option value="Social Media & Ad Creatives">Social Media &amp; Ad Creatives</option>
+              <option value="Website & Digital Design">Website &amp; Digital Design</option>
+              <option value="Branding & Packaging Design">Branding &amp; Packaging Design</option>
             </select>
           </div>
           <div class="form-group full">
@@ -407,32 +494,50 @@
       <div class="order-summary">
         <h4 class="order-title">Order Summary</h4>
         <div class="order-item">
-          <span id="os-plan">Professional Plan</span>
-          <span id="os-price">₹45,000</span>
+          <div>
+            <strong id="os-plan" style="display:block; font-size:0.95rem;">Social Media &amp; Ad Creatives</strong>
+            <small id="os-count" style="color:var(--text-secondary); font-size:0.75rem;">3 sub-services selected</small>
+          </div>
+          <span id="os-price" style="font-weight:700;">₹7,500</span>
         </div>
+
+        <!-- Selected subservices itemized list -->
+        <div class="summary-items-list" id="os-subservices-list">
+          <!-- Populated dynamically -->
+        </div>
+
         <div class="order-item">
-          <span>Consultation Call</span>
+          <span>Strategy &amp; Briefing Call</span>
           <span style="color:var(--lime)">Free</span>
         </div>
         <div class="order-item">
-          <span>Source Files</span>
+          <span>Master Vector Source Files</span>
           <span style="color:var(--lime)">Included</span>
         </div>
         <div class="order-item">
           <span>GST (18%)</span>
-          <span id="os-tax">₹8,100</span>
+          <span id="os-tax">₹1,350</span>
         </div>
         <div class="order-total">
-          <span class="label">Total</span>
-          <span class="amount" id="os-total">₹53,100</span>
+          <span class="label">Total Project Value</span>
+          <span class="amount" id="os-total">₹8,850</span>
         </div>
+
+        <div class="order-item" style="border-top:1px dashed var(--border); margin-top:var(--sp-3); padding-top:var(--sp-3); background:var(--surface-2); padding:10px 12px; border-radius:var(--r-sm);">
+          <div>
+            <strong style="color:var(--text-primary); font-size:0.86rem; display:block;">50% Advance Due Now</strong>
+            <small style="color:var(--text-muted); font-size:0.75rem;">Balance payable on final approval</small>
+          </div>
+          <span id="os-advance" style="color:var(--lime); font-size:1.15rem; font-weight:800;">₹4,425</span>
+        </div>
+
         <p class="order-note">
-          50% advance payment to start the project. Remaining 50% upon final delivery and approval.
+          50% advance begins design sprint immediately. We iterate until 100% satisfied.
         </p>
         <div style="margin-top:var(--sp-6);">
           <div style="display:flex; align-items:center; gap:var(--sp-3); margin-bottom:var(--sp-3);">
             <i class="fa-solid fa-check-circle" style="color:var(--lime);"></i>
-            <span style="font-size:0.85rem;">Free strategy call included</span>
+            <span style="font-size:0.85rem;">Free consultation call included</span>
           </div>
           <div style="display:flex; align-items:center; gap:var(--sp-3); margin-bottom:var(--sp-3);">
             <i class="fa-solid fa-check-circle" style="color:var(--lime);"></i>
@@ -486,32 +591,179 @@
 <script src="js/character.js"></script>
 <script src="js/main.js"></script>
 <script>
-  // Billing toggle
-  const toggle = document.getElementById('billing-toggle');
-  const monthlyLabel = document.getElementById('monthly-label');
-  const yearlyLabel  = document.getElementById('yearly-label');
-  let yearly = false;
+  // ── Products & Per-Service Data ──
+  const productsData = {
+    social: {
+      id: "social",
+      num: "01 / SOCIAL & CAMPAIGNS",
+      title: "Social Media & Ad Creatives",
+      subtitle: "Create scroll-stopping visuals for social media, paid advertising and digital marketing campaigns.",
+      services: [
+        { id: "s1", name: "Social Media Post Design", price: 1500, checked: true },
+        { id: "s2", name: "Carousel Design", price: 2500, checked: true },
+        { id: "s3", name: "Instagram Stories Design", price: 1200, checked: false },
+        { id: "s4", name: "Reels Covers & Thumbnails", price: 1200, checked: false },
+        { id: "s5", name: "Meta Ads Creatives (Facebook & Instagram)", price: 3500, checked: true },
+        { id: "s6", name: "Campaign & Promotional Creatives", price: 4000, checked: false },
+        { id: "s7", name: "Product Promotional Graphics", price: 2500, checked: false },
+        { id: "s8", name: "Social Media Banners & Headers", price: 2000, checked: false },
+        { id: "s9", name: "Creative Resizing for Different Platforms", price: 1500, checked: false },
+        { id: "s10", name: "Monthly Social Media Design", price: 18000, checked: false }
+      ]
+    },
+    web: {
+      id: "web",
+      num: "02 / WEB & DIGITAL DESIGN",
+      title: "Website & Digital Design",
+      subtitle: "Design intuitive, responsive and visually consistent digital experiences that bring your brand online.",
+      services: [
+        { id: "w1", name: "Website UI Design", price: 12000, checked: true },
+        { id: "w2", name: "Landing Page Design", price: 8000, checked: true },
+        { id: "w3", name: "Website Layout & Structure", price: 5000, checked: false },
+        { id: "w4", name: "Wireframing", price: 4000, checked: false },
+        { id: "w5", name: "Responsive Desktop Design", price: 6000, checked: true },
+        { id: "w6", name: "Tablet & Mobile Layout Design", price: 6000, checked: false },
+        { id: "w7", name: "Figma Prototyping", price: 5000, checked: false },
+        { id: "w8", name: "UI Components & Design Systems", price: 7000, checked: false },
+        { id: "w9", name: "Website Banners & Graphics", price: 3500, checked: false },
+        { id: "w10", name: "Website Redesign & Visual Refresh", price: 15000, checked: false }
+      ]
+    },
+    brand: {
+      id: "brand",
+      num: "03 / BRANDING & PACKAGING",
+      title: "Branding & Packaging Design",
+      subtitle: "Build a distinctive brand identity and cohesive packaging that makes your business or product memorable.",
+      services: [
+        { id: "b1", name: "Logo Design", price: 8000, checked: true },
+        { id: "b2", name: "Complete Brand Identity", price: 18000, checked: true },
+        { id: "b3", name: "Brand Guidelines", price: 6000, checked: false },
+        { id: "b4", name: "Brand Colour Palette & Typography", price: 4000, checked: false },
+        { id: "b5", name: "Business Card & Stationery Design", price: 3500, checked: false },
+        { id: "b6", name: "Product Packaging Design", price: 12000, checked: false },
+        { id: "b7", name: "Label Design", price: 5000, checked: false },
+        { id: "b8", name: "Packaging Artwork & Print-Ready Files", price: 4500, checked: false },
+        { id: "b9", name: "Product Mockups", price: 3500, checked: false },
+        { id: "b10", name: "Brand Refresh & Redesign", price: 14000, checked: false }
+      ]
+    }
+  };
 
-  toggle.addEventListener('click', () => {
-    yearly = !yearly;
-    toggle.classList.toggle('on', yearly);
-    monthlyLabel.classList.toggle('active', !yearly);
-    yearlyLabel.classList.toggle('active', yearly);
-    document.querySelectorAll('.plan-price').forEach(el => {
-      el.textContent = yearly ? el.dataset.yearly : el.dataset.monthly;
+  let activeProductKey = "social";
+
+  // Format INR Currency
+  function formatINR(val) {
+    return '₹' + Math.round(val).toLocaleString('en-IN');
+  }
+
+  // Switch between the 3 main products
+  function switchProduct(key) {
+    if (!productsData[key]) return;
+    activeProductKey = key;
+
+    // Update active tab UI
+    document.querySelectorAll('.product-tab').forEach(tab => {
+      tab.classList.toggle('active', tab.getAttribute('data-product') === key);
     });
-  });
 
-  // Plan selection
-  function selectPlan(name, price) {
-    document.getElementById('sel-plan-name').textContent = name + ' — ' + price;
-    document.getElementById('os-plan').textContent = name + ' Plan';
-    document.getElementById('os-price').textContent = price;
-    const num = parseInt(price.replace(/[₹,]/g,''));
-    const tax = Math.round(num * 0.18);
-    document.getElementById('os-tax').textContent = '₹' + tax.toLocaleString('en-IN');
-    document.getElementById('os-total').textContent = '₹' + (num + tax).toLocaleString('en-IN');
-    document.getElementById('pay-btn').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    // Update Header
+    const prod = productsData[key];
+    document.getElementById('current-prod-num').textContent = prod.num;
+    document.getElementById('current-prod-title').textContent = prod.title;
+    document.getElementById('current-prod-desc').textContent = prod.subtitle;
+
+    renderSubservices();
+    updateCalculations();
+  }
+
+  // Render Subservices Checklist
+  function renderSubservices() {
+    const prod = productsData[activeProductKey];
+    const container = document.getElementById('subservice-list-container');
+    container.innerHTML = '';
+
+    prod.services.forEach(svc => {
+      const card = document.createElement('div');
+      card.className = 'subservice-check-card' + (svc.checked ? ' checked' : '');
+      card.onclick = () => toggleSubservice(svc.id);
+
+      card.innerHTML = `
+        <div class="subservice-info-wrap">
+          <div class="custom-check-box"><i class="fa-solid fa-check"></i></div>
+          <span class="subservice-name">${svc.name}</span>
+        </div>
+        <span class="subservice-price-pill">+ ${formatINR(svc.price)}</span>
+      `;
+
+      container.appendChild(card);
+    });
+  }
+
+  // Toggle single subservice
+  function toggleSubservice(serviceId) {
+    const prod = productsData[activeProductKey];
+    const svc = prod.services.find(s => s.id === serviceId);
+    if (!svc) return;
+
+    svc.checked = !svc.checked;
+    renderSubservices();
+    updateCalculations();
+  }
+
+  // Select All or Clear All for active product
+  function selectAllCurrent(selectAll) {
+    const prod = productsData[activeProductKey];
+    prod.services.forEach(s => s.checked = selectAll);
+    renderSubservices();
+    updateCalculations();
+  }
+
+  // Update live totals, summary and counter
+  function updateCalculations() {
+    const prod = productsData[activeProductKey];
+    const selected = prod.services.filter(s => s.checked);
+    const count = selected.length;
+    const subtotal = selected.reduce((sum, s) => sum + s.price, 0);
+    const tax = Math.round(subtotal * 0.18);
+    const total = subtotal + tax;
+    const advance = Math.round(total * 0.5);
+
+    // Update customizer header
+    document.getElementById('sel-counter').textContent = `${count} of ${prod.services.length} Selected`;
+    document.getElementById('box-subtotal').textContent = formatINR(subtotal);
+
+    // Update active scope banner
+    document.getElementById('sel-plan-name').textContent = `${prod.title} (${count} sub-services)`;
+
+    // Update Order Summary
+    document.getElementById('os-plan').textContent = prod.title;
+    document.getElementById('os-count').textContent = count === 0 ? 'No sub-services selected' : `${count} sub-services customized`;
+    document.getElementById('os-price').textContent = formatINR(subtotal);
+    document.getElementById('os-tax').textContent = formatINR(tax);
+    document.getElementById('os-total').textContent = formatINR(total);
+    document.getElementById('os-advance').textContent = formatINR(advance);
+
+    // Update itemized list in summary
+    const listEl = document.getElementById('os-subservices-list');
+    listEl.innerHTML = '';
+    if (selected.length === 0) {
+      listEl.innerHTML = '<div style="font-size:0.8rem; color:var(--text-muted); font-style:italic; padding:6px 0;">Select sub-services above to calculate price.</div>';
+    } else {
+      selected.forEach(s => {
+        const item = document.createElement('div');
+        item.className = 'summary-item-pill';
+        item.innerHTML = `<span><i class="fa-solid fa-check text-lime" style="font-size:0.7em;margin-right:6px;"></i>${s.name}</span><span>${formatINR(s.price)}</span>`;
+        listEl.appendChild(item);
+      });
+    }
+
+    // Pre-select project type in form
+    const selEl = document.querySelector('select.form-input');
+    if (selEl) {
+      if (activeProductKey === 'social') selEl.value = 'Social Media & Ad Creatives';
+      if (activeProductKey === 'web') selEl.value = 'Website & Digital Design';
+      if (activeProductKey === 'brand') selEl.value = 'Branding & Packaging Design';
+    }
   }
 
   // Card number formatting
@@ -523,14 +775,30 @@
 
   // Payment handler
   function handlePayment() {
+    const prod = productsData[activeProductKey];
+    const selected = prod.services.filter(s => s.checked);
+    if (selected.length === 0) {
+      alert('Please select at least one sub-service to continue.');
+      document.getElementById('customizer-box').scrollIntoView({ behavior: 'smooth' });
+      return;
+    }
+
     const btn = document.getElementById('pay-btn');
-    btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Processing…';
+    btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Processing Booking…';
     btn.disabled = true;
     setTimeout(() => {
-      btn.innerHTML = '<i class="fa-solid fa-check-circle"></i> Payment Successful! We\'ll contact you within 24 hours.';
+      btn.innerHTML = '<i class="fa-solid fa-check-circle"></i> Booking Confirmed! We\'ll reach out within 24 hours.';
       btn.style.background = '#22c55e';
-    }, 2200);
+    }, 2000);
   }
+
+  // Initialize on load & support URL parameter
+  const urlParams = new URLSearchParams(window.location.search);
+  const pParam = urlParams.get('product');
+  if (pParam && productsData[pParam]) {
+    activeProductKey = pParam;
+  }
+  switchProduct(activeProductKey);
 </script>
 </body>
 </html>
