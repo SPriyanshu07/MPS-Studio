@@ -53,6 +53,56 @@
     }
     .service-tags { display: flex; flex-wrap: wrap; gap: var(--sp-2); }
 
+    /* Sub-Services Styling */
+    .subservices-section {
+      margin-top: var(--sp-6);
+      padding-top: var(--sp-5);
+      border-top: 1px solid var(--border);
+    }
+    .subservices-header {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--lime);
+      margin-bottom: var(--sp-4);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .subservices-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--sp-3);
+      margin-bottom: var(--sp-6);
+    }
+    .subservice-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--r-md);
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      transition: all var(--dur-fast) var(--ease);
+    }
+    .subservice-item:hover {
+      border-color: var(--lime);
+      transform: translateX(3px);
+      background: rgba(85, 119, 184, 0.12);
+    }
+    .subservice-item i {
+      color: var(--lime);
+      font-size: 0.78rem;
+      flex-shrink: 0;
+    }
+    @media (max-width: 640px) {
+      .subservices-grid { grid-template-columns: 1fr; }
+    }
+
     /* Feature bullet cards */
     .feature-mini {
       padding: var(--sp-5) var(--sp-6);
@@ -162,111 +212,224 @@
       <!-- Main content -->
       <div class="services-content">
 
-        <!-- Service 1: Brand Identity -->
+        <!-- Service 1: Branding & Visual Identity -->
         <div class="service-detail reveal">
           <div class="card card-glow service-detail-main">
             <div class="service-big-icon"><i class="fa-solid fa-palette"></i></div>
             <div>
-              <h2>Brand <span class="text-lime">Identity</span></h2>
-              <p>Your brand is more than a logo — it's the complete visual language of your business. We craft comprehensive brand identities that create instant recognition and build lasting trust with your audience.</p>
-              <div class="service-tags">
-                <span class="tag tag-lime">Logo Design</span>
-                <span class="tag tag-lime">Color Systems</span>
-                <span class="tag tag-lime">Typography</span>
-                <span class="tag tag-lime">Brand Guidelines</span>
-                <span class="tag tag-lime">Stationery</span>
+              <div class="section-label" style="margin-bottom:var(--sp-2);">01 / Core Capability</div>
+              <h2>Branding & Visual <span class="text-lime">Identity</span></h2>
+              <p>We craft distinctive, memorable brand identities that resonate with your target audience, establish immediate credibility, and command market leadership across every touchpoint.</p>
+              
+              <div class="subservices-section">
+                <div class="subservices-header"><i class="fa-solid fa-shapes"></i> Included Sub-Services</div>
+                <div class="subservices-grid">
+                  <div class="subservice-item"><i class="fa-solid fa-check"></i> Logo Design</div>
+                  <div class="subservice-item"><i class="fa-solid fa-check"></i> Brand Identity Systems</div>
+                  <div class="subservice-item"><i class="fa-solid fa-check"></i> Brand Guidelines</div>
+                  <div class="subservice-item"><i class="fa-solid fa-check"></i> Brand Strategy & Art Direction</div>
+                  <div class="subservice-item"><i class="fa-solid fa-check"></i> Rebranding & Brand Refresh</div>
+                  <div class="subservice-item"><i class="fa-solid fa-check"></i> Business Cards & Stationery</div>
+                </div>
               </div>
-              <a href="payment.html" class="btn btn-lime" style="margin-top:var(--sp-6);">Start Branding Project</a>
+
+              <div style="display:flex; gap:var(--sp-3); flex-wrap:wrap; margin-top:var(--sp-4);">
+                <a href="contact.html" class="btn btn-lime">Inquire for Branding</a>
+                <a href="portfolio.html" class="btn btn-outline">View Brand Case Studies</a>
+              </div>
             </div>
           </div>
           <div class="card feature-mini reveal d1">
-            <h4>🎯 Strategic Design</h4>
-            <p>We research your market and competitors before touching pen to paper.</p>
+            <h4>🎯 Strategic Positioning</h4>
+            <p>Deep market & competitor research to carve out an unmistakable visual identity.</p>
           </div>
           <div class="card feature-mini reveal d2">
-            <h4>♾️ Unlimited Revisions</h4>
-            <p>We iterate until you're 100% in love with the result.</p>
+            <h4>📦 Complete Brand Kit</h4>
+            <p>All vector sources (AI, EPS, SVG), color tokens & brand guideline manuals included.</p>
           </div>
         </div>
 
-        <!-- Service 2: UI/UX -->
+        <!-- Service 2: Graphic & Communication Design -->
         <div class="service-detail reveal">
           <div class="card card-glow service-detail-main">
-            <div class="service-big-icon"><i class="fa-solid fa-pen-nib"></i></div>
+            <div class="service-big-icon"><i class="fa-solid fa-layer-group"></i></div>
             <div>
-              <h2>UI/UX <span class="text-lime">Design</span></h2>
-              <p>We design digital experiences that users love and businesses profit from. Our human-centered approach ensures every interaction is intuitive, beautiful, and conversion-optimized.</p>
-              <div class="service-tags">
-                <span class="tag tag-lime">User Research</span>
-                <span class="tag tag-lime">Wireframing</span>
-                <span class="tag tag-lime">Prototyping</span>
-                <span class="tag tag-lime">Figma Design</span>
-                <span class="tag tag-lime">Design Systems</span>
+              <div class="section-label" style="margin-bottom:var(--sp-2);">02 / Core Capability</div>
+              <h2>Graphic & Communication <span class="text-lime">Design</span></h2>
+              <p>High-impact visual collateral designed to captivate attention, stop the scroll, and translate key marketing objectives into clear, persuasive visual communication.</p>
+              
+              <div class="subservices-section">
+                <div class="subservices-header"><i class="fa-solid fa-shapes"></i> Included Sub-Services</div>
+                <div class="subservices-grid">
+                  <div class="subservice-item"><i class="fa-solid fa-check"></i> Social Media Creatives</div>
+                  <div class="subservice-item"><i class="fa-solid fa-check"></i> Digital Ads & Campaigns</div>
+                  <div class="subservice-item"><i class="fa-solid fa-check"></i> Posters, Flyers & Brochures</div>
+                  <div class="subservice-item"><i class="fa-solid fa-check"></i> Editorial & Publication Design</div>
+                  <div class="subservice-item"><i class="fa-solid fa-check"></i> Infographics & Presentations</div>
+                  <div class="subservice-item"><i class="fa-solid fa-check"></i> Marketing Collateral</div>
+                </div>
               </div>
-              <a href="payment.html" class="btn btn-lime" style="margin-top:var(--sp-6);">Start UI/UX Project</a>
+
+              <div style="display:flex; gap:var(--sp-3); flex-wrap:wrap; margin-top:var(--sp-4);">
+                <a href="contact.html" class="btn btn-lime">Start Graphic Project</a>
+                <a href="portfolio.html" class="btn btn-outline">Explore Collateral</a>
+              </div>
             </div>
           </div>
           <div class="card feature-mini reveal d1">
-            <h4>📊 Data-Driven</h4>
-            <p>Every design decision is backed by user research and testing.</p>
+            <h4>📈 Conversion-Focused</h4>
+            <p>Engineered for high CTR on Instagram, LinkedIn, Meta Ads & print circulation.</p>
           </div>
           <div class="card feature-mini reveal d2">
-            <h4>🚀 Figma Handoff</h4>
-            <p>Developer-ready files with detailed specs and components.</p>
+            <h4>⚡ Rapid Delivery</h4>
+            <p>Fast turnarounds on marketing campaigns without ever sacrificing quality.</p>
           </div>
         </div>
 
-        <!-- Service 3: Web Design -->
+        <!-- Service 3: Web & Digital Design -->
         <div class="service-detail reveal">
           <div class="card card-glow service-detail-main">
-            <div class="service-big-icon"><i class="fa-solid fa-globe"></i></div>
+            <div class="service-big-icon"><i class="fa-solid fa-laptop-code"></i></div>
             <div>
-              <h2>Web <span class="text-lime">Design</span></h2>
-              <p>Websites that don't just look good — they work hard for your business. We create responsive, fast-loading, and SEO-friendly web experiences that convert visitors into customers.</p>
-              <div class="service-tags">
-                <span class="tag tag-lime">Landing Pages</span>
-                <span class="tag tag-lime">Portfolio Sites</span>
-                <span class="tag tag-lime">E-Commerce</span>
-                <span class="tag tag-lime">Responsive Design</span>
-                <span class="tag tag-lime">CMS Integration</span>
+              <div class="section-label" style="margin-bottom:var(--sp-2);">03 / Core Capability</div>
+              <h2>Web & Digital <span class="text-lime">Design</span></h2>
+              <p>Modern user interfaces and digital experiences that engage visitors and turn traffic into loyal clients. Built on solid user research and structured design systems in Figma.</p>
+              
+              <div class="subservices-section">
+                <div class="subservices-header"><i class="fa-solid fa-shapes"></i> Included Sub-Services</div>
+                <div class="subservices-grid">
+                  <div class="subservice-item"><i class="fa-solid fa-check"></i> Website UI Design</div>
+                  <div class="subservice-item"><i class="fa-solid fa-check"></i> Landing Page Design</div>
+                  <div class="subservice-item"><i class="fa-solid fa-check"></i> Website Layouts & Wireframes</div>
+                  <div class="subservice-item"><i class="fa-solid fa-check"></i> Responsive Web Design</div>
+                  <div class="subservice-item"><i class="fa-solid fa-check"></i> UI Design in Figma</div>
+                  <div class="subservice-item"><i class="fa-solid fa-check"></i> Website Visual Refresh</div>
+                </div>
               </div>
-              <a href="payment.html" class="btn btn-lime" style="margin-top:var(--sp-6);">Start Web Project</a>
+
+              <div style="display:flex; gap:var(--sp-3); flex-wrap:wrap; margin-top:var(--sp-4);">
+                <a href="contact.html" class="btn btn-lime">Start Web UI Design</a>
+                <a href="team-portfolio.html" class="btn btn-outline">View UI Showcase</a>
+              </div>
             </div>
           </div>
           <div class="card feature-mini reveal d1">
-            <h4>📱 Mobile-First</h4>
-            <p>Every design starts with mobile and scales beautifully to desktop.</p>
+            <h4>📱 Fully Responsive</h4>
+            <p>Flawless experience across mobile, tablet, laptop, and ultra-wide screens.</p>
           </div>
           <div class="card feature-mini reveal d2">
-            <h4>⚡ Fast & Optimized</h4>
-            <p>Performance-optimized pages that score 90+ on PageSpeed.</p>
+            <h4>🚀 Figma Auto-Layout</h4>
+            <p>Developer-ready component systems with clear style guides and assets.</p>
           </div>
         </div>
 
-        <!-- Service 4: Motion -->
+        <!-- Service 4: Motion Graphics & Video -->
         <div class="service-detail reveal">
           <div class="card card-glow service-detail-main">
             <div class="service-big-icon"><i class="fa-solid fa-film"></i></div>
             <div>
-              <h2>Motion <span class="text-lime">Graphics</span></h2>
-              <p>Static design tells a story — motion design makes it unforgettable. We create captivating animations, explainer videos, and brand motion content that captivate and convert.</p>
-              <div class="service-tags">
-                <span class="tag tag-lime">Brand Animations</span>
-                <span class="tag tag-lime">Explainer Videos</span>
-                <span class="tag tag-lime">Logo Animation</span>
-                <span class="tag tag-lime">Social Reels</span>
-                <span class="tag tag-lime">After Effects</span>
+              <div class="section-label" style="margin-bottom:var(--sp-2);">04 / Core Capability</div>
+              <h2>Motion Graphics & <span class="text-lime">Video</span></h2>
+              <p>Movement brings static brands alive. We produce captivating 2D animations, motion posters, and promotional video edits that command attention across modern digital channels.</p>
+              
+              <div class="subservices-section">
+                <div class="subservices-header"><i class="fa-solid fa-shapes"></i> Included Sub-Services</div>
+                <div class="subservices-grid">
+                  <div class="subservice-item"><i class="fa-solid fa-check"></i> Logo Animation</div>
+                  <div class="subservice-item"><i class="fa-solid fa-check"></i> Kinetic Typography</div>
+                  <div class="subservice-item"><i class="fa-solid fa-check"></i> Social Media Motion Design</div>
+                  <div class="subservice-item"><i class="fa-solid fa-check"></i> Promotional Videos</div>
+                  <div class="subservice-item"><i class="fa-solid fa-check"></i> Animated Ads</div>
+                  <div class="subservice-item"><i class="fa-solid fa-check"></i> Video Editing</div>
+                </div>
               </div>
-              <a href="payment.html" class="btn btn-lime" style="margin-top:var(--sp-6);">Start Motion Project</a>
+
+              <div style="display:flex; gap:var(--sp-3); flex-wrap:wrap; margin-top:var(--sp-4);">
+                <a href="contact.html" class="btn btn-lime">Start Motion Project</a>
+                <a href="team-portfolio.html" class="btn btn-outline">See Motion Reels</a>
+              </div>
             </div>
           </div>
           <div class="card feature-mini reveal d1">
-            <h4>🎬 Cinematic Quality</h4>
-            <p>Hollywood-grade motion techniques adapted for brand storytelling.</p>
+            <h4>🎬 Fluid Animation</h4>
+            <p>Paced timing, sound design synchronization, and color grading included.</p>
           </div>
           <div class="card feature-mini reveal d2">
-            <h4>🔄 All Formats</h4>
-            <p>Delivered in MP4, GIF, WebM — ready for any platform.</p>
+            <h4>🔄 Universal Formats</h4>
+            <p>Rendered for 9:16 vertical reels, 16:9 widescreen, and 1:1 social square feeds.</p>
+          </div>
+        </div>
+
+        <!-- Service 5: Packaging & Print Design -->
+        <div class="service-detail reveal">
+          <div class="card card-glow service-detail-main">
+            <div class="service-big-icon"><i class="fa-solid fa-box-open"></i></div>
+            <div>
+              <div class="section-label" style="margin-bottom:var(--sp-2);">05 / Core Capability</div>
+              <h2>Packaging & Print <span class="text-lime">Design</span></h2>
+              <p>Tangible, tactile packaging solutions that stand out on retail shelves and create unforgettable unboxing experiences for customers and e-commerce shoppers.</p>
+              
+              <div class="subservices-section">
+                <div class="subservices-header"><i class="fa-solid fa-shapes"></i> Included Sub-Services</div>
+                <div class="subservices-grid">
+                  <div class="subservice-item"><i class="fa-solid fa-check"></i> Product Packaging</div>
+                  <div class="subservice-item"><i class="fa-solid fa-check"></i> Label Design</div>
+                  <div class="subservice-item"><i class="fa-solid fa-check"></i> Brochures & Catalogues</div>
+                  <div class="subservice-item"><i class="fa-solid fa-check"></i> Print-Ready Artwork</div>
+                  <div class="subservice-item"><i class="fa-solid fa-check"></i> Product Mockups</div>
+                  <div class="subservice-item"><i class="fa-solid fa-check"></i> Packaging Redesign</div>
+                </div>
+              </div>
+
+              <div style="display:flex; gap:var(--sp-3); flex-wrap:wrap; margin-top:var(--sp-4);">
+                <a href="contact.html" class="btn btn-lime">Start Packaging Project</a>
+                <a href="portfolio.html" class="btn btn-outline">View Print Work</a>
+              </div>
+            </div>
+          </div>
+          <div class="card feature-mini reveal d1">
+            <h4>🖨️ Production Ready</h4>
+            <p>Precise dielines, CMYK color profiles, Pantone matching & bleed margins.</p>
+          </div>
+          <div class="card feature-mini reveal d2">
+            <h4>✨ 3D Photorealistic Previews</h4>
+            <p>Realistic 3D renders for pitch decks, e-commerce listings, and product marketing.</p>
+          </div>
+        </div>
+
+        <!-- Service 6: Creative Direction -->
+        <div class="service-detail reveal">
+          <div class="card card-glow service-detail-main">
+            <div class="service-big-icon"><i class="fa-solid fa-compass-drafting"></i></div>
+            <div>
+              <div class="section-label" style="margin-bottom:var(--sp-2);">06 / Core Capability</div>
+              <h2>Creative <span class="text-lime">Direction</span></h2>
+              <p>Comprehensive visual guidance and strategic design leadership to align your campaign narratives, maintain cross-platform brand integrity, and steer creative teams toward excellence.</p>
+              
+              <div class="subservices-section">
+                <div class="subservices-header"><i class="fa-solid fa-shapes"></i> Included Sub-Services</div>
+                <div class="subservices-grid">
+                  <div class="subservice-item"><i class="fa-solid fa-check"></i> Visual Concept Development</div>
+                  <div class="subservice-item"><i class="fa-solid fa-check"></i> Campaign Art Direction</div>
+                  <div class="subservice-item"><i class="fa-solid fa-check"></i> Moodboards & Design Systems</div>
+                  <div class="subservice-item"><i class="fa-solid fa-check"></i> Brand Consistency</div>
+                  <div class="subservice-item"><i class="fa-solid fa-check"></i> Creative Consultation</div>
+                </div>
+              </div>
+
+              <div style="display:flex; gap:var(--sp-3); flex-wrap:wrap; margin-top:var(--sp-4);">
+                <a href="contact.html" class="btn btn-lime">Book Consultation</a>
+                <a href="about.html" class="btn btn-outline">Meet the Team</a>
+              </div>
+            </div>
+          </div>
+          <div class="card feature-mini reveal d1">
+            <h4>🧭 Cohesive Vision</h4>
+            <p>Unifying product design, marketing creatives, and brand messaging seamlessly.</p>
+          </div>
+          <div class="card feature-mini reveal d2">
+            <h4>💡 Strategic Advisory</h4>
+            <p>Hands-on design leadership for founders, marketing directors & internal teams.</p>
           </div>
         </div>
 
@@ -396,11 +559,12 @@
       <div>
         <div class="footer-col-title">Services</div>
         <ul class="footer-links">
-          <li><a href="#">Brand Identity</a></li>
-          <li><a href="#">UI/UX Design</a></li>
-          <li><a href="#">Web Design</a></li>
-          <li><a href="#">Motion Graphics</a></li>
-          <li><a href="#">Print Design</a></li>
+          <li><a href="services.html">Branding & Identity</a></li>
+          <li><a href="services.html">Graphic & Communication</a></li>
+          <li><a href="services.html">Web & Digital Design</a></li>
+          <li><a href="services.html">Motion Graphics & Video</a></li>
+          <li><a href="services.html">Packaging & Print</a></li>
+          <li><a href="services.html">Creative Direction</a></li>
         </ul>
       </div>
       <div>
@@ -430,10 +594,10 @@
   const svcBubble = { show() {}, hide() {} }; // use direct typing
 
   const msgs = [
-    "Each service is crafted with strategy and passion! 🎨",
-    "We've completed 20+ projects for happy clients.",
+    "Welcome to MPS Studio Services! 6 core disciplines to elevate your brand. 🎨",
+    "From Logo Design to Creative Direction, every sub-service is tailored to perfection.",
+    "20+ projects delivered for happy clients.",
     "Not sure which service fits? Let's chat — it's free! 💬",
-    "Our process is collaborative — you're always in the loop.",
   ];
   let i = 0;
   function cycleMsgs() {
