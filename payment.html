@@ -829,37 +829,15 @@
     const advance = Math.round(total * 0.5);
 
     const originalBtnHtml = btn.innerHTML;
-    btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Submitting Booking to hello@mpsstudio.in…';
+    btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Submitting Booking…';
     btn.disabled = true;
     statusDiv.style.display = 'none';
 
-    // Auto-reply message sent to client's email
-    const autoReplyMessage = `Dear ${name},
-
-Thank you for booking your project with MPS Studio! We have successfully received your project scope and order details:
-
-• Product / Category: ${prod.title}
-• Selected Sub-services:
-${selected.map(s => '  - ' + s.name + ' (' + formatINR(s.price) + ')').join('\n')}
-
-• Subtotal: ${formatINR(subtotal)}
-• GST (18%): ${formatINR(tax)}
-• Total Project Value: ${formatINR(total)}
-• 50% Advance to Initiate: ${formatINR(advance)}
-
-${descEl.value.trim() ? '• Project Notes: ' + descEl.value.trim() + '\n' : ''}
-Our Creative Director, Priyanshu Singh, and the MPS Studio team will review your project brief and contact you within 24 hours to schedule your strategy kickoff call and finalize payment and onboarding.
-
-If you have any reference materials, moodboards, or questions in the meantime, reply directly to this email or reach us on WhatsApp.
-
-Warm regards,
-Priyanshu Singh & The MPS Studio Team
-Email: hello@mpsstudio.in
-Website: https://mpsstudio.in
-Mumbai, Maharashtra, India`;
-
     const payload = {
-      client_name: name,
+      access_key: '8214a3dc-2501-4f24-9989-286d5b637f12',
+      from_name: 'MPS Studio Booking Engine',
+      subject: `New Project Booking: ${prod.title} — ${name}`,
+      name: name,
       email: email,
       phone: phone,
       company: companyEl.value.trim() || 'Not specified',
@@ -871,15 +849,11 @@ Mumbai, Maharashtra, India`;
       tax_gst: formatINR(tax),
       total_amount: formatINR(total),
       advance_amount_50pct: formatINR(advance),
-      project_description: descEl.value.trim() || 'None provided',
-      _subject: `New Project Booking: ${prod.title} — ${name}`,
-      _autoresponse: autoReplyMessage,
-      _template: 'table',
-      _captcha: 'false'
+      project_description: descEl.value.trim() || 'None provided'
     };
 
     try {
-      const res = await fetch('https://formsubmit.co/ajax/hello@mpsstudio.in', {
+      const res = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -890,7 +864,7 @@ Mumbai, Maharashtra, India`;
 
       const data = await res.json();
 
-      if (res.ok || data.success === 'true' || data.success === true) {
+      if (res.status === 200 && data.success) {
         statusDiv.style.display = 'block';
         statusDiv.style.background = 'rgba(34, 197, 94, 0.12)';
         statusDiv.style.border = '1px solid rgba(34, 197, 94, 0.4)';
@@ -900,9 +874,8 @@ Mumbai, Maharashtra, India`;
             <i class="fa-solid fa-circle-check"></i> Booking Confirmed! Thank you, ${name}.
           </div>
           <div style="color:var(--text-secondary); font-size:0.85rem; line-height:1.6;">
-            Your project order has been dispatched directly to <strong>hello@mpsstudio.in</strong>.<br/>
-            An instant confirmation auto-reply has been sent to <strong>${email}</strong>.<br/>
-            Our team will reach out within 24 hours to schedule your strategy call and initiate your project!
+            Your project order and scope have been received successfully.<br/>
+            Our team will reach out to <strong>${email}</strong> within 24 hours to schedule your strategy call and initiate your project!
           </div>`;
         btn.innerHTML = '<i class="fa-solid fa-check"></i> Project Scope Booked!';
         btn.style.background = '#22c55e';
@@ -919,10 +892,10 @@ Mumbai, Maharashtra, India`;
       statusDiv.style.color = '#f87171';
       statusDiv.innerHTML = `
         <div style="font-weight:700; margin-bottom:4px;">
-          <i class="fa-solid fa-triangle-exclamation"></i> Submission Notice
+          <i class="fa-solid fa-triangle-exclamation"></i> Submission Error
         </div>
         <div style="font-size:0.85rem; color:var(--text-secondary);">
-          If this is the first submission to <strong>hello@mpsstudio.in</strong>, FormSubmit requires a one-time email activation link sent to your inbox. You can also email your project scope directly to <a href="mailto:hello@mpsstudio.in" style="color:var(--lime); text-decoration:underline; font-weight:600;">hello@mpsstudio.in</a>.
+          ${err.message || 'Unable to submit your booking at this moment.'} You can also email your project scope directly to <a href="mailto:hello@mpsstudio.in" style="color:var(--lime); text-decoration:underline; font-weight:600;">hello@mpsstudio.in</a>.
         </div>`;
       btn.disabled = false;
       btn.innerHTML = originalBtnHtml;
