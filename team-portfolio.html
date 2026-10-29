@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Priyanshu Singh — Team Portfolio — MPS Studio</title>
+  <meta name="description" content="Explore Priyanshu Singh's personal portfolio — Senior Visual / Graphic Designer (Brand, Digital & Motion) with 5+ years of experience across branding, digital campaigns, and motion graphics." />
+
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/character.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <style>
+    /* ── TEAM / PERSONAL PORTFOLIO STYLES ── */
+    .port-layout { display: flex; gap: var(--sp-12); align-items: flex-start; }
+    .port-content { flex: 1; min-width: 0; }
+
+    /* Profile Header Card */
+    .profile-hero-card {
+      background: linear-gradient(135deg, rgba(31,31,31,0.95), rgba(23,23,23,0.98));
+      border: 1px solid var(--border-accent);
+      border-radius: var(--r-xl);
+      padding: var(--sp-8);
+      margin-bottom: var(--sp-10);
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--sh-md);
+    }
+    .profile-hero-card::before {
+      content: '';
+      position: absolute;
+      top: 0; right: 0;
+      width: 280px; height: 280px;
+      background: radial-gradient(circle, rgba(85,119,184,0.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .profile-header-flex {
+      display: flex;
+      gap: var(--sp-8);
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .profile-avatar-wrap {
+      position: relative;
+      flex-shrink: 0;
+    }
+    .profile-avatar-img {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid var(--lime);
+      box-shadow: 0 0 24px rgba(85,119,184,0.35);
+      background: var(--surface-2);
+    }
+    .profile-badge {
+      position: absolute;
+      bottom: 4px;
+      right: 4px;
+      background: var(--lime);
+      color: #fff;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      border: 2px solid var(--black);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+    }
+    .profile-details { flex: 1; min-width: 280px; }
+    .profile-role-tag {
+      display: inline-block;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--lime);
+      margin-bottom: 6px;
+    }
+    .profile-title {
+      font-size: clamp(1.8rem, 4vw, 2.4rem);
+      margin-bottom: 4px;
+    }
+    .profile-subtitle {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      font-weight: 500;
+      margin-bottom: var(--sp-4);
+    }
+    .profile-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--sp-3);
+      margin-bottom: var(--sp-5);
+    }
+    .profile-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.8rem;
+      padding: 6px 14px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--r-full);
+      color: var(--text-primary);
+    }
+    .profile-chip i { color: var(--lime); }
+    .profile-actions {
+      display: flex;
+      gap: var(--sp-3);
+      flex-wrap: wrap;
+    }
+
+    /* Skills Grid */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--sp-4);
+      margin-bottom: var(--sp-12);
+    }
+    .skill-card {
+      background: var(--surface-1);
+      border: 1px solid var(--border);
+      border-radius: var(--r-md);
+      padding: var(--sp-5);
+      transition: all var(--dur) var(--ease);
+    }
+    .skill-card:hover {
+      border-color: var(--border-accent);
+      transform: translateY(-2px);
+    }
+    .skill-name {
+      display: flex;
+      justify-content: space-between;
+      font-weight: 700;
+      font-size: 0.9rem;
+      margin-bottom: 8px;
+    }
+    .skill-bar-wrap {
+      width: 100%;
+      height: 6px;
+      background: var(--surface-3);
+      border-radius: var(--r-full);
+      overflow: hidden;
+    }
+    .skill-bar-fill {
+      height: 100%;
+      background: var(--grad-lime);
+      border-radius: var(--r-full);
+    }
+
+    /* Tools Pill Flex */
+    .tool-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--sp-3);
+      margin-bottom: var(--sp-10);
+    }
+    .tool-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 18px;
+      background: var(--surface-1);
+      border: 1px solid var(--border);
+      border-radius: var(--r-md);
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      transition: all var(--dur) var(--ease);
+    }
+    .tool-pill:hover {
+      border-color: var(--lime);
+      background: var(--surface-2);
+      color: var(--lime);
+      transform: translateY(-2px);
+    }
+
+    /* Detailed Experience Timeline */
+    .resume-timeline {
+      position: relative;
+      padding-left: 28px;
+      margin-bottom: var(--sp-12);
+    }
+    .resume-timeline::before {
+      content: '';
+      position: absolute;
+      left: 6px;
+      top: 6px;
+      bottom: 12px;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--lime) 0%, rgba(85,119,184,0.1) 100%);
+    }
+    .resume-item {
+      position: relative;
+      margin-bottom: var(--sp-8);
+      background: var(--surface-1);
+      border: 1px solid var(--border);
+      border-radius: var(--r-md);
+      padding: var(--sp-6);
+      transition: all var(--dur) var(--ease);
+    }
+    .resume-item:hover {
+      border-color: var(--border-accent);
+      transform: translateX(4px);
+      box-shadow: var(--sh-sm);
+    }
+    .resume-dot {
+      position: absolute;
+      left: -28px;
+      top: 20px;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--lime);
+      border: 3px solid var(--black);
+      box-shadow: 0 0 10px var(--lime-glow);
+    }
+    .resume-dates {
+      font-size: 0.74rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--lime);
+      margin-bottom: 4px;
+    }
+    .resume-role-company {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: var(--sp-3);
+    }
+    .resume-role-company h3 {
+      font-size: 1.15rem;
+      margin: 0;
+    }
+    .resume-company-tag {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      background: var(--surface-2);
+      padding: 3px 10px;
+      border-radius: var(--r-sm);
+      border: 1px solid var(--border);
+    }
+    .resume-bullets {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .resume-bullets li {
+      position: relative;
+      padding-left: 18px;
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 6px;
+    }
+    .resume-bullets li::before {
+      content: '▹';
+      position: absolute;
+      left: 0;
+      top: 0;
+      color: var(--lime);
+      font-weight: 700;
+    }
+
+    /* Education Card */
+    .edu-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--sp-4);
+      margin-bottom: var(--sp-12);
+    }
+    .edu-card {
+      background: var(--surface-1);
+      border: 1px solid var(--border);
+      border-radius: var(--r-md);
+      padding: var(--sp-6);
+    }
+    .edu-year {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--lime);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .edu-card h4 {
+      font-size: 1rem;
+      margin-bottom: 4px;
+    }
+    .edu-card p {
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    /* Filter tabs */
+    .filter-bar {
+      display: flex; gap: var(--sp-2); flex-wrap: wrap;
+      margin-bottom: var(--sp-8);
+    }
+    .filter-btn {
+      padding: 8px 20px;
+      border-radius: var(--r-full);
+      font-size: 0.82rem; font-weight: 700;
+      background: var(--surface-1);
+      color: var(--text-secondary);
+      border: 1px solid var(--border);
+      cursor: pointer;
+      transition: all var(--dur) var(--ease);
+    }
+    .filter-btn.active, .filter-btn:hover {
+      background: var(--lime);
+      color: #fff;
+      border-color: var(--lime);
+    }
+
+    /* Portfolio Grid */
+    .portfolio-masonry {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--sp-4);
+      margin-bottom: var(--sp-12);
+    }
+    .portfolio-item {
+      border-radius: var(--r-lg);
+      overflow: hidden;
+      cursor: pointer;
+      position: relative;
+      transition: transform var(--dur) var(--ease), opacity var(--dur) var(--ease);
+    }
+    .portfolio-item.tall { grid-row: span 2; }
+    .portfolio-item-inner {
+      height: 100%; min-height: 220px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 3.5rem;
+      position: relative;
+      transition: transform var(--dur-slow) var(--ease);
+    }
+    .portfolio-item:hover .portfolio-item-inner { transform: scale(1.05); }
+
+    .portfolio-item-info {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(23,23,23,0.95) 0%, rgba(23,23,23,0.3) 50%, transparent 100%);
+      display: flex; flex-direction: column; justify-content: flex-end;
+      padding: var(--sp-5);
+      opacity: 0; transition: opacity var(--dur) var(--ease);
+    }
+    .portfolio-item:hover .portfolio-item-info { opacity: 1; }
+    .portfolio-item-info h3 { font-size: 1rem; margin-bottom: 4px; }
+    .portfolio-item-info .pi-cat {
+      font-size: 0.72rem; font-weight: 700;
+      letter-spacing: 0.08em; text-transform: uppercase; color: var(--lime);
+      margin-bottom: var(--sp-3);
+    }
+    .pi-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 0.8rem; font-weight: 700; color: var(--lime);
+    }
+
+    @media (max-width: 1024px) {
+      .port-layout { flex-direction: column; }
+      .char-side-panel { width: 100%; position: static; }
+      .char-side-canvas-wrap { width: 100%; height: 280px; }
+      .portfolio-masonry { grid-template-columns: 1fr; }
+      .portfolio-item.tall { grid-row: auto; }
+      .skills-grid { grid-template-columns: 1fr; }
+      .edu-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<div class="noise-overlay" aria-hidden="true"></div>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><img src="images/mps-logo.png" alt="MPS Studio" class="site-logo-img" /></a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="index.html"     class="nav-link">Home</a></li>
+      <li><a href="services.html"  class="nav-link">Services</a></li>
+      <li class="nav-item-dropdown">
+        <a href="portfolio.html" class="nav-link active">Portfolio <i class="fa-solid fa-chevron-down" style="font-size:0.7em;margin-left:4px;"></i></a>
+        <div class="nav-dropdown-menu">
+          <a href="portfolio.html" class="nav-dropdown-item"><i class="fa-solid fa-building"></i> Company Portfolio</a>
+          <a href="team-portfolio.html" class="nav-dropdown-item active"><i class="fa-solid fa-user-tie"></i> Team Portfolio (Priyanshu)</a>
+        </div>
+      </li>
+      <li><a href="about.html"     class="nav-link">About</a></li>
+      <li><a href="contact.html"   class="nav-link">Contact</a></li>
+      <li><a href="payment.html"   class="nav-cta">Get Started</a></li>
+    </ul>
+    <button class="nav-burger" id="nav-burger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <div class="container">
+    <div class="section-label reveal">Our Team · Personal Portfolio</div>
+    <h1 class="reveal d1">Priyanshu <span class="text-lime">Singh</span></h1>
+    <p class="reveal d2">Senior Visual / Graphic Designer (Brand, Digital & Motion) with 5+ years translating business goals into evocative visual communications.</p>
+    
+    <!-- Portfolio Switcher -->
+    <div class="portfolio-switcher reveal d3">
+      <a href="portfolio.html" class="portfolio-switch-tab"><i class="fa-solid fa-building"></i> Company Portfolio</a>
+      <a href="team-portfolio.html" class="portfolio-switch-tab active"><i class="fa-solid fa-user-tie"></i> Our Team: Priyanshu Singh</a>
+    </div>
+  </div>
+</section>
+
+<!-- MAIN CONTENT -->
+<section class="section">
+  <div class="container">
+    <div class="port-layout">
+
+      <!-- Left: Profile & Career Showcase -->
+      <div class="port-content">
+
+        <!-- Profile Hero Card -->
+        <div class="profile-hero-card reveal">
+          <div class="profile-header-flex">
+            <div class="profile-avatar-wrap">
+              <img src="images/priyanshu-singh.png" alt="Priyanshu Singh" class="profile-avatar-img" />
+              <div class="profile-badge" title="Verified Senior Designer"><i class="fa-solid fa-check"></i></div>
+            </div>
+            <div class="profile-details">
+              <span class="profile-role-tag">MPS Studio · Lead Creative</span>
+              <h2 class="profile-title">Priyanshu Singh</h2>
+              <div class="profile-subtitle">Senior Visual / Graphic Designer (Brand, Digital & Motion)</div>
+              
+              <div class="profile-chips">
+                <span class="profile-chip"><i class="fa-solid fa-briefcase"></i> 5+ Years Experience</span>
+                <span class="profile-chip"><i class="fa-solid fa-location-dot"></i> India · Open to Relocation</span>
+                <span class="profile-chip"><i class="fa-solid fa-language"></i> English & Hindi</span>
+              </div>
+
+              <div class="profile-actions">
+                <a href="https://www.behance.net/princesingh174" target="_blank" rel="noopener" class="btn btn-sm btn-lime">
+                  <i class="fa-brands fa-behance"></i> Behance Portfolio
+                </a>
+                <a href="mailto:spriyanshuajay25@gmail.com" class="btn btn-sm btn-dark">
+                  <i class="fa-solid fa-envelope"></i> spriyanshuajay25@gmail.com
+                </a>
+                <a href="tel:8888578111" class="btn btn-sm btn-outline">
+                  <i class="fa-solid fa-phone"></i> +91 8888578111
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- About Summary -->
+        <div class="card reveal" style="margin-bottom:var(--sp-10);">
+          <div class="section-label" style="margin-bottom:var(--sp-4);">Summary & Philosophy</div>
+          <p style="font-size:1.05rem; line-height:1.8; color:var(--text-primary); margin-bottom:var(--sp-4);">
+            Senior Visual Designer with <strong>5+ years of experience</strong> in branding, digital campaigns, social media creatives, and motion graphics. Skilled in translating business and marketing goals into clear visual communication, leading design execution, and collaborating with cross-functional teams. Experienced in working independently and delivering consistent, high-quality results across digital and offline platforms.
+          </p>
+          <div style="display:flex; gap:var(--sp-3); flex-wrap:wrap;">
+            <span class="tag tag-lime">Visual Storytelling</span>
+            <span class="tag tag-lime">Brand Identity</span>
+            <span class="tag tag-lime">Motion Graphics</span>
+            <span class="tag tag-lime">Performance Ad Creatives</span>
+            <span class="tag tag-stone">Creative Mentoring</span>
+          </div>
+        </div>
+
+        <!-- Design Tools & Hard Skills -->
+        <div class="reveal" style="margin-bottom:var(--sp-10);">
+          <div class="section-label" style="margin-bottom:var(--sp-4);">Toolbox & Mastery</div>
+          <h2 style="font-size:1.6rem; margin-bottom:var(--sp-6);">Software & Craft</h2>
+          
+          <div class="tool-pills">
+            <div class="tool-pill"><i class="fa-solid fa-pen-nib"></i> Adobe Photoshop</div>
+            <div class="tool-pill"><i class="fa-solid fa-bezier-curve"></i> Adobe Illustrator</div>
+            <div class="tool-pill"><i class="fa-solid fa-film"></i> Adobe After Effects</div>
+            <div class="tool-pill"><i class="fa-solid fa-video"></i> Adobe Premiere Pro</div>
+            <div class="tool-pill"><i class="fa-brands fa-figma"></i> Figma</div>
+          </div>
+
+          <div class="skills-grid">
+            <div class="skill-card">
+              <div class="skill-name"><span>Brand Identity & Visual Systems</span><span class="text-lime">95%</span></div>
+              <div class="skill-bar-wrap"><div class="skill-bar-fill" style="width:95%;"></div></div>
+            </div>
+            <div class="skill-card">
+              <div class="skill-name"><span>Social Media & Digital Campaigns</span><span class="text-lime">95%</span></div>
+              <div class="skill-bar-wrap"><div class="skill-bar-fill" style="width:95%;"></div></div>
+            </div>
+            <div class="skill-card">
+              <div class="skill-name"><span>Motion Graphics & Video Editing</span><span class="text-lime">90%</span></div>
+              <div class="skill-bar-wrap"><div class="skill-bar-fill" style="width:90%;"></div></div>
+            </div>
+            <div class="skill-card">
+              <div class="skill-name"><span>Campaign Concept Development</span><span class="text-lime">92%</span></div>
+              <div class="skill-bar-wrap"><div class="skill-bar-fill" style="width:92%;"></div></div>
+            </div>
+            <div class="skill-card">
+              <div class="skill-name"><span>Website & Digital Banners</span><span class="text-lime">90%</span></div>
+              <div class="skill-bar-wrap"><div class="skill-bar-fill" style="width:90%;"></div></div>
+            </div>
+            <div class="skill-card">
+              <div class="skill-name"><span>Print Design (Brochures & Hoardings)</span><span class="text-lime">88%</span></div>
+              <div class="skill-bar-wrap"><div class="skill-bar-fill" style="width:88%;"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Work Experience Timeline -->
+        <div class="reveal" style="margin-bottom:var(--sp-12);">
+          <div class="section-label" style="margin-bottom:var(--sp-4);">Career Trajectory</div>
+          <h2 style="font-size:1.6rem; margin-bottom:var(--sp-6);">Professional Experience (5+ Years)</h2>
+
+          <div class="resume-timeline">
+
+            <!-- Item 1 -->
+            <div class="resume-item">
+              <div class="resume-dot"></div>
+              <div class="resume-dates">05/2025 – 09/2026</div>
+              <div class="resume-role-company">
+                <h3>Graphic Designer</h3>
+                <span class="resume-company-tag">Techeon IT</span>
+              </div>
+              <ul class="resume-bullets">
+                <li>Led design execution for social media campaigns and brand communications aligned with marketing goals.</li>
+                <li>Created campaign decks, key visuals, and digital assets for internal and client-facing use.</li>
+                <li>Produced static and motion creatives optimized for social media platforms.</li>
+                <li>Collaborated with stakeholders to translate business requirements into clear visual solutions.</li>
+              </ul>
+            </div>
+
+            <!-- Item 2 -->
+            <div class="resume-item">
+              <div class="resume-dot"></div>
+              <div class="resume-dates">02/2024 – 05/2025</div>
+              <div class="resume-role-company">
+                <h3>Graphic Designer</h3>
+                <span class="resume-company-tag">Insignia Consultancy Solution</span>
+              </div>
+              <ul class="resume-bullets">
+                <li>Led end-to-end design for social media, e-commerce, and website creatives, supporting marketing and brand campaigns.</li>
+                <li>Designed motion graphics, reels, and video creatives used in paid ads and digital promotions.</li>
+                <li>Developed campaign concepts and key visuals to strengthen brand identity and consistency.</li>
+                <li>Created pitch decks and presentations for client and internal proposals.</li>
+                <li>Mentored junior designers and reviewed outputs to maintain quality standards.</li>
+              </ul>
+            </div>
+
+            <!-- Item 3 -->
+            <div class="resume-item">
+              <div class="resume-dot"></div>
+              <div class="resume-dates">01/2023 – 01/2024</div>
+              <div class="resume-role-company">
+                <h3>Graphic Designer</h3>
+                <span class="resume-company-tag">Sima Enterprises</span>
+              </div>
+              <ul class="resume-bullets">
+                <li>Worked as an in-house designer handling both digital and print requirements for a single brand.</li>
+                <li>Designed banners, brochures, posters, and print materials for promotions and sales.</li>
+                <li>Created social media creatives to maintain consistent online brand presence.</li>
+                <li>Ensured visual consistency across offline and online assets in a fast-paced environment.</li>
+              </ul>
+            </div>
+
+            <!-- Item 4 -->
+            <div class="resume-item">
+              <div class="resume-dot"></div>
+              <div class="resume-dates">04/2022 – 12/2022</div>
+              <div class="resume-role-company">
+                <h3>Graphic Designer</h3>
+                <span class="resume-company-tag">Regradute</span>
+              </div>
+              <ul class="resume-bullets">
+                <li>Designed social media creatives and campaign visuals for multiple client brands across industries.</li>
+                <li>Created logos, visiting cards, packaging designs, and website banners as part of complete branding solutions.</li>
+                <li>Supported end-to-end branding requirements from concept development to final delivery.</li>
+              </ul>
+            </div>
+
+            <!-- Item 5 -->
+            <div class="resume-item">
+              <div class="resume-dot"></div>
+              <div class="resume-dates">10/2020 – 03/2022</div>
+              <div class="resume-role-company">
+                <h3>Motion Graphic Designer</h3>
+                <span class="resume-company-tag">Eternal Happiness Cards</span>
+              </div>
+              <ul class="resume-bullets">
+                <li>Produced 2D animations, motion graphics, and marketing videos for branding and promotional campaigns.</li>
+                <li>Developed creative concepts aligned with brand guidelines and campaign objectives.</li>
+                <li>Enhanced videos through editing, sound design, and basic color grading to improve visual quality.</li>
+                <li>Presented concepts clearly and refined creatives based on internal and client feedback.</li>
+              </ul>
+            </div>
+
+            <!-- Item 6 -->
+            <div class="resume-item">
+              <div class="resume-dot"></div>
+              <div class="resume-dates">03/2020 – 09/2020</div>
+              <div class="resume-role-company">
+                <h3>Graphic Designer</h3>
+                <span class="resume-company-tag">Optician Guru</span>
+              </div>
+              <ul class="resume-bullets">
+                <li>Designed social media creatives and campaign artwork to support digital marketing efforts.</li>
+                <li>Created logos, visiting cards, and branding assets for business promotion and brand identity.</li>
+              </ul>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Education & Academic Foundation -->
+        <div class="reveal" style="margin-bottom:var(--sp-12);">
+          <div class="section-label" style="margin-bottom:var(--sp-4);">Academic Background</div>
+          <h2 style="font-size:1.6rem; margin-bottom:var(--sp-6);">Education & Continuous Learning</h2>
+          
+          <div class="edu-grid">
+            <div class="edu-card">
+              <div class="edu-year">2026 – Present</div>
+              <h4>Performance Marketing</h4>
+              <p style="color:var(--lime); font-weight:600; margin-bottom:4px;">TuteDude</p>
+              <p>Specializing in paid performance ad strategies, conversion creatives, and analytics-driven visuals.</p>
+            </div>
+            <div class="edu-card">
+              <div class="edu-year">2020 – 2023</div>
+              <h4>B.Sc. in 3D Animation & Visual Effects</h4>
+              <p style="color:var(--lime); font-weight:600; margin-bottom:4px;">Yashwantrao Chavan Maharashtra Open University</p>
+              <p>Advanced study of 3D modeling, texturing, animation pipelines, cinematography, and VFX composition.</p>
+            </div>
+            <div class="edu-card">
+              <div class="edu-year">2018 – 2021</div>
+              <h4>Graphic Designing & Animation</h4>
+              <p style="color:var(--lime); font-weight:600; margin-bottom:4px;">Arena Animation</p>
+              <p>Foundations of design theory, typography, vector illustration, video editing, and motion design.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Curated Works & Behance Showcase -->
+        <div class="reveal">
+          <div class="section-label" style="margin-bottom:var(--sp-4);">Featured Works</div>
+          <div style="display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:var(--sp-4); margin-bottom:var(--sp-6);">
+            <div>
+              <h2 style="font-size:1.6rem; margin-bottom:4px;">Priyanshu's Showcase Gallery</h2>
+              <p style="color:var(--text-secondary); margin:0;">Hand-picked visual campaigns, identities, and motion pieces.</p>
+            </div>
+            <a href="https://www.behance.net/princesingh174" target="_blank" rel="noopener" class="btn btn-sm btn-lime">
+              <i class="fa-brands fa-behance"></i> Full Behance Profile <i class="fa-solid fa-arrow-up-right-from-square" style="font-size:0.75rem;margin-left:4px;"></i>
+            </a>
+          </div>
+
+          <!-- Filter -->
+          <div class="filter-bar">
+            <button class="filter-btn active" data-filter="all">All Projects</button>
+            <button class="filter-btn" data-filter="brand">Brand Identity</button>
+            <button class="filter-btn" data-filter="social">Social & Ads</button>
+            <button class="filter-btn" data-filter="motion">Motion & Video</button>
+            <button class="filter-btn" data-filter="print">Print & Decks</button>
+          </div>
+
+          <!-- Portfolio Grid -->
+          <div class="portfolio-masonry">
+            
+            <div class="portfolio-item tall reveal d1" data-cat="brand">
+              <div class="portfolio-item-inner" style="background:linear-gradient(135deg,#152033,#253d66);">✨</div>
+              <div class="portfolio-item-info">
+                <div class="pi-cat">Brand Identity & Visual System</div>
+                <h3>Zenith Tech Rebrand</h3>
+                <p style="font-size:0.8rem;color:var(--stone);margin-bottom:var(--sp-3);">Complete brand identity, color theory, typography scale, and comprehensive guidelines.</p>
+                <a href="https://www.behance.net/princesingh174" target="_blank" rel="noopener" class="pi-link"><i class="fa-solid fa-arrow-up-right"></i> View on Behance</a>
+              </div>
+            </div>
+
+            <div class="portfolio-item reveal d2" data-cat="social">
+              <div class="portfolio-item-inner" style="background:linear-gradient(135deg,#1f1a3a,#3f3273); min-height:190px;">📱</div>
+              <div class="portfolio-item-info">
+                <div class="pi-cat">Social Media & Performance Ads</div>
+                <h3>Insignia Campaign Deck</h3>
+                <div class="pi-link"><a href="https://www.behance.net/princesingh174" target="_blank" rel="noopener" style="color:inherit;"><i class="fa-solid fa-arrow-up-right"></i> View Project</a></div>
+              </div>
+            </div>
+
+            <div class="portfolio-item reveal d3" data-cat="motion">
+              <div class="portfolio-item-inner" style="background:linear-gradient(135deg,#142921,#265744); min-height:190px;">🎬</div>
+              <div class="portfolio-item-info">
+                <div class="pi-cat">Motion Graphics & Reels</div>
+                <h3>2D Motion & Reel Series</h3>
+                <div class="pi-link"><a href="https://www.behance.net/princesingh174" target="_blank" rel="noopener" style="color:inherit;"><i class="fa-solid fa-arrow-up-right"></i> View Project</a></div>
+              </div>
+            </div>
+
+            <div class="portfolio-item tall reveal d1" data-cat="social">
+              <div class="portfolio-item-inner" style="background:linear-gradient(135deg,#2e1e17,#633a28);">⚡</div>
+              <div class="portfolio-item-info">
+                <div class="pi-cat">Digital Campaigns</div>
+                <h3>Techeon IT Key Visuals</h3>
+                <p style="font-size:0.8rem;color:var(--stone);margin-bottom:var(--sp-3);">High-conversion digital campaign creative suite for LinkedIn, Instagram & ad networks.</p>
+                <a href="https://www.behance.net/princesingh174" target="_blank" rel="noopener" class="pi-link"><i class="fa-solid fa-arrow-up-right"></i> View on Behance</a>
+              </div>
+            </div>
+
+            <div class="portfolio-item reveal d2" data-cat="print">
+              <div class="portfolio-item-inner" style="background:linear-gradient(135deg,#241526,#4a2250); min-height:190px;">📄</div>
+              <div class="portfolio-item-info">
+                <div class="pi-cat">Print & Collateral</div>
+                <h3>Corporate Brochure & Pitch Decks</h3>
+                <div class="pi-link"><a href="https://www.behance.net/princesingh174" target="_blank" rel="noopener" style="color:inherit;"><i class="fa-solid fa-arrow-up-right"></i> View Project</a></div>
+              </div>
+            </div>
+
+            <div class="portfolio-item reveal d3" data-cat="motion">
+              <div class="portfolio-item-inner" style="background:linear-gradient(135deg,#1a2636,#284668); min-height:190px;">🎞️</div>
+              <div class="portfolio-item-info">
+                <div class="pi-cat">Motion Design</div>
+                <h3>Eternal Happiness 2D Promo</h3>
+                <div class="pi-link"><a href="https://www.behance.net/princesingh174" target="_blank" rel="noopener" style="color:inherit;"><i class="fa-solid fa-arrow-up-right"></i> View Project</a></div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Right: Interactive 3D Character Side Panel -->
+      <aside class="char-side-panel">
+        <div class="char-side-canvas-wrap">
+          <canvas id="team-port-canvas"></canvas>
+          <div class="char-platform"></div>
+        </div>
+        <div class="char-side-bubble">
+          <div class="bubble-name">Alex · MPS Studio Guide</div>
+          <div class="bubble-text" id="team-port-bubble-text">Loading...</div>
+        </div>
+
+        <!-- Quick Info Card -->
+        <div class="card" style="margin-top:var(--sp-6); padding:var(--sp-5);">
+          <div class="section-label" style="margin-bottom:var(--sp-3);">Get in Touch</div>
+          <h4 style="margin-bottom:var(--sp-2);">Direct Contact</h4>
+          <p style="font-size:0.85rem; color:var(--text-secondary); margin-bottom:var(--sp-4);">Reach Priyanshu directly for freelance projects, design consultations, or studio collaborations.</p>
+          
+          <div style="font-size:0.85rem; display:flex; flex-direction:column; gap:8px; margin-bottom:var(--sp-5);">
+            <div><i class="fa-solid fa-envelope text-lime" style="width:20px;"></i> <a href="mailto:spriyanshuajay25@gmail.com" style="color:var(--text-primary);">spriyanshuajay25@gmail.com</a></div>
+            <div><i class="fa-solid fa-phone text-lime" style="width:20px;"></i> <a href="tel:8888578111" style="color:var(--text-primary);">+91 8888578111</a></div>
+            <div><i class="fa-brands fa-behance text-lime" style="width:20px;"></i> <a href="https://www.behance.net/princesingh174" target="_blank" rel="noopener" style="color:var(--text-primary);">behance.net/princesingh174</a></div>
+            <div><i class="fa-solid fa-location-dot text-lime" style="width:20px;"></i> <span>India · Open to Relocation</span></div>
+          </div>
+
+          <a href="contact.html" class="btn btn-lime" style="width:100%; justify-content:center;">
+            <i class="fa-solid fa-paper-plane"></i> Send Message
+          </a>
+        </div>
+      </aside>
+
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section style="padding:var(--sp-16) 0; background:var(--surface-1); text-align:center;">
+  <div class="container reveal">
+    <h2>Let's Create Something <span class="text-lime">Remarkable</span></h2>
+    <p style="color:var(--text-secondary);margin:var(--sp-4) auto var(--sp-8); max-width:520px;">Need senior-level design leadership, bespoke branding, or compelling motion graphics? Let's discuss your project.</p>
+    <div style="display:flex; gap:var(--sp-4); justify-content:center; flex-wrap:wrap;">
+      <a href="https://www.behance.net/princesingh174" target="_blank" rel="noopener" class="btn btn-lime btn-lg"><i class="fa-brands fa-behance"></i> Explore Behance</a>
+      <a href="contact.html" class="btn btn-outline btn-lg">Work With Priyanshu</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="nav-logo" style="margin-bottom:var(--sp-5);"><img src="images/mps-logo.png" alt="MPS Studio" class="site-logo-img" /></div>
+        <p>Creating visual experiences that inspire, engage, and convert. Based in Mumbai, working globally.</p>
+        <div class="social-links" style="margin-top:var(--sp-6);">
+          <a href="https://www.behance.net/princesingh174" target="_blank" rel="noopener" class="social-link" title="Behance"><i class="fa-brands fa-behance"></i></a>
+          <a href="https://www.linkedin.com" target="_blank" rel="noopener" class="social-link" title="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+          <a href="mailto:spriyanshuajay25@gmail.com" class="social-link" title="Email Priyanshu"><i class="fa-solid fa-envelope"></i></a>
+          <a href="tel:8888578111" class="social-link" title="Call Priyanshu"><i class="fa-solid fa-phone"></i></a>
+        </div>
+      </div>
+      <div><div class="footer-col-title">Portfolios</div><ul class="footer-links"><li><a href="portfolio.html">Company Portfolio</a></li><li><a href="team-portfolio.html">Team / Priyanshu's Portfolio</a></li><li><a href="about.html">Meet Our Team</a></li><li><a href="services.html">Services</a></li><li><a href="contact.html">Contact Us</a></li></ul></div>
+      <div><div class="footer-col-title">Services</div><ul class="footer-links"><li><a href="services.html">Brand Identity</a></li><li><a href="services.html">UI/UX Design</a></li><li><a href="services.html">Web Design</a></li><li><a href="services.html">Motion Graphics</a></li></ul></div>
+      <div><div class="footer-col-title">Contact</div><ul class="footer-links"><li><a href="mailto:spriyanshuajay25@gmail.com">spriyanshuajay25@gmail.com</a></li><li><a href="tel:8888578111">+91 8888578111</a></li><li><a href="#">India · Relocation Ready</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><p>© 2026 MPS Studio. All rights reserved.</p><p>Crafted by Priyanshu Singh</p></div>
+  </div>
+</footer>
+<button class="scroll-top-btn" id="scroll-top" aria-label="Scroll to top"><i class="fa-solid fa-chevron-up"></i></button>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+<script src="js/character.js"></script>
+<script src="js/main.js"></script>
+<script>
+  const teamPortChar = new MPSCharacter('team-port-canvas', { cameraY: 1.0, cameraZ: 3.6 });
+  const teamPortText = document.getElementById('team-port-bubble-text');
+  const teamPortMsgs = [
+    "Welcome to Priyanshu Singh's personal portfolio! ✨",
+    "Senior Visual Designer with 5+ years crafting brands and motion.",
+    "Trained at Arena Animation & YCMOU in 3D Animation & VFX. 🎨",
+    "Check out the career timeline and Behance showcases!",
+    "Need a strategic designer for your next project? Let's connect! 🤝",
+  ];
+  let tpi = 0;
+  function teamPortCycle() { window.typeInBubble(teamPortText, teamPortMsgs[tpi++ % teamPortMsgs.length]); }
+  setTimeout(() => { teamPortChar.wave(); teamPortCycle(); setInterval(teamPortCycle, 5200); }, 600);
+
+  // Character reacts to filter
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => teamPortChar.point());
+    btn.addEventListener('mouseleave', () => setTimeout(() => teamPortChar.talk(), 800));
+  });
+</script>
+</body>
+</html>

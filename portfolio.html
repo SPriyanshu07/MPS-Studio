@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Portfolio — MPS Studio</title>
-  <meta name="description" content="Explore MPS Studio's portfolio — 150+ brand identities, UI/UX designs, motion graphics, and web design projects." />
+  <title>Company Portfolio — MPS Studio</title>
+  <meta name="description" content="Explore MPS Studio's company portfolio — 150+ brand identities, UI/UX designs, motion graphics, and web design projects." />
 
   <link rel="stylesheet" href="css/main.css" />
   <link rel="stylesheet" href="css/character.css" />
@@ -145,7 +145,13 @@
     <ul class="nav-links" id="nav-links">
       <li><a href="index.html"     class="nav-link">Home</a></li>
       <li><a href="services.html"  class="nav-link">Services</a></li>
-      <li><a href="portfolio.html" class="nav-link active">Portfolio</a></li>
+      <li class="nav-item-dropdown">
+        <a href="portfolio.html" class="nav-link active">Portfolio <i class="fa-solid fa-chevron-down" style="font-size:0.7em;margin-left:4px;"></i></a>
+        <div class="nav-dropdown-menu">
+          <a href="portfolio.html" class="nav-dropdown-item active"><i class="fa-solid fa-building"></i> Company Portfolio</a>
+          <a href="team-portfolio.html" class="nav-dropdown-item"><i class="fa-solid fa-user-tie"></i> Team Portfolio (Priyanshu)</a>
+        </div>
+      </li>
       <li><a href="about.html"     class="nav-link">About</a></li>
       <li><a href="contact.html"   class="nav-link">Contact</a></li>
       <li><a href="payment.html"   class="nav-cta">Get Started</a></li>
@@ -157,9 +163,15 @@
 <!-- PAGE HERO -->
 <section class="page-hero">
   <div class="container">
-    <div class="section-label reveal">Portfolio</div>
-    <h1 class="reveal d1">Our <span class="text-lime">Creative</span> Universe</h1>
-    <p class="reveal d2">5+ years. 150+ projects. Countless stories told through design. Here's a glimpse of the work we're most proud of.</p>
+    <div class="section-label reveal">Company Portfolio</div>
+    <h1 class="reveal d1">Our <span class="text-lime">Studio</span> Universe</h1>
+    <p class="reveal d2">150+ projects delivered with strategic precision. Explore our agency case studies, client collaborations, and visual identity systems.</p>
+    
+    <!-- Portfolio Switcher -->
+    <div class="portfolio-switcher reveal d3">
+      <a href="portfolio.html" class="portfolio-switch-tab active"><i class="fa-solid fa-building"></i> Company Portfolio</a>
+      <a href="team-portfolio.html" class="portfolio-switch-tab"><i class="fa-solid fa-user-tie"></i> Our Team Portfolio (Priyanshu Singh)</a>
+    </div>
   </div>
 </section>
 
@@ -170,6 +182,19 @@
 
       <!-- Left: Portfolio -->
       <div class="port-content">
+
+        <!-- Spotlight Banner to Team Portfolio -->
+        <div class="card reveal" style="margin-bottom:var(--sp-8); background: linear-gradient(135deg, rgba(85,119,184,0.12), rgba(23,23,23,0.8)); border-color:var(--border-accent); display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:var(--sp-4);">
+          <div style="display:flex; align-items:center; gap:var(--sp-4);">
+            <img src="images/priyanshu-singh.png" alt="Priyanshu Singh" style="width:60px; height:60px; border-radius:50%; object-fit:cover; border:2px solid var(--lime); flex-shrink:0;" />
+            <div>
+              <div style="font-size:0.75rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--lime); font-weight:700;">Our Team Spotlight · Senior Visual Designer</div>
+              <h3 style="font-size:1.1rem; margin:2px 0;">Looking for Priyanshu Singh's Personal Portfolio?</h3>
+              <p style="font-size:0.85rem; color:var(--text-secondary); margin:0;">Explore 5+ years of career experience, Behance showcases, digital campaigns & motion design.</p>
+            </div>
+          </div>
+          <a href="team-portfolio.html" class="btn btn-sm btn-lime"><i class="fa-solid fa-arrow-right"></i> View Team Portfolio</a>
+        </div>
 
         <!-- Stats Bar -->
         <div class="stats-bar reveal">
@@ -334,13 +359,13 @@
         <div class="nav-logo" style="margin-bottom:var(--sp-5);"><img src="images/mps-logo.png" alt="MPS Studio" class="site-logo-img" /></div>
         <p>Creating visual experiences that inspire, engage, and convert. Based in Mumbai, working globally.</p>
         <div class="social-links" style="margin-top:var(--sp-6);">
-          <a href="#" class="social-link"><i class="fa-brands fa-instagram"></i></a>
-          <a href="#" class="social-link"><i class="fa-brands fa-behance"></i></a>
-          <a href="#" class="social-link"><i class="fa-brands fa-dribbble"></i></a>
-          <a href="#" class="social-link"><i class="fa-brands fa-linkedin-in"></i></a>
+          <a href="https://www.behance.net/princesingh174" target="_blank" rel="noopener" class="social-link" title="Behance Portfolio"><i class="fa-brands fa-behance"></i></a>
+          <a href="https://www.linkedin.com" target="_blank" rel="noopener" class="social-link" title="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+          <a href="mailto:spriyanshuajay25@gmail.com" class="social-link" title="Email Priyanshu"><i class="fa-solid fa-envelope"></i></a>
+          <a href="tel:8888578111" class="social-link" title="Call Us"><i class="fa-solid fa-phone"></i></a>
         </div>
       </div>
-      <div><div class="footer-col-title">Pages</div><ul class="footer-links"><li><a href="index.html">Home</a></li><li><a href="services.html">Services</a></li><li><a href="portfolio.html">Portfolio</a></li><li><a href="about.html">About Us</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+      <div><div class="footer-col-title">Portfolios</div><ul class="footer-links"><li><a href="portfolio.html">Company Portfolio</a></li><li><a href="team-portfolio.html">Team / Priyanshu's Portfolio</a></li><li><a href="about.html">Meet Our Team</a></li><li><a href="services.html">Services</a></li><li><a href="contact.html">Contact Us</a></li></ul></div>
       <div><div class="footer-col-title">Services</div><ul class="footer-links"><li><a href="services.html">Brand Identity</a></li><li><a href="services.html">UI/UX Design</a></li><li><a href="services.html">Web Design</a></li><li><a href="services.html">Motion Graphics</a></li></ul></div>
       <div><div class="footer-col-title">Contact</div><ul class="footer-links"><li><a href="mailto:hello@mpsstudio.in">hello@mpsstudio.in</a></li><li><a href="#">+91 98765 43210</a></li><li><a href="#">Mumbai, Maharashtra</a></li></ul></div>
     </div>
