@@ -564,23 +564,28 @@
 <script src="js/main.js"></script>
 <script>
   // ── Character ──
-  const contactChar = new MPSCharacter('contact-canvas', { cameraY: 1.0, cameraZ: 3.6 });
-  const contactText = document.getElementById('contact-bubble-text');
-  const contactMsgs = [
-    "I'm so glad you're reaching out! 👋 We'd love to hear from you.",
-    "Tell us about your project — we'll make it amazing together! 🚀",
-    "Every great collaboration starts with a conversation. Let's talk! 💬",
-    "We typically respond within 24 hours — often much faster! ⚡",
-  ];
-  let ci = 0;
-  function contactCycle() { window.typeInBubble(contactText, contactMsgs[ci++ % contactMsgs.length]); }
-  setTimeout(() => { contactChar.wave(); contactCycle(); setInterval(contactCycle, 5000); }, 600);
+  let contactChar = null;
+  try {
+    contactChar = new MPSCharacter('contact-canvas', { cameraY: 1.0, cameraZ: 3.6 });
+    const contactText = document.getElementById('contact-bubble-text');
+    const contactMsgs = [
+      "I'm so glad you're reaching out! 👋 We'd love to hear from you.",
+      "Tell us about your project — we'll make it amazing together! 🚀",
+      "Every great collaboration starts with a conversation. Let's talk! 💬",
+      "We typically respond within 24 hours — often much faster! ⚡",
+    ];
+    let ci = 0;
+    function contactCycle() { if (contactText && window.typeInBubble) window.typeInBubble(contactText, contactMsgs[ci++ % contactMsgs.length]); }
+    setTimeout(() => { if (contactChar && contactChar.wave) contactChar.wave(); contactCycle(); setInterval(contactCycle, 5000); }, 600);
 
-  // Character reacts to form focus
-  document.querySelectorAll('.form-input').forEach(input => {
-    input.addEventListener('focus', () => contactChar.talk());
-    input.addEventListener('blur', () => contactChar.idle());
-  });
+    // Character reacts to form focus
+    document.querySelectorAll('.form-input').forEach(input => {
+      input.addEventListener('focus', () => { if (contactChar && contactChar.talk) contactChar.talk(); });
+      input.addEventListener('blur', () => { if (contactChar && contactChar.idle) contactChar.idle(); });
+    });
+  } catch (err) {
+    console.warn('Character canvas notice:', err);
+  }
 
   // ── Service Chips ──
   document.querySelectorAll('.service-chip').forEach(chip => {
@@ -604,7 +609,10 @@
       if (!isOpen) item.classList.add('open');
     });
   });
+</script>
 
+<!-- Contact Form & Submission Engine (Independent & Self-Contained) -->
+<script>
   // ── Self-Contained Contact Form Component: Web3Forms & Google Sheets Dual-Sync ──
   const contactForm = document.getElementById('contact-form');
   const statusDiv = document.getElementById('cf-status');

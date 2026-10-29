@@ -78,7 +78,9 @@
       this.scene.add(this.rimLight);
 
       // Warm ground bounce
-      this.scene.add(Object.assign(new THREE.PointLight(0xF59E0B, 0.4, 6), { position: new THREE.Vector3(0, -1, 1) }));
+      const bounce = new THREE.PointLight(0xF59E0B, 0.4, 6);
+      bounce.position.set(0, -1, 1);
+      this.scene.add(bounce);
     }
 
     /* ─── Character Construction ───────────────────────────── */
