@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfolio — MPS Studio</title>
+  <meta name="description" content="Explore MPS Studio's portfolio — 150+ brand identities, UI/UX designs, motion graphics, and web design projects." />
+
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/character.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <style>
+    /* ── PORTFOLIO PAGE ── */
+    .port-layout { display: flex; gap: var(--sp-12); align-items: flex-start; }
+    .port-content { flex: 1; min-width: 0; }
+
+    /* Experience Timeline */
+    .exp-timeline {
+      position: relative;
+      padding-left: var(--sp-10);
+      margin-bottom: var(--sp-12);
+    }
+    .exp-timeline::before {
+      content: '';
+      position: absolute; left: 20px; top: 0; bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--lime), transparent);
+    }
+    .exp-item {
+      position: relative;
+      margin-bottom: var(--sp-8);
+    }
+    .exp-item::before {
+      content: '';
+      position: absolute; left: -34px; top: 6px;
+      width: 12px; height: 12px;
+      border-radius: 50%;
+      background: var(--lime);
+      border: 2px solid var(--black);
+      box-shadow: 0 0 10px var(--lime-glow);
+    }
+    .exp-year {
+      font-size: 0.72rem; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--lime); margin-bottom: 4px;
+    }
+    .exp-item h3 { font-size: 1.05rem; margin-bottom: 4px; }
+    .exp-item p { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.6; }
+
+    /* Filter tabs */
+    .filter-bar {
+      display: flex; gap: var(--sp-2); flex-wrap: wrap;
+      margin-bottom: var(--sp-8);
+    }
+    .filter-btn {
+      padding: 8px 20px;
+      border-radius: var(--r-full);
+      font-size: 0.82rem; font-weight: 700;
+      background: var(--surface-1);
+      color: var(--text-secondary);
+      border: 1px solid var(--border);
+      cursor: pointer;
+      transition: all var(--dur) var(--ease);
+    }
+    .filter-btn.active, .filter-btn:hover {
+      background: var(--lime);
+      color: var(--black);
+      border-color: var(--lime);
+    }
+
+    /* Portfolio Grid */
+    .portfolio-masonry {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--sp-4);
+    }
+    .portfolio-item {
+      border-radius: var(--r-lg);
+      overflow: hidden;
+      cursor: pointer;
+      position: relative;
+      transition: transform var(--dur) var(--ease), opacity var(--dur) var(--ease);
+    }
+    .portfolio-item.tall { grid-row: span 2; }
+    .portfolio-item-inner {
+      height: 100%; min-height: 220px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 3.5rem;
+      position: relative;
+      transition: transform var(--dur-slow) var(--ease);
+    }
+    .portfolio-item:hover .portfolio-item-inner { transform: scale(1.05); }
+
+    .portfolio-item-info {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(23,23,23,0.95) 0%, rgba(23,23,23,0.2) 50%, transparent 100%);
+      display: flex; flex-direction: column; justify-content: flex-end;
+      padding: var(--sp-5);
+      opacity: 0; transition: opacity var(--dur) var(--ease);
+    }
+    .portfolio-item:hover .portfolio-item-info { opacity: 1; }
+    .portfolio-item-info h3 { font-size: 1rem; margin-bottom: 4px; }
+    .portfolio-item-info .pi-cat {
+      font-size: 0.72rem; font-weight: 700;
+      letter-spacing: 0.08em; text-transform: uppercase; color: var(--lime);
+      margin-bottom: var(--sp-3);
+    }
+    .pi-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 0.8rem; font-weight: 700; color: var(--lime);
+    }
+
+    /* Stats bar */
+    .stats-bar {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 1px; background: var(--border);
+      border-radius: var(--r-lg);
+      overflow: hidden;
+      margin-bottom: var(--sp-12);
+    }
+    .stats-bar-item {
+      background: var(--surface-1);
+      padding: var(--sp-6);
+      text-align: center;
+    }
+
+    @media (max-width: 1024px) {
+      .port-layout { flex-direction: column; }
+      .char-side-panel { width: 100%; position: static; }
+      .char-side-canvas-wrap { width: 100%; height: 280px; }
+      .portfolio-masonry { grid-template-columns: 1fr; }
+      .portfolio-item.tall { grid-row: auto; }
+      .stats-bar { grid-template-columns: repeat(2,1fr); }
+    }
+  </style>
+</head>
+<body>
+<div class="noise-overlay" aria-hidden="true"></div>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><img src="images/mps-logo.png" alt="MPS Studio" class="site-logo-img" /></a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="index.html"     class="nav-link">Home</a></li>
+      <li><a href="services.html"  class="nav-link">Services</a></li>
+      <li><a href="portfolio.html" class="nav-link active">Portfolio</a></li>
+      <li><a href="about.html"     class="nav-link">About</a></li>
+      <li><a href="contact.html"   class="nav-link">Contact</a></li>
+      <li><a href="payment.html"   class="nav-cta">Get Started</a></li>
+    </ul>
+    <button class="nav-burger" id="nav-burger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <div class="container">
+    <div class="section-label reveal">Portfolio</div>
+    <h1 class="reveal d1">Our <span class="text-lime">Creative</span> Universe</h1>
+    <p class="reveal d2">5+ years. 150+ projects. Countless stories told through design. Here's a glimpse of the work we're most proud of.</p>
+  </div>
+</section>
+
+<!-- MAIN CONTENT -->
+<section class="section">
+  <div class="container">
+    <div class="port-layout">
+
+      <!-- Left: Portfolio -->
+      <div class="port-content">
+
+        <!-- Stats Bar -->
+        <div class="stats-bar reveal">
+          <div class="stats-bar-item">
+            <div class="stat-num" data-target="150" data-suffix="+">0+</div>
+            <div class="stat-label">Projects</div>
+          </div>
+          <div class="stats-bar-item">
+            <div class="stat-num" data-target="80" data-suffix="+">0+</div>
+            <div class="stat-label">Clients</div>
+          </div>
+          <div class="stats-bar-item">
+            <div class="stat-num" data-target="5" data-suffix="+">0+</div>
+            <div class="stat-label">Years</div>
+          </div>
+          <div class="stats-bar-item">
+            <div class="stat-num" data-target="15" data-suffix="+">0+</div>
+            <div class="stat-label">Awards</div>
+          </div>
+        </div>
+
+        <!-- Filter -->
+        <div class="filter-bar reveal">
+          <button class="filter-btn active" data-filter="all">All Work</button>
+          <button class="filter-btn" data-filter="brand">Branding</button>
+          <button class="filter-btn" data-filter="ui">UI/UX</button>
+          <button class="filter-btn" data-filter="web">Web</button>
+          <button class="filter-btn" data-filter="motion">Motion</button>
+          <button class="filter-btn" data-filter="print">Print</button>
+        </div>
+
+        <!-- Grid -->
+        <div class="portfolio-masonry">
+          <div class="portfolio-item tall reveal d1" data-cat="brand">
+            <div class="portfolio-item-inner" style="background:linear-gradient(135deg,#1a1040,#3d1b7a);">🎨</div>
+            <div class="portfolio-item-info">
+              <div class="pi-cat">Branding</div>
+              <h3>TechFlow Brand Identity</h3>
+              <p style="font-size:0.8rem;color:var(--stone);margin-bottom:var(--sp-3);">Complete brand overhaul for a B2B SaaS company.</p>
+              <div class="pi-link"><i class="fa-solid fa-arrow-up-right"></i> View Project</div>
+            </div>
+          </div>
+          <div class="portfolio-item reveal d2" data-cat="ui">
+            <div class="portfolio-item-inner" style="background:linear-gradient(135deg,#0a1628,#1e3a5f); min-height:180px;">📱</div>
+            <div class="portfolio-item-info">
+              <div class="pi-cat">UI/UX</div>
+              <h3>NeoBank App</h3>
+              <div class="pi-link"><i class="fa-solid fa-arrow-up-right"></i> View Project</div>
+            </div>
+          </div>
+          <div class="portfolio-item reveal d3" data-cat="web">
+            <div class="portfolio-item-inner" style="background:linear-gradient(135deg,#1a2810,#2d5c1e); min-height:180px;">🌿</div>
+            <div class="portfolio-item-info">
+              <div class="pi-cat">Web Design</div>
+              <h3>Bloom E-Commerce</h3>
+              <div class="pi-link"><i class="fa-solid fa-arrow-up-right"></i> View Project</div>
+            </div>
+          </div>
+          <div class="portfolio-item tall reveal d1" data-cat="motion">
+            <div class="portfolio-item-inner" style="background:linear-gradient(135deg,#2a0a0a,#6b1e1e);">🎬</div>
+            <div class="portfolio-item-info">
+              <div class="pi-cat">Motion Graphics</div>
+              <h3>Vertex Motion Reel</h3>
+              <p style="font-size:0.8rem;color:var(--stone);margin-bottom:var(--sp-3);">Award-winning brand motion identity for a VC firm.</p>
+              <div class="pi-link"><i class="fa-solid fa-arrow-up-right"></i> View Project</div>
+            </div>
+          </div>
+          <div class="portfolio-item reveal d2" data-cat="print">
+            <div class="portfolio-item-inner" style="background:linear-gradient(135deg,#1a1010,#4d2810); min-height:180px;">📦</div>
+            <div class="portfolio-item-info">
+              <div class="pi-cat">Packaging</div>
+              <h3>SkyBrew Packaging</h3>
+              <div class="pi-link"><i class="fa-solid fa-arrow-up-right"></i> View Project</div>
+            </div>
+          </div>
+          <div class="portfolio-item reveal d3" data-cat="brand">
+            <div class="portfolio-item-inner" style="background:linear-gradient(135deg,#0a1a28,#103050); min-height:180px;">📰</div>
+            <div class="portfolio-item-info">
+              <div class="pi-cat">Editorial</div>
+              <h3>Pulse Magazine</h3>
+              <div class="pi-link"><i class="fa-solid fa-arrow-up-right"></i> View Project</div>
+            </div>
+          </div>
+          <div class="portfolio-item reveal d1" data-cat="ui">
+            <div class="portfolio-item-inner" style="background:linear-gradient(135deg,#10283a,#1a4060); min-height:180px;">🏥</div>
+            <div class="portfolio-item-info">
+              <div class="pi-cat">UI/UX</div>
+              <h3>HealthSync Dashboard</h3>
+              <div class="pi-link"><i class="fa-solid fa-arrow-up-right"></i> View Project</div>
+            </div>
+          </div>
+          <div class="portfolio-item reveal d2" data-cat="brand">
+            <div class="portfolio-item-inner" style="background:linear-gradient(135deg,#181028,#2d1a50); min-height:180px;">💼</div>
+            <div class="portfolio-item-info">
+              <div class="pi-cat">Branding</div>
+              <h3>Apex Consulting</h3>
+              <div class="pi-link"><i class="fa-solid fa-arrow-up-right"></i> View Project</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Right: Character + Timeline -->
+      <aside class="char-side-panel">
+        <div class="char-side-canvas-wrap">
+          <canvas id="port-canvas"></canvas>
+          <div class="char-platform"></div>
+        </div>
+        <div class="char-side-bubble">
+          <div class="bubble-name">Alex · MPS Studio</div>
+          <div class="bubble-text" id="port-bubble-text">Loading...</div>
+        </div>
+
+        <!-- Experience Timeline -->
+        <div style="margin-top:var(--sp-8);">
+          <div class="section-label" style="margin-bottom:var(--sp-5);">Experience</div>
+          <div class="exp-timeline">
+            <div class="exp-item">
+              <div class="exp-year">2024 – Present</div>
+              <h3>Senior Design Lead</h3>
+              <p>Leading full brand transformations and digital experiences for enterprise clients.</p>
+            </div>
+            <div class="exp-item">
+              <div class="exp-year">2022 – 2024</div>
+              <h3>Brand Designer</h3>
+              <p>Specialised in premium brand identities and motion design.</p>
+            </div>
+            <div class="exp-item">
+              <div class="exp-year">2019 – 2022</div>
+              <h3>Founded MPS Studio</h3>
+              <p>Started from a passion for design. Grew to 80+ clients in 3 years.</p>
+            </div>
+          </div>
+        </div>
+
+        <a href="contact.html" class="btn btn-lime" style="width:100%; justify-content:center;">
+          <i class="fa-solid fa-envelope"></i> Discuss a Project
+        </a>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section style="padding:var(--sp-16) 0; background:var(--surface-1); text-align:center;">
+  <div class="container reveal">
+    <h2>Your Project Could Be <span class="text-lime">Next</span></h2>
+    <p style="color:var(--text-secondary);margin:var(--sp-4) auto var(--sp-8); max-width:480px;">Let's collaborate on something exceptional. Every great project starts with a conversation.</p>
+    <div style="display:flex; gap:var(--sp-4); justify-content:center; flex-wrap:wrap;">
+      <a href="payment.html" class="btn btn-lime btn-lg">Start a Project</a>
+      <a href="contact.html" class="btn btn-outline btn-lg">Get in Touch</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="nav-logo" style="margin-bottom:var(--sp-5);"><img src="images/mps-logo.png" alt="MPS Studio" class="site-logo-img" /></div>
+        <p>Creating visual experiences that inspire, engage, and convert. Based in Mumbai, working globally.</p>
+        <div class="social-links" style="margin-top:var(--sp-6);">
+          <a href="#" class="social-link"><i class="fa-brands fa-instagram"></i></a>
+          <a href="#" class="social-link"><i class="fa-brands fa-behance"></i></a>
+          <a href="#" class="social-link"><i class="fa-brands fa-dribbble"></i></a>
+          <a href="#" class="social-link"><i class="fa-brands fa-linkedin-in"></i></a>
+        </div>
+      </div>
+      <div><div class="footer-col-title">Pages</div><ul class="footer-links"><li><a href="index.html">Home</a></li><li><a href="services.html">Services</a></li><li><a href="portfolio.html">Portfolio</a></li><li><a href="about.html">About Us</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+      <div><div class="footer-col-title">Services</div><ul class="footer-links"><li><a href="services.html">Brand Identity</a></li><li><a href="services.html">UI/UX Design</a></li><li><a href="services.html">Web Design</a></li><li><a href="services.html">Motion Graphics</a></li></ul></div>
+      <div><div class="footer-col-title">Contact</div><ul class="footer-links"><li><a href="mailto:hello@mpsstudio.in">hello@mpsstudio.in</a></li><li><a href="#">+91 98765 43210</a></li><li><a href="#">Mumbai, Maharashtra</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><p>© 2026 MPS Studio. All rights reserved.</p><p>Privacy Policy · Terms of Service</p></div>
+  </div>
+</footer>
+<button class="scroll-top-btn" id="scroll-top" aria-label="Scroll to top"><i class="fa-solid fa-chevron-up"></i></button>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+<script src="js/character.js"></script>
+<script src="js/main.js"></script>
+<script>
+  const portChar = new MPSCharacter('port-canvas', { cameraY: 1.0, cameraZ: 3.6 });
+  const portText = document.getElementById('port-bubble-text');
+  const portMsgs = [
+    "Welcome to our portfolio! 5+ years of design magic. ✨",
+    "We've worked with startups, enterprises, and everyone in between!",
+    "Each project is a unique story — let me show you around. 🎨",
+    "Want to see your project in this portfolio? Let's talk!",
+  ];
+  let pi = 0;
+  function portCycle() { window.typeInBubble(portText, portMsgs[pi++ % portMsgs.length]); }
+  setTimeout(() => { portChar.wave(); portCycle(); setInterval(portCycle, 5200); }, 600);
+
+  // Character reacts to filter
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => portChar.point());
+    btn.addEventListener('mouseleave', () => setTimeout(() => portChar.talk(), 800));
+  });
+</script>
+</body>
+</html>

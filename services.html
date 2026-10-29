@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Services — MPS Studio</title>
+  <meta name="description" content="Explore MPS Studio's premium design services: Brand Identity, UI/UX, Web Design, Motion Graphics, Print Design, and Social Media." />
+
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/character.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <style>
+    /* ── SERVICES PAGE ── */
+    .services-layout {
+      display: flex;
+      gap: var(--sp-12);
+      align-items: flex-start;
+    }
+    .services-content { flex: 1; min-width: 0; }
+
+    /* Service Detail Cards */
+    .service-detail {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--sp-4);
+      margin-bottom: var(--sp-16);
+    }
+    .service-detail-main {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: var(--sp-6);
+      align-items: start;
+      padding: var(--sp-8);
+    }
+    .service-big-icon {
+      width: 72px; height: 72px;
+      background: var(--lime-dim); border: 1px solid var(--border-accent);
+      border-radius: var(--r-lg);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.8rem; color: var(--lime);
+      flex-shrink: 0;
+    }
+    .service-detail-main h2 {
+      font-size: 1.6rem;
+      margin-bottom: var(--sp-3);
+    }
+    .service-detail-main p {
+      color: var(--text-secondary);
+      line-height: 1.8;
+      margin-bottom: var(--sp-5);
+    }
+    .service-tags { display: flex; flex-wrap: wrap; gap: var(--sp-2); }
+
+    /* Feature bullet cards */
+    .feature-mini {
+      padding: var(--sp-5) var(--sp-6);
+      border-radius: var(--r-md);
+    }
+    .feature-mini h4 { font-size: 0.9rem; margin-bottom: 4px; }
+    .feature-mini p { font-size: 0.82rem; color: var(--text-secondary); }
+
+    /* Process section */
+    .process-grid {
+      display: grid;
+      grid-template-columns: repeat(4,1fr);
+      gap: var(--sp-4);
+      position: relative;
+    }
+    .process-step {
+      text-align: center;
+      padding: var(--sp-6);
+      position: relative;
+    }
+    .process-num {
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      background: var(--lime); color: var(--black);
+      font-weight: 800; font-size: 1.1rem;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto var(--sp-4);
+    }
+    .process-step h4 { font-size: 0.95rem; margin-bottom: var(--sp-2); }
+    .process-step p  { font-size: 0.82rem; color: var(--text-secondary); }
+
+    /* Why Us */
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(2,1fr);
+      gap: var(--sp-4);
+    }
+    .why-item {
+      display: flex; gap: var(--sp-4); align-items: flex-start;
+      padding: var(--sp-5);
+    }
+    .why-icon {
+      width: 40px; height: 40px; flex-shrink: 0;
+      background: var(--lime-dim);
+      border: 1px solid var(--border-accent);
+      border-radius: var(--r-sm);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--lime); font-size: 0.95rem;
+    }
+    .why-item h4 { font-size: 0.95rem; margin-bottom: 4px; }
+    .why-item p { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6; }
+
+    @media (max-width: 1024px) {
+      .services-layout { flex-direction: column; }
+      .char-side-panel { width: 100%; position: static; }
+      .char-side-canvas-wrap { width: 100%; height: 280px; }
+      .process-grid { grid-template-columns: repeat(2,1fr); }
+    }
+    @media (max-width: 768px) {
+      .service-detail-main { grid-template-columns: 1fr; }
+      .service-detail { grid-template-columns: 1fr; }
+      .why-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<div class="noise-overlay" aria-hidden="true"></div>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><img src="images/mps-logo.png" alt="MPS Studio" class="site-logo-img" /></a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="index.html"     class="nav-link">Home</a></li>
+      <li><a href="services.html"  class="nav-link active">Services</a></li>
+      <li><a href="portfolio.html" class="nav-link">Portfolio</a></li>
+      <li><a href="about.html"     class="nav-link">About</a></li>
+      <li><a href="contact.html"   class="nav-link">Contact</a></li>
+      <li><a href="payment.html"   class="nav-cta">Get Started</a></li>
+    </ul>
+    <button class="nav-burger" id="nav-burger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <div class="container">
+    <div class="section-label page-hero-label reveal">Our Services</div>
+    <h1 class="reveal d1">Design Services That <span class="text-lime">Deliver</span></h1>
+    <p class="reveal d2">From brand inception to digital presence — we cover every aspect of visual communication with precision and artistry.</p>
+  </div>
+</section>
+
+<!-- SERVICES MAIN -->
+<section class="section">
+  <div class="container">
+    <div class="services-layout">
+
+      <!-- Main content -->
+      <div class="services-content">
+
+        <!-- Service 1: Brand Identity -->
+        <div class="service-detail reveal">
+          <div class="card card-glow service-detail-main">
+            <div class="service-big-icon"><i class="fa-solid fa-palette"></i></div>
+            <div>
+              <h2>Brand <span class="text-lime">Identity</span></h2>
+              <p>Your brand is more than a logo — it's the complete visual language of your business. We craft comprehensive brand identities that create instant recognition and build lasting trust with your audience.</p>
+              <div class="service-tags">
+                <span class="tag tag-lime">Logo Design</span>
+                <span class="tag tag-lime">Color Systems</span>
+                <span class="tag tag-lime">Typography</span>
+                <span class="tag tag-lime">Brand Guidelines</span>
+                <span class="tag tag-lime">Stationery</span>
+              </div>
+              <a href="payment.html" class="btn btn-lime" style="margin-top:var(--sp-6);">Start Branding Project</a>
+            </div>
+          </div>
+          <div class="card feature-mini reveal d1">
+            <h4>🎯 Strategic Design</h4>
+            <p>We research your market and competitors before touching pen to paper.</p>
+          </div>
+          <div class="card feature-mini reveal d2">
+            <h4>♾️ Unlimited Revisions</h4>
+            <p>We iterate until you're 100% in love with the result.</p>
+          </div>
+        </div>
+
+        <!-- Service 2: UI/UX -->
+        <div class="service-detail reveal">
+          <div class="card card-glow service-detail-main">
+            <div class="service-big-icon"><i class="fa-solid fa-pen-nib"></i></div>
+            <div>
+              <h2>UI/UX <span class="text-lime">Design</span></h2>
+              <p>We design digital experiences that users love and businesses profit from. Our human-centered approach ensures every interaction is intuitive, beautiful, and conversion-optimized.</p>
+              <div class="service-tags">
+                <span class="tag tag-lime">User Research</span>
+                <span class="tag tag-lime">Wireframing</span>
+                <span class="tag tag-lime">Prototyping</span>
+                <span class="tag tag-lime">Figma Design</span>
+                <span class="tag tag-lime">Design Systems</span>
+              </div>
+              <a href="payment.html" class="btn btn-lime" style="margin-top:var(--sp-6);">Start UI/UX Project</a>
+            </div>
+          </div>
+          <div class="card feature-mini reveal d1">
+            <h4>📊 Data-Driven</h4>
+            <p>Every design decision is backed by user research and testing.</p>
+          </div>
+          <div class="card feature-mini reveal d2">
+            <h4>🚀 Figma Handoff</h4>
+            <p>Developer-ready files with detailed specs and components.</p>
+          </div>
+        </div>
+
+        <!-- Service 3: Web Design -->
+        <div class="service-detail reveal">
+          <div class="card card-glow service-detail-main">
+            <div class="service-big-icon"><i class="fa-solid fa-globe"></i></div>
+            <div>
+              <h2>Web <span class="text-lime">Design</span></h2>
+              <p>Websites that don't just look good — they work hard for your business. We create responsive, fast-loading, and SEO-friendly web experiences that convert visitors into customers.</p>
+              <div class="service-tags">
+                <span class="tag tag-lime">Landing Pages</span>
+                <span class="tag tag-lime">Portfolio Sites</span>
+                <span class="tag tag-lime">E-Commerce</span>
+                <span class="tag tag-lime">Responsive Design</span>
+                <span class="tag tag-lime">CMS Integration</span>
+              </div>
+              <a href="payment.html" class="btn btn-lime" style="margin-top:var(--sp-6);">Start Web Project</a>
+            </div>
+          </div>
+          <div class="card feature-mini reveal d1">
+            <h4>📱 Mobile-First</h4>
+            <p>Every design starts with mobile and scales beautifully to desktop.</p>
+          </div>
+          <div class="card feature-mini reveal d2">
+            <h4>⚡ Fast & Optimized</h4>
+            <p>Performance-optimized pages that score 90+ on PageSpeed.</p>
+          </div>
+        </div>
+
+        <!-- Service 4: Motion -->
+        <div class="service-detail reveal">
+          <div class="card card-glow service-detail-main">
+            <div class="service-big-icon"><i class="fa-solid fa-film"></i></div>
+            <div>
+              <h2>Motion <span class="text-lime">Graphics</span></h2>
+              <p>Static design tells a story — motion design makes it unforgettable. We create captivating animations, explainer videos, and brand motion content that captivate and convert.</p>
+              <div class="service-tags">
+                <span class="tag tag-lime">Brand Animations</span>
+                <span class="tag tag-lime">Explainer Videos</span>
+                <span class="tag tag-lime">Logo Animation</span>
+                <span class="tag tag-lime">Social Reels</span>
+                <span class="tag tag-lime">After Effects</span>
+              </div>
+              <a href="payment.html" class="btn btn-lime" style="margin-top:var(--sp-6);">Start Motion Project</a>
+            </div>
+          </div>
+          <div class="card feature-mini reveal d1">
+            <h4>🎬 Cinematic Quality</h4>
+            <p>Hollywood-grade motion techniques adapted for brand storytelling.</p>
+          </div>
+          <div class="card feature-mini reveal d2">
+            <h4>🔄 All Formats</h4>
+            <p>Delivered in MP4, GIF, WebM — ready for any platform.</p>
+          </div>
+        </div>
+
+        <!-- Process -->
+        <div class="reveal" style="margin-bottom:var(--sp-16);">
+          <div class="section-label" style="margin-bottom:var(--sp-5);">How We Work</div>
+          <h2 style="margin-bottom:var(--sp-10);">Our Creative <span class="text-lime">Process</span></h2>
+          <div class="process-grid">
+            <div class="card process-step reveal d1">
+              <div class="process-num">1</div>
+              <h4>Discover</h4>
+              <p>Deep-dive into your brand, goals, and target audience.</p>
+            </div>
+            <div class="card process-step reveal d2">
+              <div class="process-num">2</div>
+              <h4>Strategize</h4>
+              <p>Build a design strategy rooted in research and insight.</p>
+            </div>
+            <div class="card process-step reveal d3">
+              <div class="process-num">3</div>
+              <h4>Create</h4>
+              <p>Craft multiple concepts and refine with your feedback.</p>
+            </div>
+            <div class="card process-step reveal d4">
+              <div class="process-num">4</div>
+              <h4>Deliver</h4>
+              <p>Final assets delivered, ready to make an impact.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Why Us -->
+        <div class="reveal">
+          <div class="section-label" style="margin-bottom:var(--sp-5);">Why MPS Studio</div>
+          <h2 style="margin-bottom:var(--sp-8);">The <span class="text-lime">MPS</span> Difference</h2>
+          <div class="why-grid">
+            <div class="card why-item reveal d1">
+              <div class="why-icon"><i class="fa-solid fa-bolt"></i></div>
+              <div>
+                <h4>Fast Turnaround</h4>
+                <p>Logo designs in 3-5 days. We respect your deadlines without compromising quality.</p>
+              </div>
+            </div>
+            <div class="card why-item reveal d2">
+              <div class="why-icon"><i class="fa-solid fa-headset"></i></div>
+              <div>
+                <h4>Dedicated Support</h4>
+                <p>Direct access to your designer throughout the project. No middlemen.</p>
+              </div>
+            </div>
+            <div class="card why-item reveal d3">
+              <div class="why-icon"><i class="fa-solid fa-award"></i></div>
+              <div>
+                <h4>Award-Winning Quality</h4>
+                <p>15+ design awards recognizing excellence in brand identity and UI/UX.</p>
+              </div>
+            </div>
+            <div class="card why-item reveal d4">
+              <div class="why-icon"><i class="fa-solid fa-rotate-left"></i></div>
+              <div>
+                <h4>Satisfaction Guarantee</h4>
+                <p>Not happy? We'll redo it. Your satisfaction is our only measure of success.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Sticky Character Panel -->
+      <aside class="char-side-panel">
+        <div class="char-side-canvas-wrap">
+          <canvas id="services-canvas"></canvas>
+          <div class="char-platform"></div>
+        </div>
+        <div class="char-side-bubble">
+          <div class="bubble-name">Alex · MPS Studio</div>
+          <div class="bubble-text" id="services-bubble-text">Loading...</div>
+        </div>
+        <div style="margin-top:var(--sp-6);">
+          <a href="payment.html" class="btn btn-lime w-full" style="width:100%; justify-content:center;">
+            <i class="fa-solid fa-rocket"></i> Get a Quote
+          </a>
+          <a href="contact.html" class="btn btn-outline" style="width:100%; justify-content:center; margin-top:var(--sp-3);">
+            Talk to Us First
+          </a>
+        </div>
+      </aside>
+
+    </div>
+  </div>
+</section>
+
+<!-- CTA Strip -->
+<section style="padding:var(--sp-16) 0; background:var(--surface-1); text-align:center;">
+  <div class="container reveal">
+    <h2>Ready to <span class="text-lime">Transform</span> Your Brand?</h2>
+    <p style="color:var(--text-secondary);margin:var(--sp-4) auto var(--sp-8); max-width:520px;">Pick a package or get a custom quote — let's start creating something remarkable.</p>
+    <a href="payment.html" class="btn btn-lime btn-lg">View Pricing Plans</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="nav-logo" style="margin-bottom:var(--sp-5);"><img src="images/mps-logo.png" alt="MPS Studio" class="site-logo-img" /></div>
+        <p>Creating visual experiences that inspire, engage, and convert. Based in Mumbai, working globally.</p>
+        <div class="social-links" style="margin-top:var(--sp-6);">
+          <a href="#" class="social-link"><i class="fa-brands fa-instagram"></i></a>
+          <a href="#" class="social-link"><i class="fa-brands fa-behance"></i></a>
+          <a href="#" class="social-link"><i class="fa-brands fa-dribbble"></i></a>
+          <a href="#" class="social-link"><i class="fa-brands fa-linkedin-in"></i></a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Pages</div>
+        <ul class="footer-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="portfolio.html">Portfolio</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Services</div>
+        <ul class="footer-links">
+          <li><a href="#">Brand Identity</a></li>
+          <li><a href="#">UI/UX Design</a></li>
+          <li><a href="#">Web Design</a></li>
+          <li><a href="#">Motion Graphics</a></li>
+          <li><a href="#">Print Design</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Contact</div>
+        <ul class="footer-links">
+          <li><a href="mailto:hello@mpsstudio.in">hello@mpsstudio.in</a></li>
+          <li><a href="tel:+919876543210">+91 98765 43210</a></li>
+          <li><a href="#">Mumbai, Maharashtra</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 MPS Studio. All rights reserved.</p>
+      <p>Privacy Policy · Terms of Service</p>
+    </div>
+  </div>
+</footer>
+
+<button class="scroll-top-btn" id="scroll-top" aria-label="Scroll to top"><i class="fa-solid fa-chevron-up"></i></button>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+<script src="js/character.js"></script>
+<script src="js/main.js"></script>
+<script>
+  const svcChar = new MPSCharacter('services-canvas', { cameraY: 1.0, cameraZ: 3.6 });
+  const svcText = document.getElementById('services-bubble-text');
+  const svcBubble = { show() {}, hide() {} }; // use direct typing
+
+  const msgs = [
+    "Each service is crafted with strategy and passion! 🎨",
+    "We've completed 150+ projects for clients worldwide.",
+    "Not sure which service fits? Let's chat — it's free! 💬",
+    "Our process is collaborative — you're always in the loop.",
+  ];
+  let i = 0;
+  function cycleMsgs() {
+    window.typeInBubble(svcText, msgs[i++ % msgs.length]);
+  }
+  setTimeout(() => { svcChar.talk(); cycleMsgs(); setInterval(cycleMsgs, 5000); }, 600);
+</script>
+</body>
+</html>

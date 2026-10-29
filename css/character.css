@@ -1,0 +1,162 @@
+/* ============================================================
+   CHARACTER PANEL — Speech Bubble & Canvas Wrapper
+============================================================ */
+
+/* Canvas wrapper */
+.char-scene {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: var(--r-xl);
+  overflow: hidden;
+}
+.char-scene canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* Speech Bubble */
+.speech-bubble {
+  position: absolute;
+  top: 16px;
+  right: -10px;
+  max-width: 260px;
+  min-width: 180px;
+  background: rgba(23, 23, 23, 0.92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border-accent);
+  border-radius: 16px 16px 16px 4px;
+  padding: 14px 18px;
+  pointer-events: none;
+  opacity: 0;
+  transform: scale(0.9) translateY(6px);
+  transform-origin: bottom left;
+  transition: opacity 0.4s var(--ease), transform 0.4s var(--ease-spring);
+  z-index: 20;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4), 0 0 20px rgba(215,255,100,0.1);
+}
+.speech-bubble.show {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+/* Tail */
+.speech-bubble::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 20px;
+  width: 16px;
+  height: 8px;
+  background: rgba(23,23,23,0.92);
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  border-left: 1px solid var(--border-accent);
+  border-right: 1px solid var(--border-accent);
+}
+
+.bubble-name {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--lime);
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.bubble-name::before {
+  content: '';
+  width: 5px; height: 5px;
+  background: var(--lime);
+  border-radius: 50%;
+  animation: blink 1.5s ease-in-out infinite;
+}
+
+.bubble-text {
+  font-size: 0.88rem;
+  line-height: 1.55;
+  color: var(--text-primary);
+  min-height: 40px;
+}
+
+.bubble-cursor {
+  display: inline-block;
+  width: 2px; height: 0.9em;
+  background: var(--lime);
+  vertical-align: text-bottom;
+  margin-left: 2px;
+  animation: cursor-blink 0.7s ease-in-out infinite;
+}
+
+/* Floating platform / glow under character */
+.char-platform {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px; height: 24px;
+  background: radial-gradient(ellipse, rgba(215,255,100,0.25) 0%, transparent 70%);
+  border-radius: 50%;
+  filter: blur(8px);
+  animation: float-platform 3s ease-in-out infinite;
+}
+
+/* Orbit rings (decorative) */
+.char-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(215,255,100,0.12);
+  pointer-events: none;
+  animation: spin-ring 12s linear infinite;
+}
+.char-ring-1 { width: 160px; height: 160px; top: 50%; left: 50%; transform: translate(-50%,-50%); }
+.char-ring-2 { width: 220px; height: 220px; top: 50%; left: 50%; transform: translate(-50%,-50%); animation-direction: reverse; animation-duration: 18s; }
+
+/* ============================================================
+   SIDE PANEL (inner pages)
+============================================================ */
+.char-side-panel {
+  position: sticky;
+  top: calc(var(--nav-h) + 24px);
+  width: 280px;
+  flex-shrink: 0;
+}
+.char-side-canvas-wrap {
+  width: 280px;
+  height: 380px;
+  background: radial-gradient(ellipse at center, rgba(215,255,100,0.05) 0%, transparent 65%);
+  border-radius: var(--r-xl);
+  overflow: hidden;
+  position: relative;
+}
+.char-side-bubble {
+  margin-top: var(--sp-4);
+  background: var(--surface-1);
+  border: 1px solid var(--border-accent);
+  border-radius: var(--r-lg);
+  padding: var(--sp-4) var(--sp-5);
+  position: relative;
+}
+.char-side-bubble::before {
+  content: '';
+  position: absolute;
+  top: -8px; left: 50%; transform: translateX(-50%);
+  width: 16px; height: 8px;
+  background: var(--surface-1);
+  clip-path: polygon(50% 0, 0 100%, 100% 100%);
+  border-top: 1px solid var(--border-accent);
+}
+
+/* ============================================================
+   KEYFRAMES
+============================================================ */
+@keyframes float-platform {
+  0%, 100% { opacity: 0.7; transform: translateX(-50%) scaleX(1); }
+  50% { opacity: 1; transform: translateX(-50%) scaleX(1.15); }
+}
+@keyframes spin-ring {
+  0% { transform: translate(-50%,-50%) rotate(0deg); }
+  100% { transform: translate(-50%,-50%) rotate(360deg); }
+}

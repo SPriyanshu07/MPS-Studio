@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pricing & Payment — MPS Studio</title>
+  <meta name="description" content="Choose an MPS Studio design package. Flexible pricing for startups and established brands. Start with a free consultation." />
+
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/character.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <style>
+    /* ── PAYMENT PAGE ── */
+
+    /* Pricing Toggle */
+    .toggle-wrap {
+      display: flex; align-items: center; gap: var(--sp-4);
+      justify-content: center; margin-bottom: var(--sp-10);
+    }
+    .toggle-label { font-size: 0.9rem; font-weight: 600; color: var(--text-secondary); }
+    .toggle-label.active { color: var(--text-primary); }
+    .toggle-switch {
+      width: 48px; height: 26px;
+      background: var(--surface-2); border-radius: var(--r-full);
+      cursor: pointer; position: relative;
+      border: 1px solid var(--border);
+      transition: background var(--dur) var(--ease);
+    }
+    .toggle-switch.on { background: var(--lime); }
+    .toggle-knob {
+      position: absolute; top: 3px; left: 3px;
+      width: 18px; height: 18px; border-radius: 50%;
+      background: var(--text-primary);
+      transition: transform var(--dur) var(--ease);
+    }
+    .toggle-switch.on .toggle-knob { transform: translateX(22px); background: var(--black); }
+    .save-badge {
+      font-size: 0.72rem; font-weight: 700;
+      background: var(--lime-dim); color: var(--lime);
+      border: 1px solid var(--border-accent);
+      padding: 2px 8px; border-radius: var(--r-full);
+    }
+
+    /* Pricing Cards */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: var(--sp-5);
+      margin-bottom: var(--sp-16);
+    }
+    .pricing-card {
+      border-radius: var(--r-xl);
+      padding: var(--sp-8) var(--sp-6);
+      border: 1px solid var(--border);
+      background: var(--surface-1);
+      position: relative;
+      transition: all var(--dur) var(--ease);
+    }
+    .pricing-card:hover { border-color: var(--border-accent); transform: translateY(-4px); box-shadow: var(--sh-md); }
+    .pricing-card.featured {
+      background: var(--lime);
+      border-color: var(--lime);
+      transform: translateY(-8px);
+      box-shadow: 0 24px 60px rgba(215,255,100,0.2);
+    }
+    .pricing-card.featured * { color: var(--black) !important; }
+    .pricing-card.featured .plan-btn { background: var(--black); color: var(--lime); }
+    .pricing-card.featured .plan-btn:hover { background: #222; }
+    .featured-badge {
+      position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+      background: var(--black); color: var(--lime);
+      padding: 4px 16px; border-radius: var(--r-full);
+      font-size: 0.72rem; font-weight: 700;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .plan-name {
+      font-size: 0.78rem; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--text-secondary); margin-bottom: var(--sp-3);
+    }
+    .plan-price {
+      font-family: var(--font-head);
+      font-size: 2.8rem; font-weight: 800;
+      letter-spacing: -0.03em; line-height: 1;
+      margin-bottom: 4px;
+    }
+    .plan-period { font-size: 0.82rem; color: var(--text-secondary); margin-bottom: var(--sp-5); }
+    .plan-desc { font-size: 0.88rem; line-height: 1.6; color: var(--text-secondary); margin-bottom: var(--sp-6); }
+
+    .plan-features { margin-bottom: var(--sp-8); }
+    .plan-feature {
+      display: flex; align-items: center; gap: var(--sp-3);
+      font-size: 0.88rem; padding: 8px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .plan-feature:last-child { border-bottom: none; }
+    .plan-feature i { font-size: 0.8rem; color: var(--lime); flex-shrink: 0; }
+    .pricing-card.featured .plan-feature i { color: var(--black); }
+    .plan-feature.off { opacity: 0.4; }
+    .plan-feature.off i { color: var(--text-muted); }
+
+    .plan-btn {
+      width: 100%;
+      padding: 14px;
+      border-radius: var(--r-full);
+      background: var(--lime); color: var(--black);
+      font-weight: 700; font-size: 0.9rem;
+      text-align: center; cursor: pointer;
+      border: none; font-family: inherit;
+      transition: all var(--dur) var(--ease);
+    }
+    .plan-btn:hover { filter: brightness(1.1); transform: translateY(-1px); }
+    .plan-btn-outline {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-primary);
+    }
+    .plan-btn-outline:hover { border-color: var(--border-accent); color: var(--lime); background: var(--lime-dim); }
+
+    /* Checkout Form */
+    .checkout-wrap {
+      display: grid;
+      grid-template-columns: 1fr 400px;
+      gap: var(--sp-10);
+      align-items: start;
+    }
+    .checkout-card {
+      background: var(--surface-1);
+      border: 1px solid var(--border);
+      border-radius: var(--r-xl);
+      padding: var(--sp-10);
+    }
+    .checkout-title { font-size: 1.4rem; margin-bottom: var(--sp-8); }
+
+    .card-fields { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-4); }
+    .card-fields .full { grid-column: 1 / -1; }
+
+    .secure-badge {
+      display: flex; align-items: center; gap: var(--sp-3);
+      padding: var(--sp-4) var(--sp-5);
+      background: rgba(215,255,100,0.05);
+      border: 1px solid var(--border-accent);
+      border-radius: var(--r-md);
+      font-size: 0.82rem; color: var(--text-secondary);
+      margin-top: var(--sp-6);
+    }
+    .secure-badge i { color: var(--lime); font-size: 1rem; }
+
+    /* Order Summary */
+    .order-summary {
+      background: var(--surface-1);
+      border: 1px solid var(--border);
+      border-radius: var(--r-xl);
+      padding: var(--sp-8);
+      position: sticky; top: calc(var(--nav-h) + 20px);
+    }
+    .order-title { font-size: 1.1rem; margin-bottom: var(--sp-6); }
+    .order-item {
+      display: flex; justify-content: space-between;
+      align-items: center; padding: var(--sp-3) 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.9rem;
+    }
+    .order-item:last-of-type { border-bottom: none; }
+    .order-total {
+      display: flex; justify-content: space-between;
+      align-items: center; padding-top: var(--sp-4);
+      border-top: 2px solid var(--border-accent);
+      margin-top: var(--sp-4);
+    }
+    .order-total .label { font-weight: 700; }
+    .order-total .amount { font-size: 1.4rem; font-weight: 800; color: var(--lime); }
+    .order-note { font-size: 0.78rem; color: var(--text-muted); margin-top: var(--sp-4); line-height: 1.6; }
+
+    /* Guarantee */
+    .guarantee-strip {
+      display: grid; grid-template-columns: repeat(3,1fr); gap: var(--sp-4);
+      margin-top: var(--sp-12);
+    }
+    .guarantee-item {
+      text-align: center; padding: var(--sp-6);
+    }
+    .guarantee-icon { font-size: 2rem; margin-bottom: var(--sp-3); }
+    .guarantee-item h4 { font-size: 0.95rem; margin-bottom: var(--sp-2); }
+    .guarantee-item p { font-size: 0.82rem; color: var(--text-secondary); }
+
+    /* Selected plan highlight */
+    .selected-plan {
+      display: flex; align-items: center; justify-content: space-between;
+      background: var(--lime-dim); border: 1px solid var(--border-accent);
+      border-radius: var(--r-md); padding: var(--sp-4) var(--sp-5);
+      margin-bottom: var(--sp-6);
+    }
+    .selected-plan-name { font-weight: 700; color: var(--lime); }
+    .selected-plan-change { font-size: 0.8rem; color: var(--text-secondary); cursor: pointer; text-decoration: underline; }
+
+    @media (max-width: 1024px) {
+      .pricing-grid { grid-template-columns: 1fr; }
+      .pricing-card.featured { transform: none; }
+      .checkout-wrap { grid-template-columns: 1fr; }
+      .guarantee-strip { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 768px) {
+      .card-fields { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<div class="noise-overlay" aria-hidden="true"></div>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><img src="images/mps-logo.png" alt="MPS Studio" class="site-logo-img" /></a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="index.html"     class="nav-link">Home</a></li>
+      <li><a href="services.html"  class="nav-link">Services</a></li>
+      <li><a href="portfolio.html" class="nav-link">Portfolio</a></li>
+      <li><a href="about.html"     class="nav-link">About</a></li>
+      <li><a href="contact.html"   class="nav-link">Contact</a></li>
+      <li><a href="payment.html"   class="nav-cta">Get Started</a></li>
+    </ul>
+    <button class="nav-burger" id="nav-burger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <div class="container">
+    <div class="section-label reveal">Pricing</div>
+    <h1 class="reveal d1">Simple, <span class="text-lime">Transparent</span> Pricing</h1>
+    <p class="reveal d2">No hidden fees. No surprises. Pick a plan that fits your vision, or request a custom quote for complex projects.</p>
+  </div>
+</section>
+
+<!-- PRICING SECTION -->
+<section class="section">
+  <div class="container">
+
+    <!-- Toggle -->
+    <div class="toggle-wrap reveal">
+      <span class="toggle-label active" id="monthly-label">Monthly</span>
+      <div class="toggle-switch" id="billing-toggle">
+        <div class="toggle-knob"></div>
+      </div>
+      <span class="toggle-label" id="yearly-label">Yearly <span class="save-badge">Save 20%</span></span>
+    </div>
+
+    <!-- Pricing Cards -->
+    <div class="pricing-grid reveal">
+      <!-- Starter -->
+      <div class="pricing-card tilt" id="plan-starter">
+        <div class="plan-name">Starter</div>
+        <div class="plan-price" data-monthly="₹15,000" data-yearly="₹1,44,000">₹15,000</div>
+        <div class="plan-period">per project</div>
+        <p class="plan-desc">Perfect for startups and small businesses looking to establish their visual identity.</p>
+        <div class="plan-features">
+          <div class="plan-feature"><i class="fa-solid fa-check"></i> Logo Design (3 concepts)</div>
+          <div class="plan-feature"><i class="fa-solid fa-check"></i> Basic Brand Guidelines</div>
+          <div class="plan-feature"><i class="fa-solid fa-check"></i> Business Card Design</div>
+          <div class="plan-feature"><i class="fa-solid fa-check"></i> 2 Revision Rounds</div>
+          <div class="plan-feature"><i class="fa-solid fa-check"></i> All Source Files</div>
+          <div class="plan-feature off"><i class="fa-solid fa-xmark"></i> UI/UX Design</div>
+          <div class="plan-feature off"><i class="fa-solid fa-xmark"></i> Motion Graphics</div>
+        </div>
+        <button class="plan-btn plan-btn-outline" onclick="selectPlan('Starter', '₹15,000')">Choose Starter</button>
+      </div>
+
+      <!-- Professional (Featured) -->
+      <div class="pricing-card featured tilt" id="plan-pro">
+        <div class="featured-badge">⭐ Most Popular</div>
+        <div class="plan-name">Professional</div>
+        <div class="plan-price" data-monthly="₹45,000" data-yearly="₹4,32,000">₹45,000</div>
+        <div class="plan-period">per project</div>
+        <p class="plan-desc">Full brand experience for growing businesses ready to make a serious impression.</p>
+        <div class="plan-features">
+          <div class="plan-feature"><i class="fa-solid fa-check"></i> Complete Brand Identity</div>
+          <div class="plan-feature"><i class="fa-solid fa-check"></i> UI/UX Design (up to 5 screens)</div>
+          <div class="plan-feature"><i class="fa-solid fa-check"></i> Web Design (Landing Page)</div>
+          <div class="plan-feature"><i class="fa-solid fa-check"></i> Social Media Kit</div>
+          <div class="plan-feature"><i class="fa-solid fa-check"></i> Unlimited Revisions</div>
+          <div class="plan-feature"><i class="fa-solid fa-check"></i> Priority Support</div>
+          <div class="plan-feature off"><i class="fa-solid fa-xmark"></i> Motion Graphics</div>
+        </div>
+        <button class="plan-btn" onclick="selectPlan('Professional', '₹45,000')">Choose Professional</button>
+      </div>
+
+      <!-- Enterprise -->
+      <div class="pricing-card tilt" id="plan-enterprise">
+        <div class="plan-name">Enterprise</div>
+        <div class="plan-price" data-monthly="₹1,20,000" data-yearly="₹11,52,000">₹1,20,000</div>
+        <div class="plan-period">per project</div>
+        <p class="plan-desc">The complete design suite for enterprises demanding the highest level of output.</p>
+        <div class="plan-features">
+          <div class="plan-feature"><i class="fa-solid fa-check"></i> Full Brand Identity System</div>
+          <div class="plan-feature"><i class="fa-solid fa-check"></i> Full UI/UX App Design</div>
+          <div class="plan-feature"><i class="fa-solid fa-check"></i> Multi-page Web Design</div>
+          <div class="plan-feature"><i class="fa-solid fa-check"></i> Motion Graphics Package</div>
+          <div class="plan-feature"><i class="fa-solid fa-check"></i> Print Collateral Set</div>
+          <div class="plan-feature"><i class="fa-solid fa-check"></i> Dedicated Design Manager</div>
+          <div class="plan-feature"><i class="fa-solid fa-check"></i> 6-Month Support</div>
+        </div>
+        <button class="plan-btn plan-btn-outline" onclick="selectPlan('Enterprise', '₹1,20,000')">Choose Enterprise</button>
+      </div>
+    </div>
+
+    <!-- Divider -->
+    <div class="divider"></div>
+
+    <!-- Checkout Section -->
+    <div class="section-header reveal" style="margin-bottom:var(--sp-10);">
+      <div class="section-label">Checkout</div>
+      <h2>Complete Your <span class="text-lime">Order</span></h2>
+    </div>
+
+    <div class="checkout-wrap reveal">
+      <!-- Form -->
+      <div class="checkout-card">
+        <h3 class="checkout-title">Project Details &amp; Payment</h3>
+
+        <div class="selected-plan" id="selected-plan-banner">
+          <span>Selected: <span class="selected-plan-name" id="sel-plan-name">Professional — ₹45,000</span></span>
+          <span class="selected-plan-change" onclick="window.scrollTo({top:0,behavior:'smooth'})">Change Plan</span>
+        </div>
+
+        <!-- Project info -->
+        <div class="card-fields" style="margin-bottom:var(--sp-6);">
+          <div class="form-group full">
+            <label class="form-label">Full Name *</label>
+            <input type="text" class="form-input" placeholder="Your full name" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email Address *</label>
+            <input type="email" class="form-input" placeholder="you@example.com" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Phone Number *</label>
+            <input type="tel" class="form-input" placeholder="+91 98765 43210" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Company / Brand Name</label>
+            <input type="text" class="form-input" placeholder="Your company name" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Project Type</label>
+            <select class="form-input">
+              <option>Brand Identity</option>
+              <option>UI/UX Design</option>
+              <option>Web Design</option>
+              <option>Motion Graphics</option>
+              <option>Complete Package</option>
+            </select>
+          </div>
+          <div class="form-group full">
+            <label class="form-label">Brief Project Description</label>
+            <textarea class="form-input" placeholder="Tell us about your project, goals, and timeline..." rows="3"></textarea>
+          </div>
+        </div>
+
+        <!-- Payment -->
+        <div style="margin-bottom:var(--sp-4);font-size:0.82rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-secondary);">Payment Information</div>
+        <div class="card-fields">
+          <div class="form-group full">
+            <label class="form-label">Card Number</label>
+            <input type="text" class="form-input" placeholder="1234  5678  9012  3456" maxlength="19" id="card-num" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Expiry Date</label>
+            <input type="text" class="form-input" placeholder="MM / YY" maxlength="7" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">CVV</label>
+            <input type="text" class="form-input" placeholder="•••" maxlength="4" />
+          </div>
+          <div class="form-group full">
+            <label class="form-label">Cardholder Name</label>
+            <input type="text" class="form-input" placeholder="Name as on card" />
+          </div>
+        </div>
+
+        <!-- UPI Option -->
+        <div style="text-align:center; margin: var(--sp-4) 0; font-size:0.82rem; color:var(--text-muted);">— or pay via —</div>
+        <div style="display:flex; gap:var(--sp-3); justify-content:center; margin-bottom:var(--sp-6);">
+          <button class="btn btn-dark btn-sm"><i class="fa-solid fa-qrcode"></i> UPI</button>
+          <button class="btn btn-dark btn-sm"><i class="fa-solid fa-building-columns"></i> Net Banking</button>
+        </div>
+
+        <button class="btn btn-lime" style="width:100%; padding:16px; font-size:1rem;" id="pay-btn" onclick="handlePayment()">
+          <i class="fa-solid fa-lock"></i> Pay & Start Project
+        </button>
+
+        <div class="secure-badge">
+          <i class="fa-solid fa-shield-halved"></i>
+          <span>256-bit SSL encryption · Your payment is 100% secure · We never store card details</span>
+        </div>
+      </div>
+
+      <!-- Order Summary -->
+      <div class="order-summary">
+        <h4 class="order-title">Order Summary</h4>
+        <div class="order-item">
+          <span id="os-plan">Professional Plan</span>
+          <span id="os-price">₹45,000</span>
+        </div>
+        <div class="order-item">
+          <span>Consultation Call</span>
+          <span style="color:var(--lime)">Free</span>
+        </div>
+        <div class="order-item">
+          <span>Source Files</span>
+          <span style="color:var(--lime)">Included</span>
+        </div>
+        <div class="order-item">
+          <span>GST (18%)</span>
+          <span id="os-tax">₹8,100</span>
+        </div>
+        <div class="order-total">
+          <span class="label">Total</span>
+          <span class="amount" id="os-total">₹53,100</span>
+        </div>
+        <p class="order-note">
+          50% advance payment to start the project. Remaining 50% upon final delivery and approval.
+        </p>
+        <div style="margin-top:var(--sp-6);">
+          <div style="display:flex; align-items:center; gap:var(--sp-3); margin-bottom:var(--sp-3);">
+            <i class="fa-solid fa-check-circle" style="color:var(--lime);"></i>
+            <span style="font-size:0.85rem;">Free strategy call included</span>
+          </div>
+          <div style="display:flex; align-items:center; gap:var(--sp-3); margin-bottom:var(--sp-3);">
+            <i class="fa-solid fa-check-circle" style="color:var(--lime);"></i>
+            <span style="font-size:0.85rem;">100% satisfaction guarantee</span>
+          </div>
+          <div style="display:flex; align-items:center; gap:var(--sp-3);">
+            <i class="fa-solid fa-check-circle" style="color:var(--lime);"></i>
+            <span style="font-size:0.85rem;">Full source files delivered</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Guarantees -->
+    <div class="guarantee-strip reveal">
+      <div class="card guarantee-item">
+        <div class="guarantee-icon">🔒</div>
+        <h4>Secure Payment</h4>
+        <p>Bank-level encryption protects every transaction.</p>
+      </div>
+      <div class="card guarantee-item">
+        <div class="guarantee-icon">🔄</div>
+        <h4>Satisfaction Guarantee</h4>
+        <p>Not happy with the result? We'll make it right, no questions asked.</p>
+      </div>
+      <div class="card guarantee-item">
+        <div class="guarantee-icon">⚡</div>
+        <h4>Fast Kickoff</h4>
+        <p>Project starts within 24 hours of payment confirmation.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand"><div class="nav-logo" style="margin-bottom:var(--sp-5);"><img src="images/mps-logo.png" alt="MPS Studio" class="site-logo-img" /></div><p>Creating visual experiences that inspire and convert. Based in Mumbai, working globally.</p><div class="social-links" style="margin-top:var(--sp-6);"><a href="#" class="social-link"><i class="fa-brands fa-instagram"></i></a><a href="#" class="social-link"><i class="fa-brands fa-behance"></i></a><a href="#" class="social-link"><i class="fa-brands fa-dribbble"></i></a><a href="#" class="social-link"><i class="fa-brands fa-linkedin-in"></i></a></div></div>
+      <div><div class="footer-col-title">Pages</div><ul class="footer-links"><li><a href="index.html">Home</a></li><li><a href="services.html">Services</a></li><li><a href="portfolio.html">Portfolio</a></li><li><a href="about.html">About Us</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+      <div><div class="footer-col-title">Services</div><ul class="footer-links"><li><a href="services.html">Brand Identity</a></li><li><a href="services.html">UI/UX Design</a></li><li><a href="services.html">Web Design</a></li><li><a href="services.html">Motion Graphics</a></li></ul></div>
+      <div><div class="footer-col-title">Contact</div><ul class="footer-links"><li><a href="mailto:hello@mpsstudio.in">hello@mpsstudio.in</a></li><li><a href="#">+91 98765 43210</a></li><li><a href="#">Mumbai, Maharashtra</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><p>© 2026 MPS Studio. All rights reserved.</p><p>Privacy Policy · Terms of Service</p></div>
+  </div>
+</footer>
+<button class="scroll-top-btn" id="scroll-top" aria-label="Scroll to top"><i class="fa-solid fa-chevron-up"></i></button>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+<script src="js/character.js"></script>
+<script src="js/main.js"></script>
+<script>
+  // Billing toggle
+  const toggle = document.getElementById('billing-toggle');
+  const monthlyLabel = document.getElementById('monthly-label');
+  const yearlyLabel  = document.getElementById('yearly-label');
+  let yearly = false;
+
+  toggle.addEventListener('click', () => {
+    yearly = !yearly;
+    toggle.classList.toggle('on', yearly);
+    monthlyLabel.classList.toggle('active', !yearly);
+    yearlyLabel.classList.toggle('active', yearly);
+    document.querySelectorAll('.plan-price').forEach(el => {
+      el.textContent = yearly ? el.dataset.yearly : el.dataset.monthly;
+    });
+  });
+
+  // Plan selection
+  function selectPlan(name, price) {
+    document.getElementById('sel-plan-name').textContent = name + ' — ' + price;
+    document.getElementById('os-plan').textContent = name + ' Plan';
+    document.getElementById('os-price').textContent = price;
+    const num = parseInt(price.replace(/[₹,]/g,''));
+    const tax = Math.round(num * 0.18);
+    document.getElementById('os-tax').textContent = '₹' + tax.toLocaleString('en-IN');
+    document.getElementById('os-total').textContent = '₹' + (num + tax).toLocaleString('en-IN');
+    document.getElementById('pay-btn').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  // Card number formatting
+  const cardNumEl = document.getElementById('card-num');
+  cardNumEl?.addEventListener('input', (e) => {
+    let v = e.target.value.replace(/\D/g,'').substring(0,16);
+    e.target.value = v.match(/.{1,4}/g)?.join('  ') || v;
+  });
+
+  // Payment handler
+  function handlePayment() {
+    const btn = document.getElementById('pay-btn');
+    btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Processing…';
+    btn.disabled = true;
+    setTimeout(() => {
+      btn.innerHTML = '<i class="fa-solid fa-check-circle"></i> Payment Successful! We\'ll contact you within 24 hours.';
+      btn.style.background = '#22c55e';
+    }, 2200);
+  }
+</script>
+</body>
+</html>

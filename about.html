@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Us — MPS Studio</title>
+  <meta name="description" content="Learn the story behind MPS Studio — our mission, values, team, and the creative journey that drives every design we craft." />
+
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/character.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <style>
+    /* ── ABOUT PAGE ── */
+    .about-layout { display: flex; gap: var(--sp-12); align-items: flex-start; }
+    .about-content { flex: 1; min-width: 0; }
+
+    /* Story block */
+    .story-block {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: var(--sp-10); align-items: center;
+      margin-bottom: var(--sp-16);
+    }
+    .story-visual {
+      height: 380px;
+      background: radial-gradient(ellipse at center, rgba(215,255,100,0.08) 0%, transparent 65%);
+      border-radius: var(--r-xl);
+      border: 1px solid var(--border-accent);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 6rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .story-visual::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(
+        45deg, transparent, transparent 20px,
+        rgba(215,255,100,0.02) 20px, rgba(215,255,100,0.02) 21px
+      );
+    }
+    .story-text p { color: var(--text-secondary); line-height: 1.85; margin-bottom: var(--sp-5); }
+    .story-text .highlight {
+      font-family: var(--font-accent); font-style: italic;
+      font-size: 1.2rem; color: var(--text-primary); line-height: 1.6;
+      border-left: 3px solid var(--lime); padding-left: var(--sp-5);
+      margin: var(--sp-6) 0;
+    }
+
+    /* Values grid */
+    .values-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: var(--sp-4); margin-bottom: var(--sp-16); }
+    .value-card { text-align: center; padding: var(--sp-8) var(--sp-6); }
+    .value-num {
+      font-family: var(--font-head);
+      font-size: 3.5rem; font-weight: 800;
+      color: var(--lime); letter-spacing: -0.04em;
+      line-height: 1; margin-bottom: var(--sp-2);
+    }
+    .value-card h4 { margin-bottom: var(--sp-2); }
+    .value-card p { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6; }
+
+    /* Mission section */
+    .mission-block {
+      background: var(--lime);
+      border-radius: var(--r-xl);
+      padding: var(--sp-12);
+      text-align: center;
+      margin-bottom: var(--sp-16);
+    }
+    .mission-block h2, .mission-block p, .mission-block span { color: var(--black) !important; }
+    .mission-quote {
+      font-family: var(--font-accent); font-style: italic;
+      font-size: clamp(1.3rem, 3vw, 2rem);
+      line-height: 1.5; margin: var(--sp-6) 0;
+    }
+
+    /* Timeline */
+    .timeline { position: relative; padding-left: 60px; margin-bottom: var(--sp-12); }
+    .timeline::before {
+      content: '';
+      position: absolute; left: 24px; top: 0; bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--lime) 0%, rgba(215,255,100,0.2) 100%);
+    }
+    .timeline-item { position: relative; margin-bottom: var(--sp-10); }
+    .timeline-dot {
+      position: absolute; left: -48px; top: 4px;
+      width: 16px; height: 16px; border-radius: 50%;
+      background: var(--lime);
+      border: 3px solid var(--black);
+      box-shadow: 0 0 14px var(--lime-glow);
+    }
+    .timeline-year {
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--lime); margin-bottom: 4px;
+    }
+    .timeline-item h3 { font-size: 1.1rem; margin-bottom: 6px; }
+    .timeline-item p { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.7; }
+
+    /* Team */
+    .team-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: var(--sp-5); }
+    .team-card { text-align: center; padding: var(--sp-8) var(--sp-5); }
+    .team-avatar {
+      width: 90px; height: 90px; border-radius: 50%;
+      margin: 0 auto var(--sp-4);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2rem; font-weight: 800;
+      border: 2px solid var(--border-accent);
+    }
+    .team-avatar-1 { background: linear-gradient(135deg, #1a1040, #3d1b7a); }
+    .team-avatar-2 { background: linear-gradient(135deg, #0a1628, #1e3a5f); }
+    .team-avatar-3 { background: linear-gradient(135deg, #1a2810, #2d5c1e); }
+    .team-card h4 { margin-bottom: 4px; }
+    .team-role { font-size: 0.82rem; color: var(--lime); font-weight: 700; margin-bottom: var(--sp-3); }
+    .team-card p { font-size: 0.82rem; color: var(--text-secondary); line-height: 1.6; }
+
+    /* Stats row */
+    .about-stats { display: grid; grid-template-columns: repeat(4,1fr); gap: var(--sp-4); margin-bottom: var(--sp-16); }
+    .about-stat { text-align: center; padding: var(--sp-6); }
+
+    @media (max-width: 1024px) {
+      .about-layout { flex-direction: column; }
+      .char-side-panel { width: 100%; position: static; }
+      .char-side-canvas-wrap { width: 100%; height: 280px; }
+      .story-block { grid-template-columns: 1fr; }
+      .story-visual { height: 240px; }
+      .values-grid { grid-template-columns: 1fr 1fr; }
+      .team-grid { grid-template-columns: 1fr 1fr; }
+      .about-stats { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 768px) {
+      .values-grid, .team-grid { grid-template-columns: 1fr; }
+      .about-stats { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+<div class="noise-overlay" aria-hidden="true"></div>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><img src="images/mps-logo.png" alt="MPS Studio" class="site-logo-img" /></a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="index.html"     class="nav-link">Home</a></li>
+      <li><a href="services.html"  class="nav-link">Services</a></li>
+      <li><a href="portfolio.html" class="nav-link">Portfolio</a></li>
+      <li><a href="about.html"     class="nav-link active">About</a></li>
+      <li><a href="contact.html"   class="nav-link">Contact</a></li>
+      <li><a href="payment.html"   class="nav-cta">Get Started</a></li>
+    </ul>
+    <button class="nav-burger" id="nav-burger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <div class="container">
+    <div class="section-label reveal">About Us</div>
+    <h1 class="reveal d1">The <span class="text-lime">Creative Minds</span><br/>Behind MPS Studio</h1>
+    <p class="reveal d2">We're a passionate team of designers, strategists, and storytellers united by one belief: great design has the power to change everything.</p>
+  </div>
+</section>
+
+<!-- MAIN -->
+<section class="section">
+  <div class="container">
+    <div class="about-layout">
+      <div class="about-content">
+
+        <!-- Story -->
+        <div class="story-block reveal">
+          <div class="story-visual">✦</div>
+          <div class="story-text">
+            <div class="section-label" style="margin-bottom:var(--sp-5);">Our Story</div>
+            <h2 style="margin-bottom:var(--sp-5);">Born from a <span class="text-lime">Passion</span> for Design</h2>
+            <p>MPS Studio was founded in 2019 by a group of design enthusiasts who believed that beautiful, strategic design shouldn't be a luxury reserved for big corporations.</p>
+            <div class="highlight">"We started with a single client, a shared laptop, and an unshakeable belief that design can transform any business."</div>
+            <p>Five years and 150+ projects later, we've grown into a full-service creative studio working with startups, established brands, and everything in between. Our team of 8 specialists brings expertise across brand identity, UI/UX, motion, and print — all under one roof.</p>
+          </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="about-stats reveal">
+          <div class="card about-stat">
+            <div class="stat-num" data-target="150" data-suffix="+">0+</div>
+            <div class="stat-label">Projects Delivered</div>
+          </div>
+          <div class="card about-stat">
+            <div class="stat-num" data-target="80" data-suffix="+">0+</div>
+            <div class="stat-label">Happy Clients</div>
+          </div>
+          <div class="card about-stat">
+            <div class="stat-num" data-target="5" data-suffix="+">0+</div>
+            <div class="stat-label">Years Active</div>
+          </div>
+          <div class="card about-stat">
+            <div class="stat-num" data-target="15" data-suffix="+">0+</div>
+            <div class="stat-label">Awards Won</div>
+          </div>
+        </div>
+
+        <!-- Mission -->
+        <div class="mission-block reveal">
+          <div style="font-size:0.78rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:rgba(23,23,23,0.6);">Our Mission</div>
+          <div class="mission-quote">"To make world-class design accessible to every business, and to use our craft to tell stories that matter."</div>
+          <p style="font-size:0.9rem;line-height:1.7;">We believe every business has a unique story worth telling — and that the right visual language can transform how the world perceives you. Our mission is to be the creative partner that helps you tell that story with power, clarity, and beauty.</p>
+        </div>
+
+        <!-- Values -->
+        <div class="reveal" style="margin-bottom:var(--sp-16);">
+          <div class="section-label" style="margin-bottom:var(--sp-5);">Our Values</div>
+          <h2 style="margin-bottom:var(--sp-10);">What We <span class="text-lime">Stand For</span></h2>
+          <div class="values-grid">
+            <div class="card value-card reveal d1">
+              <div class="value-num">01</div>
+              <h4>Craft Excellence</h4>
+              <p>Every pixel matters. We obsess over the details that elevate good design to great design.</p>
+            </div>
+            <div class="card value-card reveal d2">
+              <div class="value-num">02</div>
+              <h4>Client Partnership</h4>
+              <p>We're not vendors — we're partners. Your success is our success, full stop.</p>
+            </div>
+            <div class="card value-card reveal d3">
+              <div class="value-num">03</div>
+              <h4>Strategic Thinking</h4>
+              <p>Beautiful design without strategy is just decoration. We design with purpose.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Timeline -->
+        <div class="reveal" style="margin-bottom:var(--sp-16);">
+          <div class="section-label" style="margin-bottom:var(--sp-5);">Milestones</div>
+          <h2 style="margin-bottom:var(--sp-10);">Our <span class="text-lime">Journey</span></h2>
+          <div class="timeline">
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-year">2019</div>
+              <h3>MPS Studio is Founded</h3>
+              <p>Started with 3 founding members and a dream. Landed our first client — a local restaurant — and never looked back.</p>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-year">2020</div>
+              <h3>First 25 Clients & Awards</h3>
+              <p>Grew to 25 clients and won our first regional design award for the NeoBank branding project.</p>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-year">2021</div>
+              <h3>Expanded to UI/UX & Motion</h3>
+              <p>Added UI/UX and Motion Graphics services. Team grew to 5 specialists.</p>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-year">2022–2023</div>
+              <h3>100+ Projects Milestone</h3>
+              <p>Crossed 100 projects and began working with enterprise clients across India and the UAE.</p>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-year">2024–Present</div>
+              <h3>150+ Projects & Growing</h3>
+              <p>Team of 8. 15 awards. And we're just getting started — the best work is always ahead.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Team -->
+        <div class="reveal">
+          <div class="section-label" style="margin-bottom:var(--sp-5);">The Team</div>
+          <h2 style="margin-bottom:var(--sp-10);">Meet the <span class="text-lime">Creators</span></h2>
+          <div class="team-grid">
+            <div class="card team-card reveal d1">
+              <div class="team-avatar team-avatar-1">🎨</div>
+              <h4>Mihir Pathak</h4>
+              <div class="team-role">Founder & Creative Director</div>
+              <p>8+ years in brand design. Former design lead at a global agency. Obsessed with typography and brand systems.</p>
+            </div>
+            <div class="card team-card reveal d2">
+              <div class="team-avatar team-avatar-2">💻</div>
+              <h4>Priya Sharma</h4>
+              <div class="team-role">Head of UI/UX</div>
+              <p>Ex-product designer at a Series B startup. Specialises in user-centered design and complex app interfaces.</p>
+            </div>
+            <div class="card team-card reveal d3">
+              <div class="team-avatar team-avatar-3">🎬</div>
+              <h4>Arjun Menon</h4>
+              <div class="team-role">Motion & Visual Director</div>
+              <p>Award-winning motion designer with a background in film and animation. Brings brands to life through movement.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Character Side Panel -->
+      <aside class="char-side-panel">
+        <div class="char-side-canvas-wrap">
+          <canvas id="about-canvas"></canvas>
+          <div class="char-platform"></div>
+        </div>
+        <div class="char-side-bubble">
+          <div class="bubble-name">Alex · MPS Studio</div>
+          <div class="bubble-text" id="about-bubble-text">Loading...</div>
+        </div>
+        <div style="margin-top:var(--sp-6);">
+          <a href="contact.html" class="btn btn-lime" style="width:100%; justify-content:center;">
+            <i class="fa-solid fa-envelope"></i> Work With Us
+          </a>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section style="padding:var(--sp-16) 0; background:var(--surface-1); text-align:center;">
+  <div class="container reveal">
+    <h2>Become Part of Our <span class="text-lime">Story</span></h2>
+    <p style="color:var(--text-secondary);margin:var(--sp-4) auto var(--sp-8); max-width:480px;">Every project we take on becomes a chapter in our creative journey. Let's write yours together.</p>
+    <div style="display:flex; gap:var(--sp-4); justify-content:center; flex-wrap:wrap;">
+      <a href="payment.html" class="btn btn-lime btn-lg">Start a Project</a>
+      <a href="contact.html" class="btn btn-outline btn-lg">Say Hello</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand"><div class="nav-logo" style="margin-bottom:var(--sp-5);"><img src="images/mps-logo.png" alt="MPS Studio" class="site-logo-img" /></div><p>Creating visual experiences that inspire, engage, and convert. Based in Mumbai, working globally.</p><div class="social-links" style="margin-top:var(--sp-6);"><a href="#" class="social-link"><i class="fa-brands fa-instagram"></i></a><a href="#" class="social-link"><i class="fa-brands fa-behance"></i></a><a href="#" class="social-link"><i class="fa-brands fa-dribbble"></i></a><a href="#" class="social-link"><i class="fa-brands fa-linkedin-in"></i></a></div></div>
+      <div><div class="footer-col-title">Pages</div><ul class="footer-links"><li><a href="index.html">Home</a></li><li><a href="services.html">Services</a></li><li><a href="portfolio.html">Portfolio</a></li><li><a href="about.html">About Us</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+      <div><div class="footer-col-title">Services</div><ul class="footer-links"><li><a href="services.html">Brand Identity</a></li><li><a href="services.html">UI/UX Design</a></li><li><a href="services.html">Web Design</a></li><li><a href="services.html">Motion Graphics</a></li></ul></div>
+      <div><div class="footer-col-title">Contact</div><ul class="footer-links"><li><a href="mailto:hello@mpsstudio.in">hello@mpsstudio.in</a></li><li><a href="#">+91 98765 43210</a></li><li><a href="#">Mumbai, Maharashtra</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><p>© 2026 MPS Studio. All rights reserved.</p><p>Privacy Policy · Terms of Service</p></div>
+  </div>
+</footer>
+<button class="scroll-top-btn" id="scroll-top" aria-label="Scroll to top"><i class="fa-solid fa-chevron-up"></i></button>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+<script src="js/character.js"></script>
+<script src="js/main.js"></script>
+<script>
+  const aboutChar = new MPSCharacter('about-canvas', { cameraY: 1.0, cameraZ: 3.6 });
+  const aboutText = document.getElementById('about-bubble-text');
+  const aboutMsgs = [
+    "I'm Alex — part of the MPS Studio family! 👋",
+    "We started with a big dream and a laptop. Now we're 8 strong! 💪",
+    "Every project we do is done with heart, strategy, and craft. ✨",
+    "Want to join our journey? Let's create something amazing together! 🚀",
+  ];
+  let ai = 0;
+  function aboutCycle() { window.typeInBubble(aboutText, aboutMsgs[ai++ % aboutMsgs.length]); }
+  setTimeout(() => { aboutChar.wave(); aboutCycle(); setInterval(aboutCycle, 5000); }, 600);
+</script>
+</body>
+</html>

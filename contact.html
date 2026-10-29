@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact Us — MPS Studio</title>
+  <meta name="description" content="Get in touch with MPS Studio. Let's discuss your next design project — free consultation, rapid response within 24 hours." />
+
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/character.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <style>
+    /* ── CONTACT PAGE ── */
+    .contact-layout {
+      display: grid;
+      grid-template-columns: 1fr 520px;
+      gap: var(--sp-12);
+      align-items: start;
+    }
+
+    /* Info side */
+    .contact-info-card {
+      display: flex; align-items: flex-start; gap: var(--sp-4);
+      padding: var(--sp-5) var(--sp-6);
+      margin-bottom: var(--sp-4);
+    }
+    .contact-info-icon {
+      width: 48px; height: 48px; flex-shrink: 0;
+      background: var(--lime-dim); border: 1px solid var(--border-accent);
+      border-radius: var(--r-md);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--lime); font-size: 1.1rem;
+    }
+    .contact-info-card h4 {
+      font-size: 0.78rem; font-weight: 700;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--text-secondary); margin-bottom: 4px;
+    }
+    .contact-info-card a, .contact-info-card p {
+      font-size: 0.95rem; color: var(--text-primary);
+      font-weight: 600;
+      transition: color var(--dur-fast) var(--ease);
+    }
+    .contact-info-card a:hover { color: var(--lime); }
+
+    /* Character strip (over contact info) */
+    .contact-char-strip {
+      border-radius: var(--r-xl);
+      overflow: hidden;
+      background: radial-gradient(ellipse at center, rgba(215,255,100,0.07) 0%, transparent 65%);
+      border: 1px solid var(--border-accent);
+      position: relative;
+      margin-bottom: var(--sp-6);
+    }
+    .char-strip-canvas-wrap { height: 320px; position: relative; }
+    .char-strip-bubble {
+      padding: var(--sp-5) var(--sp-6);
+      background: var(--surface-1);
+      border-top: 1px solid var(--border-accent);
+    }
+
+    /* Social links styled */
+    .contact-socials { display: flex; flex-wrap: wrap; gap: var(--sp-3); margin-top: var(--sp-2); }
+    .social-contact-link {
+      display: flex; align-items: center; gap: var(--sp-3);
+      padding: 10px 16px;
+      background: var(--surface-1);
+      border: 1px solid var(--border);
+      border-radius: var(--r-md);
+      font-size: 0.85rem; font-weight: 600;
+      color: var(--text-secondary);
+      transition: all var(--dur) var(--ease);
+    }
+    .social-contact-link:hover {
+      border-color: var(--border-accent); color: var(--lime); background: var(--lime-dim);
+    }
+    .social-contact-link i { font-size: 1rem; }
+
+    /* Form card */
+    .contact-form-card {
+      background: var(--surface-1);
+      border: 1px solid var(--border);
+      border-radius: var(--r-xl);
+      padding: var(--sp-10);
+      position: sticky; top: calc(var(--nav-h) + 20px);
+    }
+    .contact-form-card h2 { font-size: 1.5rem; margin-bottom: var(--sp-2); }
+    .contact-form-card > p { color: var(--text-secondary); font-size: 0.9rem; margin-bottom: var(--sp-8); }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-4); }
+
+    .service-chips { display: flex; flex-wrap: wrap; gap: var(--sp-2); margin-top: var(--sp-2); }
+    .service-chip {
+      padding: 6px 14px; border-radius: var(--r-full);
+      background: var(--surface-2); border: 1px solid var(--border);
+      font-size: 0.78rem; font-weight: 600; cursor: pointer;
+      color: var(--text-secondary);
+      transition: all var(--dur-fast) var(--ease);
+    }
+    .service-chip.selected {
+      background: var(--lime-dim); border-color: var(--border-accent); color: var(--lime);
+    }
+
+    .budget-options { display: flex; flex-wrap: wrap; gap: var(--sp-2); margin-top: var(--sp-2); }
+    .budget-option {
+      padding: 6px 14px; border-radius: var(--r-full);
+      background: var(--surface-2); border: 1px solid var(--border);
+      font-size: 0.78rem; font-weight: 600; cursor: pointer;
+      color: var(--text-secondary);
+      transition: all var(--dur-fast) var(--ease);
+    }
+    .budget-option.selected {
+      background: var(--lime-dim); border-color: var(--border-accent); color: var(--lime);
+    }
+
+    /* Map placeholder */
+    .map-placeholder {
+      height: 260px;
+      background: var(--surface-1);
+      border: 1px solid var(--border);
+      border-radius: var(--r-xl);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: var(--sp-4); color: var(--text-muted);
+      position: relative; overflow: hidden;
+      margin-top: var(--sp-12);
+    }
+    .map-placeholder::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(0deg, transparent, transparent 30px, rgba(255,255,255,0.02) 30px, rgba(255,255,255,0.02) 31px),
+                  repeating-linear-gradient(90deg, transparent, transparent 30px, rgba(255,255,255,0.02) 30px, rgba(255,255,255,0.02) 31px);
+    }
+    .map-pin {
+      width: 40px; height: 40px;
+      background: var(--lime); border-radius: 50% 50% 50% 0;
+      transform: rotate(-45deg);
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: var(--sh-lime);
+    }
+    .map-pin i { transform: rotate(45deg); color: var(--black); font-size: 1rem; }
+    .map-placeholder p { font-size: 0.9rem; font-weight: 600; color: var(--text-secondary); }
+
+    /* FAQ */
+    .faq-list { margin-top: var(--sp-12); }
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+      overflow: hidden;
+    }
+    .faq-q {
+      width: 100%; text-align: left;
+      padding: var(--sp-5) 0;
+      display: flex; justify-content: space-between; align-items: center;
+      cursor: pointer; background: none; border: none;
+      font-family: inherit; font-size: 0.95rem; font-weight: 600;
+      color: var(--text-primary);
+    }
+    .faq-q i { color: var(--lime); transition: transform var(--dur) var(--ease); flex-shrink: 0; margin-left: var(--sp-4); }
+    .faq-item.open .faq-q i { transform: rotate(45deg); }
+    .faq-a {
+      max-height: 0; overflow: hidden;
+      transition: max-height var(--dur) var(--ease);
+    }
+    .faq-item.open .faq-a { max-height: 200px; }
+    .faq-a p { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.7; padding-bottom: var(--sp-5); }
+
+    @media (max-width: 1024px) {
+      .contact-layout { grid-template-columns: 1fr; }
+      .contact-form-card { position: static; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<div class="noise-overlay" aria-hidden="true"></div>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><img src="images/mps-logo.png" alt="MPS Studio" class="site-logo-img" /></a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="index.html"     class="nav-link">Home</a></li>
+      <li><a href="services.html"  class="nav-link">Services</a></li>
+      <li><a href="portfolio.html" class="nav-link">Portfolio</a></li>
+      <li><a href="about.html"     class="nav-link">About</a></li>
+      <li><a href="contact.html"   class="nav-link active">Contact</a></li>
+      <li><a href="payment.html"   class="nav-cta">Get Started</a></li>
+    </ul>
+    <button class="nav-burger" id="nav-burger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <div class="container">
+    <div class="section-label reveal">Get In Touch</div>
+    <h1 class="reveal d1">Let's Start a <span class="text-lime">Conversation</span></h1>
+    <p class="reveal d2">Have a project in mind? A question? Or just want to say hello? We'd love to hear from you. We typically respond within 24 hours.</p>
+  </div>
+</section>
+
+<!-- CONTACT MAIN -->
+<section class="section">
+  <div class="container">
+    <div class="contact-layout">
+
+      <!-- Left: Info + Character -->
+      <div>
+
+        <!-- Character strip -->
+        <div class="contact-char-strip reveal">
+          <div class="char-strip-canvas-wrap">
+            <canvas id="contact-canvas"></canvas>
+            <div class="char-platform"></div>
+          </div>
+          <div class="char-strip-bubble">
+            <div class="bubble-name">Alex · MPS Studio</div>
+            <div class="bubble-text" id="contact-bubble-text">Loading...</div>
+          </div>
+        </div>
+
+        <!-- Contact Info Cards -->
+        <div class="card contact-info-card card-glow reveal d1">
+          <div class="contact-info-icon"><i class="fa-solid fa-envelope"></i></div>
+          <div>
+            <h4>Email Us</h4>
+            <a href="mailto:hello@mpsstudio.in">hello@mpsstudio.in</a>
+          </div>
+        </div>
+        <div class="card contact-info-card card-glow reveal d2">
+          <div class="contact-info-icon"><i class="fa-solid fa-phone"></i></div>
+          <div>
+            <h4>Call / WhatsApp</h4>
+            <a href="tel:+919876543210">+91 98765 43210</a>
+          </div>
+        </div>
+        <div class="card contact-info-card card-glow reveal d3">
+          <div class="contact-info-icon"><i class="fa-solid fa-location-dot"></i></div>
+          <div>
+            <h4>Studio Location</h4>
+            <p>Bandra West, Mumbai<br/>Maharashtra, India — 400 050</p>
+          </div>
+        </div>
+        <div class="card contact-info-card card-glow reveal d4">
+          <div class="contact-info-icon"><i class="fa-solid fa-clock"></i></div>
+          <div>
+            <h4>Working Hours</h4>
+            <p>Mon – Sat · 9:00 AM – 7:00 PM IST</p>
+          </div>
+        </div>
+
+        <!-- Social Links -->
+        <div class="reveal" style="margin-top:var(--sp-6);">
+          <div style="font-size:0.78rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:var(--sp-3);">Follow Our Work</div>
+          <div class="contact-socials">
+            <a href="#" class="social-contact-link"><i class="fa-brands fa-instagram"></i> Instagram</a>
+            <a href="#" class="social-contact-link"><i class="fa-brands fa-behance"></i> Behance</a>
+            <a href="#" class="social-contact-link"><i class="fa-brands fa-dribbble"></i> Dribbble</a>
+            <a href="#" class="social-contact-link"><i class="fa-brands fa-linkedin-in"></i> LinkedIn</a>
+          </div>
+        </div>
+
+        <!-- Map Placeholder -->
+        <div class="map-placeholder reveal">
+          <div class="map-pin"><i class="fa-solid fa-location-dot"></i></div>
+          <p>MPS Studio · Bandra West, Mumbai</p>
+        </div>
+
+        <!-- FAQ -->
+        <div class="faq-list reveal" style="margin-top:var(--sp-12);">
+          <div class="section-label" style="margin-bottom:var(--sp-6);">Quick Answers</div>
+          <div class="faq-item">
+            <button class="faq-q">How long does a branding project take? <i class="fa-solid fa-plus"></i></button>
+            <div class="faq-a"><p>A standard logo + brand identity project takes 7–14 business days. Rush timelines are available.</p></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q">Do you work with international clients? <i class="fa-solid fa-plus"></i></button>
+            <div class="faq-a"><p>Absolutely! We work with clients across India, UAE, USA, UK, and Australia. All communication is via email and video calls.</p></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q">What's your payment structure? <i class="fa-solid fa-plus"></i></button>
+            <div class="faq-a"><p>We require 50% advance to begin work, and the remaining 50% is due upon final delivery. We accept bank transfers, UPI, and cards.</p></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q">Do you offer ongoing retainer packages? <i class="fa-solid fa-plus"></i></button>
+            <div class="faq-a"><p>Yes! We offer monthly design retainers for brands that need continuous creative support. Get in touch to discuss custom rates.</p></div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Right: Form -->
+      <div class="contact-form-card reveal d2">
+        <h2>Send Us a <span class="text-lime">Message</span></h2>
+        <p>Fill in the form below and we'll get back to you within 24 hours.</p>
+
+        <form id="contact-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">First Name *</label>
+              <input type="text" class="form-input" placeholder="Rahul" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Last Name *</label>
+              <input type="text" class="form-input" placeholder="Kapoor" required />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email Address *</label>
+            <input type="email" class="form-input" placeholder="hello@yourcompany.com" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Phone / WhatsApp</label>
+            <input type="tel" class="form-input" placeholder="+91 98765 43210" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">I'm Interested In</label>
+            <div class="service-chips" id="service-chips">
+              <div class="service-chip selected" data-val="brand">Brand Identity</div>
+              <div class="service-chip" data-val="ui">UI/UX Design</div>
+              <div class="service-chip" data-val="web">Web Design</div>
+              <div class="service-chip" data-val="motion">Motion Graphics</div>
+              <div class="service-chip" data-val="print">Print Design</div>
+              <div class="service-chip" data-val="social">Social Media</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Estimated Budget</label>
+            <div class="budget-options" id="budget-options">
+              <div class="budget-option" data-val="<15k">Under ₹15K</div>
+              <div class="budget-option selected" data-val="15-45k">₹15K – ₹45K</div>
+              <div class="budget-option" data-val="45-1.2L">₹45K – ₹1.2L</div>
+              <div class="budget-option" data-val=">1.2L">Above ₹1.2L</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Tell Us About Your Project *</label>
+            <textarea class="form-input" placeholder="Describe your project, goals, timeline, and anything else that would help us understand what you're looking for..." rows="5" required></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-lime" style="width:100%; padding:16px; font-size:1rem;">
+            <i class="fa-solid fa-paper-plane"></i> Send Message
+          </button>
+          <p style="font-size:0.78rem; color:var(--text-muted); text-align:center; margin-top:var(--sp-4);">
+            We respond to all messages within 24 hours · Free consultation call included
+          </p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand"><div class="nav-logo" style="margin-bottom:var(--sp-5);"><img src="images/mps-logo.png" alt="MPS Studio" class="site-logo-img" /></div><p>Creating visual experiences that inspire, engage, and convert. Based in Mumbai, working globally.</p><div class="social-links" style="margin-top:var(--sp-6);"><a href="#" class="social-link"><i class="fa-brands fa-instagram"></i></a><a href="#" class="social-link"><i class="fa-brands fa-behance"></i></a><a href="#" class="social-link"><i class="fa-brands fa-dribbble"></i></a><a href="#" class="social-link"><i class="fa-brands fa-linkedin-in"></i></a></div></div>
+      <div><div class="footer-col-title">Pages</div><ul class="footer-links"><li><a href="index.html">Home</a></li><li><a href="services.html">Services</a></li><li><a href="portfolio.html">Portfolio</a></li><li><a href="about.html">About Us</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+      <div><div class="footer-col-title">Services</div><ul class="footer-links"><li><a href="services.html">Brand Identity</a></li><li><a href="services.html">UI/UX Design</a></li><li><a href="services.html">Web Design</a></li><li><a href="services.html">Motion Graphics</a></li></ul></div>
+      <div><div class="footer-col-title">Contact</div><ul class="footer-links"><li><a href="mailto:hello@mpsstudio.in">hello@mpsstudio.in</a></li><li><a href="#">+91 98765 43210</a></li><li><a href="#">Mumbai, Maharashtra</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><p>© 2026 MPS Studio. All rights reserved.</p><p>Privacy Policy · Terms of Service</p></div>
+  </div>
+</footer>
+<button class="scroll-top-btn" id="scroll-top" aria-label="Scroll to top"><i class="fa-solid fa-chevron-up"></i></button>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+<script src="js/character.js"></script>
+<script src="js/main.js"></script>
+<script>
+  // ── Character ──
+  const contactChar = new MPSCharacter('contact-canvas', { cameraY: 1.0, cameraZ: 3.6 });
+  const contactText = document.getElementById('contact-bubble-text');
+  const contactMsgs = [
+    "I'm so glad you're reaching out! 👋 We'd love to hear from you.",
+    "Tell us about your project — we'll make it amazing together! 🚀",
+    "Every great collaboration starts with a conversation. Let's talk! 💬",
+    "We typically respond within 24 hours — often much faster! ⚡",
+  ];
+  let ci = 0;
+  function contactCycle() { window.typeInBubble(contactText, contactMsgs[ci++ % contactMsgs.length]); }
+  setTimeout(() => { contactChar.wave(); contactCycle(); setInterval(contactCycle, 5000); }, 600);
+
+  // Character reacts to form focus
+  document.querySelectorAll('.form-input').forEach(input => {
+    input.addEventListener('focus', () => contactChar.talk());
+    input.addEventListener('blur', () => contactChar.idle());
+  });
+
+  // ── Service Chips ──
+  document.querySelectorAll('.service-chip').forEach(chip => {
+    chip.addEventListener('click', () => chip.classList.toggle('selected'));
+  });
+
+  // ── Budget Options ──
+  document.querySelectorAll('.budget-option').forEach(opt => {
+    opt.addEventListener('click', () => {
+      document.querySelectorAll('.budget-option').forEach(o => o.classList.remove('selected'));
+      opt.classList.add('selected');
+    });
+  });
+
+  // ── FAQ ──
+  document.querySelectorAll('.faq-q').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const item = btn.closest('.faq-item');
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+      if (!isOpen) item.classList.add('open');
+    });
+  });
+</script>
+</body>
+</html>

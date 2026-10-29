@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MPS Studio — Premium Design Studio</title>
+  <meta name="description" content="MPS Studio crafts stunning brand identities, UI/UX designs, and visual experiences that make your business unforgettable." />
+
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/character.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <style>
+    /* ── HOME-SPECIFIC ── */
+    /* Hero */
+    .hero {
+      min-height: 100svh;
+      display: grid;
+      grid-template-columns: 1fr 480px;
+      align-items: center;
+      gap: var(--sp-10);
+      padding-top: var(--nav-h);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0; z-index: 0; pointer-events: none;
+    }
+    .hero-bg canvas { width:100%!important; height:100%!important; opacity: 0.18; }
+
+    .hero-content { position: relative; z-index: 2; }
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-size: 0.78rem; font-weight: 700; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--text-secondary);
+      margin-bottom: var(--sp-6);
+    }
+    .hero-eyebrow-dot {
+      width: 32px; height: 1px; background: var(--lime);
+    }
+    .hero-eyebrow-pulse {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--lime); position: relative;
+    }
+    .hero-eyebrow-pulse::after {
+      content:''; position:absolute; inset:-4px;
+      border-radius: 50%; border: 1px solid var(--lime);
+      animation: pulse-ring 1.5s ease-out infinite;
+    }
+
+    .hero-title { margin-bottom: var(--sp-6); }
+    .hero-title .italic-word {
+      font-family: var(--font-accent); font-style: italic; font-weight: 400;
+      color: var(--lime);
+    }
+
+    .hero-desc {
+      color: var(--text-secondary);
+      font-size: 1.05rem;
+      line-height: 1.75;
+      max-width: 500px;
+      margin-bottom: var(--sp-10);
+    }
+
+    .hero-actions { display: flex; align-items: center; gap: var(--sp-4); flex-wrap: wrap; }
+
+    .hero-social-proof {
+      display: flex; align-items: center; gap: var(--sp-4);
+      margin-top: var(--sp-10);
+      padding-top: var(--sp-8);
+      border-top: 1px solid var(--border);
+    }
+    .avatar-stack { display: flex; }
+    .avatar-stack img, .avatar-item {
+      width: 36px; height: 36px; border-radius: 50%;
+      border: 2px solid var(--black);
+      margin-left: -10px; object-fit: cover;
+    }
+    .avatar-stack .avatar-item:first-child { margin-left: 0; }
+    .avatar-item {
+      background: var(--surface-2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.7rem; font-weight: 700; color: var(--text-secondary);
+    }
+    .proof-text { font-size: 0.85rem; color: var(--text-secondary); }
+    .proof-text strong { color: var(--text-primary); }
+
+    /* Hero Character */
+    .hero-char-wrap {
+      position: relative; z-index: 2;
+      height: 580px;
+    }
+    .hero-char-canvas-container {
+      width: 100%; height: 100%;
+      background: radial-gradient(ellipse at center, rgba(215,255,100,0.07) 0%, transparent 65%);
+      border-radius: var(--r-xl);
+      overflow: hidden; position: relative;
+    }
+    #hero-canvas { width: 100%; height: 100%; display: block; }
+
+    /* Floating badge on character */
+    .char-badge {
+      position: absolute;
+      background: var(--surface-1);
+      border: 1px solid var(--border-accent);
+      border-radius: var(--r-md);
+      padding: 10px 16px;
+      display: flex; align-items: center; gap: 10px;
+      box-shadow: var(--sh-md), 0 0 20px rgba(215,255,100,0.08);
+      animation: float 4s ease-in-out infinite;
+      z-index: 10;
+    }
+    .char-badge-icon {
+      width: 36px; height: 36px; border-radius: var(--r-sm);
+      background: var(--lime); color: var(--black);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem;
+    }
+    .char-badge-label { font-size: 0.72rem; color: var(--text-secondary); }
+    .char-badge-value { font-size: 0.9rem; font-weight: 700; }
+    .badge-projects { top: 20px; left: -30px; animation-delay: 0s; }
+    .badge-clients  { bottom: 80px; left: -20px; animation-delay: 1.4s; }
+    .badge-award    { top: 120px; right: -20px; animation-delay: 0.7s; }
+
+    /* ── MARQUEE SECTION ── */
+    .marquee-section {
+      padding: var(--sp-8) 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      overflow: hidden;
+    }
+    .marquee-inner { display: flex; overflow: hidden; }
+
+    /* ── SERVICES SECTION ── */
+    .services-section { background: var(--surface-1); }
+    .service-card {
+      position: relative; overflow: hidden;
+      padding: var(--sp-8);
+    }
+    .service-icon {
+      width: 52px; height: 52px;
+      background: var(--lime-dim); border: 1px solid var(--border-accent);
+      border-radius: var(--r-md);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem; color: var(--lime);
+      margin-bottom: var(--sp-5);
+      transition: all var(--dur) var(--ease);
+    }
+    .service-card:hover .service-icon {
+      background: var(--lime); color: var(--black);
+      box-shadow: var(--sh-lime);
+    }
+    .service-card h3 { font-size: 1.1rem; margin-bottom: var(--sp-3); }
+    .service-card p { color: var(--text-secondary); font-size: 0.9rem; line-height: 1.65; }
+    .service-arrow {
+      position: absolute; bottom: var(--sp-6); right: var(--sp-6);
+      width: 32px; height: 32px; border-radius: 50%;
+      background: var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.75rem; color: var(--text-muted);
+      transition: all var(--dur) var(--ease);
+    }
+    .service-card:hover .service-arrow {
+      background: var(--lime); color: var(--black); transform: translate(2px,-2px);
+    }
+
+    /* ── ABOUT STRIP ── */
+    .about-strip {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      overflow: hidden;
+      border-radius: var(--r-xl);
+      border: 1px solid var(--border);
+    }
+    .about-strip-left {
+      padding: var(--sp-16) var(--sp-12);
+      background: var(--surface-1);
+    }
+    .about-strip-right {
+      background: var(--lime);
+      padding: var(--sp-16) var(--sp-12);
+      display: flex; flex-direction: column; justify-content: center;
+    }
+    .about-strip-right h2, .about-strip-right p, .about-strip-right span {
+      color: var(--black) !important;
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--sp-8);
+      margin-top: var(--sp-10);
+    }
+    .stat-card {
+      padding: var(--sp-6);
+      border-radius: var(--r-lg);
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    /* ── PORTFOLIO PREVIEW ── */
+    .portfolio-grid-preview {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--sp-4);
+    }
+    .portfolio-thumb {
+      position: relative;
+      border-radius: var(--r-lg);
+      overflow: hidden;
+      aspect-ratio: 4/3;
+      cursor: pointer;
+    }
+    .portfolio-thumb-bg {
+      width: 100%; height: 100%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 3rem;
+      transition: transform var(--dur-slow) var(--ease);
+    }
+    .portfolio-thumb:hover .portfolio-thumb-bg { transform: scale(1.08); }
+    .portfolio-thumb-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(23,23,23,0.9) 0%, transparent 60%);
+      display: flex; flex-direction: column; justify-content: flex-end;
+      padding: var(--sp-5);
+      opacity: 0; transition: opacity var(--dur) var(--ease);
+    }
+    .portfolio-thumb:hover .portfolio-thumb-overlay { opacity: 1; }
+    .portfolio-thumb-overlay h4 { font-size: 0.95rem; margin-bottom: 4px; }
+    .portfolio-thumb-overlay span { font-size: 0.75rem; color: var(--lime); font-weight: 600; }
+
+    /* ── TESTIMONIALS ── */
+    .testimonials-section { background: var(--surface-1); }
+    .testimonial-card { padding: var(--sp-8); }
+    .testimonial-stars { color: var(--lime); font-size: 0.85rem; margin-bottom: var(--sp-4); letter-spacing: 2px; }
+    .testimonial-text {
+      font-family: var(--font-accent); font-style: italic;
+      font-size: 1.05rem; line-height: 1.7;
+      color: var(--text-primary); margin-bottom: var(--sp-6);
+    }
+    .testimonial-author { display: flex; align-items: center; gap: var(--sp-3); }
+    .author-avatar {
+      width: 44px; height: 44px; border-radius: 50%;
+      background: var(--lime-dim); border: 1px solid var(--border-accent);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 0.9rem; color: var(--lime);
+    }
+    .author-name { font-weight: 700; font-size: 0.9rem; }
+    .author-role { font-size: 0.78rem; color: var(--text-secondary); }
+
+    /* ── CTA ── */
+    .cta-section {
+      text-align: center;
+      padding: var(--sp-24) 0;
+      background: radial-gradient(ellipse at center, rgba(215,255,100,0.08) 0%, transparent 60%);
+    }
+    .cta-section h2 { margin-bottom: var(--sp-4); }
+    .cta-section p { color: var(--text-secondary); max-width: 520px; margin: 0 auto var(--sp-10); font-size: 1.05rem; }
+    .cta-actions { display: flex; align-items: center; justify-content: center; gap: var(--sp-4); flex-wrap: wrap; }
+    .cta-note { margin-top: var(--sp-6); font-size: 0.82rem; color: var(--text-muted); }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .hero { grid-template-columns: 1fr; }
+      .hero-char-wrap { height: 420px; }
+      .badge-projects, .badge-clients, .badge-award { display: none; }
+      .about-strip { grid-template-columns: 1fr; }
+      .portfolio-grid-preview { grid-template-columns: repeat(2,1fr); }
+    }
+    @media (max-width: 768px) {
+      .hero { min-height: auto; padding: calc(var(--nav-h) + 40px) 0 60px; }
+      .hero-char-wrap { height: 360px; }
+      .portfolio-grid-preview { grid-template-columns: 1fr; }
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Noise texture overlay -->
+<div class="noise-overlay" aria-hidden="true"></div>
+
+<!-- ═══════════════ NAVBAR ═══════════════ -->
+<nav class="navbar" id="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><img src="images/mps-logo.png" alt="MPS Studio" class="site-logo-img" /></a>
+
+    <ul class="nav-links" id="nav-links">
+      <li><a href="index.html"     class="nav-link">Home</a></li>
+      <li><a href="services.html"  class="nav-link">Services</a></li>
+      <li><a href="portfolio.html" class="nav-link">Portfolio</a></li>
+      <li><a href="about.html"     class="nav-link">About</a></li>
+      <li><a href="contact.html"   class="nav-link">Contact</a></li>
+      <li><a href="payment.html"   class="nav-cta">Get Started</a></li>
+    </ul>
+
+    <button class="nav-burger" id="nav-burger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ═══════════════ HERO ═══════════════ -->
+<section class="hero container" id="hero">
+
+  <!-- Left: Content -->
+  <div class="hero-content">
+    <div class="hero-eyebrow">
+      <div class="hero-eyebrow-dot"></div>
+      <div class="hero-eyebrow-pulse"></div>
+      Creative Design Studio · Est. 2019
+    </div>
+
+    <h1 class="hero-title">
+      We Design<br/>
+      <span class="italic-word">Experiences</span> That<br/>
+      <span class="text-lime">Inspire.</span>
+    </h1>
+
+    <p class="hero-desc">
+      MPS Studio crafts premium brand identities, UI/UX designs, and visual 
+      narratives that captivate audiences and elevate businesses to the next level.
+    </p>
+
+    <div class="hero-actions">
+      <a href="portfolio.html" class="btn btn-lime btn-lg">
+        View Our Work <i class="fa-solid fa-arrow-right"></i>
+      </a>
+      <a href="contact.html" class="btn btn-outline btn-lg">
+        Let's Talk
+      </a>
+    </div>
+
+    <div class="hero-social-proof">
+      <div class="avatar-stack">
+        <div class="avatar-item">RK</div>
+        <div class="avatar-item">PS</div>
+        <div class="avatar-item">AM</div>
+        <div class="avatar-item">+</div>
+      </div>
+      <div class="proof-text">
+        Trusted by <strong>80+ happy clients</strong> across India & beyond
+      </div>
+    </div>
+  </div>
+
+  <!-- Right: 3D Character -->
+  <div class="hero-char-wrap">
+    <!-- Floating info badges -->
+    <div class="char-badge badge-projects">
+      <div class="char-badge-icon"><i class="fa-solid fa-layer-group"></i></div>
+      <div>
+        <div class="char-badge-label">Projects Done</div>
+        <div class="char-badge-value">150+</div>
+      </div>
+    </div>
+
+    <div class="char-badge badge-award">
+      <div class="char-badge-icon"><i class="fa-solid fa-trophy"></i></div>
+      <div>
+        <div class="char-badge-label">Awards Won</div>
+        <div class="char-badge-value">15+</div>
+      </div>
+    </div>
+
+    <div class="char-badge badge-clients">
+      <div class="char-badge-icon"><i class="fa-solid fa-star"></i></div>
+      <div>
+        <div class="char-badge-label">Happy Clients</div>
+        <div class="char-badge-value">80+</div>
+      </div>
+    </div>
+
+    <div class="hero-char-canvas-container">
+      <!-- Decorative rings -->
+      <div class="char-ring char-ring-1"></div>
+      <div class="char-ring char-ring-2"></div>
+
+      <canvas id="hero-canvas"></canvas>
+
+      <!-- Speech bubble -->
+      <div class="speech-bubble" id="hero-bubble">
+        <div class="bubble-name">Alex · MPS Studio</div>
+        <div class="bubble-text" id="hero-bubble-text"></div>
+      </div>
+
+      <!-- Platform glow -->
+      <div class="char-platform"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ MARQUEE ═══════════════ -->
+<div class="marquee-section">
+  <div class="marquee-inner">
+    <div class="marquee-track" id="marquee-track">
+      <div class="marquee-item"><span class="marquee-dot"></span>Brand Identity</div>
+      <div class="marquee-item"><span class="marquee-dot"></span>UI/UX Design</div>
+      <div class="marquee-item"><span class="marquee-dot"></span>Motion Graphics</div>
+      <div class="marquee-item"><span class="marquee-dot"></span>Web Design</div>
+      <div class="marquee-item"><span class="marquee-dot"></span>Logo Design</div>
+      <div class="marquee-item"><span class="marquee-dot"></span>Print Design</div>
+      <div class="marquee-item"><span class="marquee-dot"></span>Social Media</div>
+      <div class="marquee-item"><span class="marquee-dot"></span>Packaging</div>
+      <!-- Clone for seamless loop -->
+      <div class="marquee-item"><span class="marquee-dot"></span>Brand Identity</div>
+      <div class="marquee-item"><span class="marquee-dot"></span>UI/UX Design</div>
+      <div class="marquee-item"><span class="marquee-dot"></span>Motion Graphics</div>
+      <div class="marquee-item"><span class="marquee-dot"></span>Web Design</div>
+      <div class="marquee-item"><span class="marquee-dot"></span>Logo Design</div>
+      <div class="marquee-item"><span class="marquee-dot"></span>Print Design</div>
+      <div class="marquee-item"><span class="marquee-dot"></span>Social Media</div>
+      <div class="marquee-item"><span class="marquee-dot"></span>Packaging</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ SERVICES ═══════════════ -->
+<section class="section services-section">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-label">What We Do</div>
+      <h2>Our Core <span class="text-lime">Services</span></h2>
+      <p>From concept to completion, we deliver design solutions that set you apart from the crowd.</p>
+    </div>
+
+    <div class="grid-3">
+      <div class="card card-glow service-card tilt reveal d1">
+        <div class="service-icon"><i class="fa-solid fa-palette"></i></div>
+        <h3>Brand Identity</h3>
+        <p>Logos, color systems, typography, and guidelines that build lasting brand recognition.</p>
+        <div class="service-arrow"><i class="fa-solid fa-arrow-up-right"></i></div>
+      </div>
+      <div class="card card-glow service-card tilt reveal d2">
+        <div class="service-icon"><i class="fa-solid fa-pen-nib"></i></div>
+        <h3>UI/UX Design</h3>
+        <p>Intuitive interfaces and seamless user experiences for web and mobile platforms.</p>
+        <div class="service-arrow"><i class="fa-solid fa-arrow-up-right"></i></div>
+      </div>
+      <div class="card card-glow service-card tilt reveal d3">
+        <div class="service-icon"><i class="fa-solid fa-globe"></i></div>
+        <h3>Web Design</h3>
+        <p>Pixel-perfect websites that convert visitors into loyal customers.</p>
+        <div class="service-arrow"><i class="fa-solid fa-arrow-up-right"></i></div>
+      </div>
+      <div class="card card-glow service-card tilt reveal d1">
+        <div class="service-icon"><i class="fa-solid fa-film"></i></div>
+        <h3>Motion Graphics</h3>
+        <p>Dynamic animations and video content that bring your brand story to life.</p>
+        <div class="service-arrow"><i class="fa-solid fa-arrow-up-right"></i></div>
+      </div>
+      <div class="card card-glow service-card tilt reveal d2">
+        <div class="service-icon"><i class="fa-solid fa-print"></i></div>
+        <h3>Print Design</h3>
+        <p>Brochures, packaging, and marketing materials with stunning visual impact.</p>
+        <div class="service-arrow"><i class="fa-solid fa-arrow-up-right"></i></div>
+      </div>
+      <div class="card card-glow service-card tilt reveal d3">
+        <div class="service-icon"><i class="fa-brands fa-instagram"></i></div>
+        <h3>Social Media</h3>
+        <p>Scroll-stopping posts, stories, and campaigns that grow your online presence.</p>
+        <div class="service-arrow"><i class="fa-solid fa-arrow-up-right"></i></div>
+      </div>
+    </div>
+
+    <div style="text-align:center; margin-top:var(--sp-12);">
+      <a href="services.html" class="btn btn-outline">
+        Explore All Services <i class="fa-solid fa-arrow-right"></i>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ ABOUT STRIP ═══════════════ -->
+<section class="section">
+  <div class="container">
+    <div class="about-strip reveal">
+      <div class="about-strip-left">
+        <div class="section-label">Our Story</div>
+        <h2>Design is not just what it <span class="text-lime font-accent">looks like</span></h2>
+        <p style="color:var(--text-secondary);margin-top:var(--sp-5);line-height:1.8;">
+          Founded in 2019, MPS Studio has been on a mission to transform businesses 
+          through the power of exceptional design. We believe every pixel, curve, and 
+          color choice has the power to tell a story and build meaningful connections.
+        </p>
+        <a href="about.html" class="btn btn-lime" style="margin-top:var(--sp-8);">
+          Our Story <i class="fa-solid fa-arrow-right"></i>
+        </a>
+      </div>
+      <div class="about-strip-right">
+        <div class="stats-grid">
+          <div>
+            <div class="stat-num" data-target="150" data-suffix="+">0+</div>
+            <div class="stat-label" style="color:rgba(23,23,23,0.65);">Projects</div>
+          </div>
+          <div>
+            <div class="stat-num" data-target="80" data-suffix="+">0+</div>
+            <div class="stat-label" style="color:rgba(23,23,23,0.65);">Clients</div>
+          </div>
+          <div>
+            <div class="stat-num" data-target="5" data-suffix="+">0+</div>
+            <div class="stat-label" style="color:rgba(23,23,23,0.65);">Years</div>
+          </div>
+          <div>
+            <div class="stat-num" data-target="15" data-suffix="+">0+</div>
+            <div class="stat-label" style="color:rgba(23,23,23,0.65);">Awards</div>
+          </div>
+        </div>
+        <p style="margin-top:var(--sp-10); font-size:0.9rem; color:rgba(23,23,23,0.75); font-style:italic; font-family:var(--font-accent);">
+          "Design is the silent ambassador of your brand."
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ PORTFOLIO PREVIEW ═══════════════ -->
+<section class="section" style="background:var(--surface-1);">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-label">Recent Work</div>
+      <h2>Featured <span class="text-lime">Projects</span></h2>
+      <p>A glimpse of our latest creative endeavors across various industries.</p>
+    </div>
+
+    <div class="portfolio-grid-preview">
+      <div class="portfolio-thumb reveal d1">
+        <div class="portfolio-thumb-bg" style="background:linear-gradient(135deg,#1a1040,#2d1b69);">🎨</div>
+        <div class="portfolio-thumb-overlay">
+          <h4>TechFlow Brand Identity</h4>
+          <span>Branding</span>
+        </div>
+      </div>
+      <div class="portfolio-thumb reveal d2">
+        <div class="portfolio-thumb-bg" style="background:linear-gradient(135deg,#0a1628,#1e3a5f);">📱</div>
+        <div class="portfolio-thumb-overlay">
+          <h4>NeoBank App UI</h4>
+          <span>UI/UX Design</span>
+        </div>
+      </div>
+      <div class="portfolio-thumb reveal d3">
+        <div class="portfolio-thumb-bg" style="background:linear-gradient(135deg,#1a2810,#2d5c1e);">🌿</div>
+        <div class="portfolio-thumb-overlay">
+          <h4>Bloom E-Commerce</h4>
+          <span>Web Design</span>
+        </div>
+      </div>
+      <div class="portfolio-thumb reveal d1">
+        <div class="portfolio-thumb-bg" style="background:linear-gradient(135deg,#2a0a0a,#5c1e1e);">🎬</div>
+        <div class="portfolio-thumb-overlay">
+          <h4>Vertex Motion Reel</h4>
+          <span>Motion Graphics</span>
+        </div>
+      </div>
+      <div class="portfolio-thumb reveal d2">
+        <div class="portfolio-thumb-bg" style="background:linear-gradient(135deg,#1a1010,#3d2010);">📦</div>
+        <div class="portfolio-thumb-overlay">
+          <h4>SkyBrew Packaging</h4>
+          <span>Print & Packaging</span>
+        </div>
+      </div>
+      <div class="portfolio-thumb reveal d3">
+        <div class="portfolio-thumb-bg" style="background:linear-gradient(135deg,#0a1a28,#103050);">📰</div>
+        <div class="portfolio-thumb-overlay">
+          <h4>Pulse Magazine</h4>
+          <span>Editorial Design</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="text-align:center; margin-top:var(--sp-12);">
+      <a href="portfolio.html" class="btn btn-lime">
+        View Full Portfolio <i class="fa-solid fa-arrow-right"></i>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ TESTIMONIALS ═══════════════ -->
+<section class="section testimonials-section">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-label">Client Love</div>
+      <h2>What Our Clients <span class="text-lime">Say</span></h2>
+    </div>
+    <div class="grid-3">
+      <div class="card card-glow testimonial-card reveal d1">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">"MPS Studio transformed our brand completely. Their design thinking is on another level — they understood our vision before we even explained it fully."</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">RK</div>
+          <div>
+            <div class="author-name">Rahul Kapoor</div>
+            <div class="author-role">CEO, TechFlow Solutions</div>
+          </div>
+        </div>
+      </div>
+      <div class="card card-glow testimonial-card reveal d2">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">"The UI/UX work MPS did for our app increased user retention by 210%. Exceptional attention to detail and always delivered ahead of schedule."</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">PS</div>
+          <div>
+            <div class="author-name">Priya Sharma</div>
+            <div class="author-role">Product Head, NeoBank</div>
+          </div>
+        </div>
+      </div>
+      <div class="card card-glow testimonial-card reveal d3">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">"The motion graphics reel they created made our pitch deck unforgettable. We closed our Series A within 3 weeks of the deck going live!"</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">AM</div>
+          <div>
+            <div class="author-name">Arun Mehta</div>
+            <div class="author-role">Founder, Vertex Ventures</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ CTA ═══════════════ -->
+<section class="cta-section">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-label" style="display:inline-flex; margin-bottom:var(--sp-5);">Ready to Create?</div>
+      <h2>Let's Build Something<br/><span class="text-lime font-accent">Extraordinary</span> Together</h2>
+      <p>Whether you're starting from scratch or elevating an existing brand, we're here to make it unforgettable.</p>
+      <div class="cta-actions">
+        <a href="payment.html" class="btn btn-lime btn-lg">
+          <i class="fa-solid fa-rocket"></i> Start a Project
+        </a>
+        <a href="contact.html" class="btn btn-outline btn-lg">
+          Schedule a Call
+        </a>
+      </div>
+      <p class="cta-note">Free consultation · No commitment required · Response within 24 hours</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ FOOTER ═══════════════ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="nav-logo" style="margin-bottom:var(--sp-5);"><img src="images/mps-logo.png" alt="MPS Studio" class="site-logo-img" /></div>
+        <p>Creating visual experiences that inspire, engage, and convert. Based in Mumbai, working with clients worldwide.</p>
+        <div class="social-links" style="margin-top:var(--sp-6);">
+          <a href="#" class="social-link" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+          <a href="#" class="social-link" aria-label="Behance"><i class="fa-brands fa-behance"></i></a>
+          <a href="#" class="social-link" aria-label="Dribbble"><i class="fa-brands fa-dribbble"></i></a>
+          <a href="#" class="social-link" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Pages</div>
+        <ul class="footer-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="portfolio.html">Portfolio</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Services</div>
+        <ul class="footer-links">
+          <li><a href="services.html">Brand Identity</a></li>
+          <li><a href="services.html">UI/UX Design</a></li>
+          <li><a href="services.html">Web Design</a></li>
+          <li><a href="services.html">Motion Graphics</a></li>
+          <li><a href="services.html">Print Design</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Contact</div>
+        <ul class="footer-links">
+          <li><a href="mailto:hello@mpsstudio.in">hello@mpsstudio.in</a></li>
+          <li><a href="tel:+919876543210">+91 98765 43210</a></li>
+          <li><a href="#">Mumbai, Maharashtra</a></li>
+          <li><a href="payment.html">Get a Quote</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 MPS Studio. All rights reserved. Crafted with ❤️</p>
+      <p>Privacy Policy · Terms of Service</p>
+    </div>
+  </div>
+</footer>
+
+<!-- Scroll to top -->
+<button class="scroll-top-btn" id="scroll-top" aria-label="Scroll to top">
+  <i class="fa-solid fa-chevron-up"></i>
+</button>
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+<script src="js/character.js"></script>
+<script src="js/main.js"></script>
+<script>
+  // ── Init Hero Character ──
+  const heroChar = new MPSCharacter('hero-canvas', { cameraY: 1.15, cameraZ: 4.0 });
+
+  // ── Speech Bubble ──
+  const bubbleEl  = document.getElementById('hero-bubble');
+  const bubbleText = document.getElementById('hero-bubble-text');
+  const bubble = new SpeechBubble(bubbleEl, bubbleText);
+
+  const messages = [
+    "Hi! I'm Alex, your guide at MPS Studio. Welcome! 👋",
+    "We design brands that people fall in love with.",
+    "5+ years of crafting visual magic for 80+ clients!",
+    "Let me show you what MPS Studio can do for you...",
+  ];
+
+  let msgIndex = 0;
+  function nextMessage() {
+    bubble.say(messages[msgIndex % messages.length]);
+    msgIndex++;
+  }
+
+  // Start after a short delay
+  setTimeout(() => {
+    heroChar.wave();
+    nextMessage();
+    setTimeout(() => {
+      heroChar.talk();
+      setInterval(nextMessage, 5000);
+    }, 2500);
+  }, 800);
+
+  // Scroll-based character reactions
+  window.addEventListener('scroll', () => {
+    const progress = window.scrollY / (document.body.scrollHeight - window.innerHeight);
+    if (progress > 0.6) heroChar.point();
+    else if (progress > 0.2) heroChar.talk();
+    else heroChar.idle();
+  }, { passive: true });
+</script>
+</body>
+</html>
