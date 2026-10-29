@@ -382,7 +382,8 @@
       <div class="char-ring char-ring-1"></div>
       <div class="char-ring char-ring-2"></div>
 
-      <canvas id="hero-canvas"></canvas>
+      <!-- Spline 3D Scene -->
+      <spline-viewer id="hero-canvas" url="https://prod.spline.design/r4mYHSDaeSf-A5DF/scene.splinecode"></spline-viewer>
 
       <!-- Speech bubble -->
       <div class="speech-bubble" id="hero-bubble">
@@ -700,7 +701,7 @@
 </button>
 
 <!-- Scripts -->
-<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+<script type="module" src="https://unpkg.com/@splinetool/viewer/build/spline-viewer.js"></script>
 <script src="js/character.js"></script>
 <script src="js/main.js"></script>
 <script>

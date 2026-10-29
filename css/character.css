@@ -2,7 +2,7 @@
    CHARACTER PANEL — Speech Bubble & Canvas Wrapper
 ============================================================ */
 
-/* Canvas wrapper */
+/* Canvas & Spline-Viewer wrapper */
 .char-scene {
   position: relative;
   width: 100%;
@@ -10,10 +10,27 @@
   border-radius: var(--r-xl);
   overflow: hidden;
 }
-.char-scene canvas {
+.char-scene canvas,
+.char-side-canvas-wrap canvas,
+.hero-char-canvas-container canvas,
+.mascot-canvas-container canvas {
   display: block;
   width: 100% !important;
   height: 100% !important;
+}
+
+/* Spline 3D Viewer Element */
+spline-viewer {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  position: relative;
+  z-index: 2;
+  border-radius: inherit;
+  outline: none;
+}
+spline-viewer::part(logo) {
+  display: none !important;
 }
 
 /* Speech Bubble */
