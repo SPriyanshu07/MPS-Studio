@@ -170,6 +170,145 @@
       .contact-form-card { position: static; }
       .form-row { grid-template-columns: 1fr; }
     }
+
+    /* ── THANK YOU POPUP MODAL ── */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 10, 12, 0.82);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--sp-4);
+      z-index: 10000;
+      opacity: 0;
+      pointer-events: none;
+      visibility: hidden;
+      transition: opacity 0.35s var(--ease), visibility 0.35s var(--ease);
+    }
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+      visibility: visible;
+    }
+    .modal-card {
+      position: relative;
+      width: 100%;
+      max-width: 500px;
+      background: var(--surface-1);
+      border: 1px solid var(--border-accent);
+      border-radius: var(--r-2xl);
+      padding: var(--sp-8) var(--sp-8);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.7), 0 0 50px rgba(215, 255, 100, 0.08);
+      text-align: center;
+      transform: scale(0.92) translateY(24px);
+      opacity: 0;
+      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.35s var(--ease);
+      overflow: hidden;
+    }
+    .modal-overlay.active .modal-card {
+      transform: scale(1) translateY(0);
+      opacity: 1;
+    }
+    .modal-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 320px; height: 160px;
+      background: radial-gradient(ellipse at top, rgba(215, 255, 100, 0.16) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .modal-x-btn {
+      position: absolute;
+      top: 18px; right: 18px;
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      transition: all var(--dur-fast) var(--ease);
+      font-size: 0.95rem;
+      z-index: 2;
+    }
+    .modal-x-btn:hover {
+      background: var(--lime-dim);
+      border-color: var(--border-accent);
+      color: var(--lime);
+      transform: rotate(90deg);
+    }
+    .modal-icon-badge {
+      width: 76px; height: 76px;
+      border-radius: 50%;
+      background: var(--lime-dim);
+      border: 2px solid var(--lime);
+      color: var(--lime);
+      box-shadow: 0 0 35px rgba(215, 255, 100, 0.38);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2rem;
+      margin: 0 auto var(--sp-5);
+      position: relative;
+      z-index: 1;
+      animation: badgePop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    @keyframes badgePop {
+      0% { transform: scale(0.3); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    .modal-card h3 {
+      font-size: 1.65rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: var(--sp-2);
+      color: var(--text-primary);
+      position: relative;
+      z-index: 1;
+    }
+    .modal-card p {
+      color: var(--text-secondary);
+      font-size: 0.92rem;
+      line-height: 1.6;
+      margin-bottom: var(--sp-6);
+      position: relative;
+      z-index: 1;
+    }
+    .modal-details-pill {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
+      padding: var(--sp-4) var(--sp-5);
+      margin-bottom: var(--sp-6);
+      text-align: left;
+      font-size: 0.84rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      position: relative;
+      z-index: 1;
+    }
+    .modal-details-row {
+      display: flex;
+      justify-content: space-between;
+      gap: var(--sp-3);
+      padding: 3px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    }
+    .modal-details-row:last-child {
+      border-bottom: none;
+      padding-top: 6px;
+    }
+    .modal-details-row span {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+    }
+    .modal-details-row strong {
+      color: var(--text-primary);
+      font-weight: 600;
+      text-align: right;
+    }
   </style>
 </head>
 <body>
@@ -378,6 +517,43 @@
 </footer>
 <button class="scroll-top-btn" id="scroll-top" aria-label="Scroll to top"><i class="fa-solid fa-chevron-up"></i></button>
 
+<!-- THANK YOU POPUP MODAL -->
+<div class="modal-overlay" id="thankyou-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <div class="modal-card">
+    <button type="button" class="modal-x-btn" id="modal-close-x" aria-label="Close thank you dialog">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+    <div class="modal-icon-badge">
+      <i class="fa-solid fa-check"></i>
+    </div>
+    <h3 id="modal-title">Thank You, <span class="text-lime" id="modal-client-name">Friend</span>!</h3>
+    <p>
+      Your inquiry has been successfully received and recorded in our project pipeline. Our creative team will review your brief and reach out within 24 hours.
+    </p>
+    <div class="modal-details-pill">
+      <div class="modal-details-row">
+        <span>Email Address:</span>
+        <strong id="modal-client-email">you@example.com</strong>
+      </div>
+      <div class="modal-details-row">
+        <span>Selected Service(s):</span>
+        <strong id="modal-detail-services" class="text-lime">Branding &amp; Visual Identity</strong>
+      </div>
+      <div class="modal-details-row">
+        <span>Estimated Budget:</span>
+        <strong id="modal-detail-budget">₹15K – ₹45K</strong>
+      </div>
+      <div class="modal-details-row">
+        <span>Status:</span>
+        <strong style="color:#4ade80;"><i class="fa-solid fa-circle-check" style="font-size:0.85em;margin-right:4px;"></i>Received &amp; Synchronized</strong>
+      </div>
+    </div>
+    <button type="button" class="btn btn-lime" id="modal-close-action" style="width:100%; padding:14px; font-weight:700; font-size:0.95rem;">
+      <i class="fa-solid fa-arrow-left" style="margin-right:6px;"></i> Return to Website
+    </button>
+  </div>
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
 <script src="js/character.js"></script>
 <script src="js/main.js"></script>
@@ -424,10 +600,51 @@
     });
   });
 
-  // ── Form Submission to hello@mpsstudio.in with Thank-You Auto-Reply ──
+  // ── Self-Contained Contact Form Component: Web3Forms & Google Sheets Dual-Sync ──
   const contactForm = document.getElementById('contact-form');
   const statusDiv = document.getElementById('cf-status');
   const submitBtn = document.getElementById('cf-submit-btn');
+
+  // Thank You Popup Modal Elements
+  const modal = document.getElementById('thankyou-modal');
+  const modalCloseX = document.getElementById('modal-close-x');
+  const modalCloseAction = document.getElementById('modal-close-action');
+  const modalClientName = document.getElementById('modal-client-name');
+  const modalClientEmail = document.getElementById('modal-client-email');
+  const modalDetailServices = document.getElementById('modal-detail-services');
+  const modalDetailBudget = document.getElementById('modal-detail-budget');
+
+  function openThankYouModal(name, email, services, budget) {
+    if (modalClientName) modalClientName.textContent = name || 'Friend';
+    if (modalClientEmail) modalClientEmail.textContent = email;
+    if (modalDetailServices) modalDetailServices.textContent = services || 'Creative Design';
+    if (modalDetailBudget) modalDetailBudget.textContent = budget || 'Flexible';
+    if (modal) {
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+    if (window.contactChar && typeof window.contactChar.wave === 'function') {
+      window.contactChar.wave();
+    }
+  }
+
+  function closeThankYouModal() {
+    if (modal) {
+      modal.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+  }
+
+  modalCloseX?.addEventListener('click', closeThankYouModal);
+  modalCloseAction?.addEventListener('click', closeThankYouModal);
+  modal?.addEventListener('click', (e) => {
+    if (e.target === modal) closeThankYouModal();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal?.classList.contains('active')) {
+      closeThankYouModal();
+    }
+  });
 
   if (contactForm) {
     contactForm.addEventListener('submit', async (e) => {
@@ -448,10 +665,11 @@
 
       const originalBtnHtml = submitBtn.innerHTML;
       submitBtn.disabled = true;
-      submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Sending Message…';
+      submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Submitting Inquiry…';
       statusDiv.style.display = 'none';
 
-      const payload = {
+      // 1. Web3Forms Payload
+      const web3Payload = {
         access_key: '8214a3dc-2501-4f24-9989-286d5b637f12',
         from_name: 'MPS Studio Website',
         subject: `New Client Inquiry from ${firstName} ${lastName} — MPS Studio`,
@@ -465,46 +683,77 @@
         message: message
       };
 
+      // 2. Google Apps Script Payload (Clean JSON format mapped for Google Sheets)
+      const gasPayload = {
+        timestamp: new Date().toISOString(),
+        firstName: firstName,
+        lastName: lastName,
+        name: `${firstName} ${lastName}`.trim(),
+        fullName: `${firstName} ${lastName}`.trim(),
+        first_name: firstName,
+        last_name: lastName,
+        email: email,
+        phone: phone || 'Not provided',
+        services: selectedChips.length ? selectedChips.join(', ') : 'None specified',
+        services_interested: selectedChips.length ? selectedChips.join(', ') : 'None specified',
+        budget: selectedBudget,
+        estimated_budget: selectedBudget,
+        message: message,
+        source: 'MPS Studio Website Contact Form'
+      };
+
       try {
-        const res = await fetch('https://api.web3forms.com/submit', {
+        // Dispatch simultaneously to Web3Forms and Google Apps Script endpoint
+        const web3Promise = fetch('https://api.web3forms.com/submit', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json'
           },
-          body: JSON.stringify(payload)
+          body: JSON.stringify(web3Payload)
+        }).then(res => res.json());
+
+        // Google Sheets script endpoint (using text/plain with no-cors to prevent preflight block)
+        const sheetsPromise = fetch('https://script.google.com/macros/s/AKfycbxiBabu28hQjcRx002s6JjLj7-0SHND98cPuoG9uZ9LSEHu2coNE-Ye-bpKmagbCO9W/exec', {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: {
+            'Content-Type': 'text/plain;charset=utf-8'
+          },
+          body: JSON.stringify(gasPayload)
         });
 
-        const data = await res.json();
+        const [web3Data] = await Promise.all([web3Promise, sheetsPromise]);
 
-        if (res.status === 200 && data.success) {
-          statusDiv.style.display = 'block';
-          statusDiv.style.background = 'rgba(34, 197, 94, 0.12)';
-          statusDiv.style.border = '1px solid rgba(34, 197, 94, 0.4)';
-          statusDiv.style.color = '#4ade80';
-          statusDiv.innerHTML = `
-            <div style="font-weight:700; font-size:1.05rem; margin-bottom:6px; color:#4ade80;">
-              <i class="fa-solid fa-circle-check"></i> Thank you, ${firstName}! Message Sent Successfully
-            </div>
-            <div style="color:var(--text-secondary); font-size:0.85rem; line-height:1.6;">
-              Your query has been received by our creative team.<br/>
-              We will review your project details and get back to you within 24 hours at <strong>${email}</strong>.
-            </div>`;
+        if (web3Data && (web3Data.success || web3Data.status === 200)) {
+          // Reset form fields
           contactForm.reset();
-          submitBtn.innerHTML = '<i class="fa-solid fa-check"></i> Message Sent!';
-          submitBtn.style.background = '#22c55e';
-          submitBtn.style.borderColor = '#22c55e';
-          if (window.contactChar && typeof window.contactChar.wave === 'function') {
-            window.contactChar.wave();
-          }
-          setTimeout(() => {
-            submitBtn.disabled = false;
-            submitBtn.innerHTML = originalBtnHtml;
-            submitBtn.style.background = '';
-            submitBtn.style.borderColor = '';
-          }, 6000);
+
+          // Reset chips to default first item
+          document.querySelectorAll('#service-chips .service-chip').forEach((chip, idx) => {
+            if (idx === 0) chip.classList.add('selected');
+            else chip.classList.remove('selected');
+          });
+
+          // Reset budget options to default second item
+          document.querySelectorAll('#budget-options .budget-option').forEach((opt, idx) => {
+            if (idx === 1) opt.classList.add('selected');
+            else opt.classList.remove('selected');
+          });
+
+          // Restore button state
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalBtnHtml;
+
+          // Open modern animated Thank You popup modal
+          openThankYouModal(
+            firstName,
+            email,
+            selectedChips.length ? selectedChips.join(', ') : 'Creative Design',
+            selectedBudget
+          );
         } else {
-          throw new Error(data.message || 'Submission error');
+          throw new Error(web3Data?.message || 'Submission error');
         }
       } catch (err) {
         console.error('Submission failed:', err);
@@ -514,7 +763,7 @@
         statusDiv.style.color = '#f87171';
         statusDiv.innerHTML = `
           <div style="font-weight:700; margin-bottom:4px;">
-            <i class="fa-solid fa-triangle-exclamation"></i> Submission Error
+            <i class="fa-solid fa-triangle-exclamation"></i> Submission Notice
           </div>
           <div style="font-size:0.85rem; color:var(--text-secondary);">
             ${err.message || 'Unable to submit your message right now.'} You can also reach out to us directly at <a href="mailto:hello@mpsstudio.in" style="color:var(--lime); text-decoration:underline; font-weight:600;">hello@mpsstudio.in</a>.
