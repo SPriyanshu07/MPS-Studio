@@ -1,7 +1,7 @@
 # Simple zero-dependency HTTP server for MPS Studio using Windows PowerShell
 $port = 8080
 $prefix = "http://localhost:$port/"
-$root = $PSScriptRoot
+$root = if ($PSScriptRoot) { $PSScriptRoot } else { "F:\Work\MPS Studio\Website" }
 
 $listener = New-Object System.Net.HttpListener
 $listener.Prefixes.Add($prefix)
