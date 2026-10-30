@@ -88,13 +88,21 @@
     /* Hero Character */
     .hero-char-wrap {
       position: relative; z-index: 2;
-      height: 580px;
+      height: 640px;
     }
     .hero-char-canvas-container {
       width: 100%; height: 100%;
-      background: radial-gradient(ellipse at center, rgba(215,255,100,0.07) 0%, transparent 65%);
+      background: radial-gradient(ellipse at center, rgba(56,132,255,0.12) 0%, rgba(99,102,241,0.05) 45%, transparent 70%);
       border-radius: var(--r-xl);
       overflow: hidden; position: relative;
+    }
+    /* Scale viewer down so character stays within frame */
+    .hero-char-canvas-container spline-viewer {
+      transform: scale(0.82);
+      transform-origin: center center;
+      width: 122% !important;
+      height: 122% !important;
+      margin: -11% 0 0 -11%;
     }
     #hero-canvas { width: 100%; height: 100%; display: block; }
 
@@ -262,14 +270,14 @@
     /* Responsive */
     @media (max-width: 1024px) {
       .hero { grid-template-columns: 1fr; }
-      .hero-char-wrap { height: 420px; }
+      .hero-char-wrap { height: 460px; }
       .badge-projects, .badge-clients, .badge-award { display: none; }
       .about-strip { grid-template-columns: 1fr; }
       .portfolio-grid-preview { grid-template-columns: repeat(2,1fr); }
     }
     @media (max-width: 768px) {
       .hero { min-height: auto; padding: calc(var(--nav-h) + 40px) 0 60px; }
-      .hero-char-wrap { height: 360px; }
+      .hero-char-wrap { height: 380px; }
       .portfolio-grid-preview { grid-template-columns: 1fr; }
       .stats-grid { grid-template-columns: 1fr 1fr; }
     }
