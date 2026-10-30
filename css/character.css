@@ -29,8 +29,14 @@ spline-viewer {
   border-radius: inherit;
   outline: none;
 }
-spline-viewer::part(logo) {
+/* ── Spline Watermark Removal (all known selectors) ── */
+spline-viewer::part(logo),
+spline-viewer::part(watermark),
+spline-viewer::part(branding) {
   display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
 }
 
 /* Speech Bubble */
