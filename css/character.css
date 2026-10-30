@@ -58,7 +58,7 @@ spline-viewer::part(branding) {
   transform-origin: bottom left;
   transition: opacity 0.4s var(--ease), transform 0.4s var(--ease-spring);
   z-index: 20;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.4), 0 0 20px rgba(215,255,100,0.1);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4), 0 0 20px rgba(85,132,255,0.15);
 }
 .speech-bubble.show {
   opacity: 1;
@@ -120,7 +120,7 @@ spline-viewer::part(branding) {
   left: 50%;
   transform: translateX(-50%);
   width: 120px; height: 24px;
-  background: radial-gradient(ellipse, rgba(215,255,100,0.25) 0%, transparent 70%);
+  background: radial-gradient(ellipse, rgba(85,132,255,0.28) 0%, transparent 70%);
   border-radius: 50%;
   filter: blur(8px);
   animation: float-platform 3s ease-in-out infinite;
@@ -130,7 +130,7 @@ spline-viewer::part(branding) {
 .char-ring {
   position: absolute;
   border-radius: 50%;
-  border: 1px solid rgba(215,255,100,0.12);
+  border: 1px solid rgba(85,132,255,0.18);
   pointer-events: none;
   animation: spin-ring 12s linear infinite;
 }
@@ -149,7 +149,7 @@ spline-viewer::part(branding) {
 .char-side-canvas-wrap {
   width: 280px;
   height: 380px;
-  background: radial-gradient(ellipse at center, rgba(215,255,100,0.05) 0%, transparent 65%);
+  background: radial-gradient(ellipse at center, rgba(85,132,255,0.08) 0%, transparent 65%);
   border-radius: var(--r-xl);
   overflow: hidden;
   position: relative;
