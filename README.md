@@ -37,13 +37,14 @@
 ## ⚡ Tech Stack
 
 - **Frontend**: Semantic HTML5, Modern CSS3 (CSS Variables, Flexbox, Grid, Glassmorphism), Vanilla JavaScript (ES6+).
-- **3D Interactive Engine**: [Three.js](https://threejs.org/) customized character engine.
+- **3D Interactive Engine**: [Spline.design](https://spline.design/) — embedded via `@splinetool/viewer` custom element.
 - **Typography**: [Manrope](https://fonts.google.com/specimen/Manrope) (Google Fonts).
 - **Icons**: [Font Awesome 6](https://fontawesome.com/).
 - **Form Endpoints**:
   - **Web3Forms**: Access key integration for real-time inquiry email delivery.
   - **Google Apps Script**: Direct JSON sync to Google Sheets CRM pipeline.
-- **Hosting & CI/CD**: [Netlify](https://www.netlify.com/) connected via GitHub `master` branch.
+- **Hosting**: [Hostinger](https://www.hostinger.in/) — static files deployed to `public_html` via GitHub.
+- **Server Config**: Apache `.htaccess` — clean URLs, HTTPS redirect, browser caching & Gzip compression.
 
 ---
 
