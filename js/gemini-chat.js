@@ -497,10 +497,8 @@ A: Bank transfer, UPI, PayPal, and all major cards via our payment page.`;
       appendMessage(reply, 'ai');
     } catch (err) {
       showTyping(false);
-      const errMsg = GEMINI_API_KEY === 'AQ.Ab8RN6I06cxKcjrWxEKKoJGzSYk_NLQPZQLO5lIvShZMkf-YVw'
-        ? 'API key not set. Please add your Gemini API key to js/gemini-chat.js'
-        : `Something went wrong: ${err.message}. Please try again or contact us directly.`;
-      appendMessage(errMsg, 'ai', true);
+      appendMessage('Oops! Could not connect to AI: ' + err.message + '. Please try again or contact us at hello@mpsstudio.in', 'ai', true);
+      console.error('Gemini API error:', err);
     } finally {
       setInputDisabled(false);
       input.focus();
