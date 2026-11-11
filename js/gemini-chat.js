@@ -4,7 +4,7 @@
 (function () {
   'use strict';
 
-  const GEMINI_API_KEY = 'YOUR_GEMINI_API_KEY_HERE'; // <-- replace this
+  const GEMINI_API_KEY = 'AQ.Ab8RN6I06cxKcjrWxEKKoJGzSYk_NLQPZQLO5lIvShZMkf-YVw'; // <-- replace this
   const GEMINI_MODEL   = 'gemini-2.0-flash';
   const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${GEMINI_API_KEY}`;
 
@@ -497,7 +497,7 @@ A: Bank transfer, UPI, PayPal, and all major cards via our payment page.`;
       appendMessage(reply, 'ai');
     } catch (err) {
       showTyping(false);
-      const errMsg = GEMINI_API_KEY === 'YOUR_GEMINI_API_KEY_HERE'
+      const errMsg = GEMINI_API_KEY === 'AQ.Ab8RN6I06cxKcjrWxEKKoJGzSYk_NLQPZQLO5lIvShZMkf-YVw'
         ? 'API key not set. Please add your Gemini API key to js/gemini-chat.js'
         : `Something went wrong: ${err.message}. Please try again or contact us directly.`;
       appendMessage(errMsg, 'ai', true);
