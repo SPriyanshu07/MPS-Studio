@@ -433,14 +433,23 @@ A: Bank transfer, UPI, PayPal, and all major cards via our payment page.`;
       ],
     };
 
-    const res = await fetch(API_URL, {
+    // Use ?key= param for browser CORS compatibility
+    const urlWithKey = API_URL + '?key=' + GEMINI_API_KEY;
+    const res = await fetch(urlWithKey, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + GEMINI_API_KEY
+        'x-goog-api-key': GEMINI_API_KEY
       },
       body: JSON.stringify(payload),
     });
+
+    if (!res.ok) {
+      const errBody = await res.json().catch(() => ({}));
+      const msg = errBody?.error?.message || ('HTTP ' + res.status + ' ' + res.statusText);
+      console.error('Gemini API response body:', JSON.stringify(errBody));
+      throw new Error(msg);
+    }
 
     if (!res.ok) {
       const err = await res.json().catch(() => ({}));
