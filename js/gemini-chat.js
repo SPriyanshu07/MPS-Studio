@@ -6,7 +6,7 @@
 
   const GEMINI_API_KEY = (typeof MPS_GEMINI_KEY !== 'undefined') ? MPS_GEMINI_KEY : 'NOT_SET'; // <-- replace this
   const GEMINI_MODEL   = 'gemini-2.0-flash';
-  const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${GEMINI_API_KEY}`;
+  const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent`;
 
   /* ---- System context: everything Gemini knows about MPS Studio ---- */
   const SYSTEM_PROMPT = `You are Alex, the friendly AI assistant for MPS Studio — a premium creative design studio based in Mumbai, India.
@@ -435,7 +435,10 @@ A: Bank transfer, UPI, PayPal, and all major cards via our payment page.`;
 
     const res = await fetch(API_URL, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + GEMINI_API_KEY
+      },
       body: JSON.stringify(payload),
     });
 
