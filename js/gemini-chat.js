@@ -4,7 +4,7 @@
 (function () {
   'use strict';
 
-  const GEMINI_API_KEY = 'YOUR_GEMINI_API_KEY_HERE'; // <-- replace this
+  const GEMINI_API_KEY = (typeof MPS_GEMINI_KEY !== 'undefined') ? MPS_GEMINI_KEY : 'NOT_SET'; // <-- replace this
   const GEMINI_MODEL   = 'gemini-2.0-flash';
   const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${GEMINI_API_KEY}`;
 
@@ -497,10 +497,12 @@ A: Bank transfer, UPI, PayPal, and all major cards via our payment page.`;
       appendMessage(reply, 'ai');
     } catch (err) {
       showTyping(false);
-      const errMsg = GEMINI_API_KEY === 'YOUR_GEMINI_API_KEY_HERE'
-        ? 'API key not set. Please add your Gemini API key to js/gemini-chat.js'
-        : `Something went wrong: ${err.message}. Please try again or contact us directly.`;
-      appendMessage(errMsg, 'ai', true);
+      let userMsg = 'Could not connect at the moment. Please try again or contact us at hello@mpsstudio.in';
+      if (err.message && (err.message.includes('403') || err.message.includes('401'))) {
+        userMsg = 'AI service temporarily unavailable. Please contact us directly at hello@mpsstudio.in or call +91 88885 78111.';
+      }
+      appendMessage(userMsg, 'ai', true);
+      console.error('Gemini API error:', err.message);
     } finally {
       setInputDisabled(false);
       input.focus();
