@@ -5,8 +5,8 @@
   'use strict';
 
   const GEMINI_API_KEY = (typeof MPS_GEMINI_KEY !== 'undefined') ? MPS_GEMINI_KEY : 'NOT_SET'; // <-- replace this
-  const GEMINI_MODEL   = 'gemini-2.0-flash';
-  const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent`;
+  const GEMINI_MODEL   = 'gemini-3.8-flash';
+  const PROXY_URL = (typeof MPS_PROXY_URL !== 'undefined') ? MPS_PROXY_URL : '';
 
   /* ---- System context: everything Gemini knows about MPS Studio ---- */
   const SYSTEM_PROMPT = `You are Alex, the friendly AI assistant for MPS Studio — a premium creative design studio based in Mumbai, India.
