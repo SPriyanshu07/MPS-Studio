@@ -5,7 +5,7 @@
   'use strict';
 
   const GEMINI_API_KEY = (typeof MPS_GEMINI_KEY !== 'undefined') ? MPS_GEMINI_KEY : 'NOT_SET'; // <-- replace this
-  const GEMINI_MODEL   = 'gemini-2.5-flash';
+  const GEMINI_MODEL   = 'gemini-3.8-flash';
   const PROXY_URL = (typeof MPS_PROXY_URL !== 'undefined') ? MPS_PROXY_URL : '';
 
   /* ---- System context: everything Gemini knows about MPS Studio ---- */
