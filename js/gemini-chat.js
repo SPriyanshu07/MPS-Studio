@@ -4,9 +4,9 @@
 (function () {
   'use strict';
 
-  const GEMINI_API_KEY = (typeof MPS_GEMINI_KEY !== 'undefined') ? MPS_GEMINI_KEY : 'NOT_SET'; // <-- replace this
+  const GEMINI_API_KEY = (typeof MPS_GEMINI_KEY !== 'undefined') ? MPS_GEMINI_KEY : '';
   const GEMINI_MODEL   = 'gemini-3.8-flash';
-  const PROXY_URL = (typeof MPS_PROXY_URL !== 'undefined') ? MPS_PROXY_URL : '';
+  const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/' + GEMINI_MODEL + ':generateContent';
 
   /* ---- System context: everything Gemini knows about MPS Studio ---- */
   const SYSTEM_PROMPT = `You are Alex, the friendly AI assistant for MPS Studio — a premium creative design studio based in Mumbai, India.
@@ -433,14 +433,11 @@ A: Bank transfer, UPI, PayPal, and all major cards via our payment page.`;
       ],
     };
 
-    // Use ?key= param for browser CORS compatibility
-    const urlWithKey = API_URL + '?key=' + GEMINI_API_KEY;
+    // Call Gemini API directly (CORS supported with ?key= param)
+    const urlWithKey = GEMINI_API_URL + '?key=' + GEMINI_API_KEY;
     const res = await fetch(urlWithKey, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-goog-api-key': GEMINI_API_KEY
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
     });
 
